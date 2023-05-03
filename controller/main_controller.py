@@ -4,5 +4,5 @@ from controller import bp_main as main
 
 @main.route('/', methods=['get','post'])
 def home():
-    return render_template( 'main.html' )
+    return 'appeal'
     
