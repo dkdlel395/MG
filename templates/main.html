@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멍결고리</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        header{           
+            background-color:rgba(242, 246, 255, 0.5);
+            height: 120px;
+            position: relative; /* header를 relative로 설정 */
+        }
+        nav {
+            position: absolute;
+            bottom: 0;
+            display: flex; /* nav를 flex로 설정 */
+            width: 100%;
+            /* border: 2px solid crimson; */
+            height: 100%;
+        }
+        #menu1 {
+            height: 50px;
+            border: 3px solid green;
+            position: absolute; /* nav를 absolute로 설정 */
+            flex-direction: row;
+            display: flex; /* nav를 flex로 설정 */
+            list-style: none; /* ul의 기본 스타일을 제거 */
+            width: 29%;
+            padding: 0;
+            top:100px;
+            left: 40px;
+        }
+
+        #menu1 li {
+            
+            text-decoration: none;
+            width: 20%;
+            height: 50px;
+            line-height: 50px;
+            text-align:center;
+            border: 3px solid #98E0AD ;
+            font-size: 13px;
+            left:10px;
+            font-family:Georgia, serif;
+            letter-spacing :2px;
+        }
+
+        #menu1 li a{
+            text-decoration: none;
+            text-decoration-line : none;
+            color:rgb(74, 74, 74);
+        }
+
+
+        #menu2 {
+            height: 40px;
+            border: 3px solid gray;
+            position: absolute; /* nav를 absolute로 설정 */
+            right:0;
+            display: flex; /* nav를 flex로 설정 */
+            list-style: none; /* ul의 기본 스타일을 제거 */
+            padding: 0;
+            width: 300px;
+            top:15px;
+        }
+
+        #menu2 li {
+            width: 33%;   
+            text-align:center;
+            height: 30px;
+            line-height: 30px;
+            font-size:12px;
+            font-family:Georgia, serif;
+            
+            
+        }
+        #menu2 li a{
+            text-decoration: none;
+            text-decoration-line : none;
+            color: rgb(23, 22, 22);
+        }
+
+        main{       
+            height: 1000px;
+            
+        }
+      
+        footer{
+            height: 60px;
+            width: 100%;
+            background-color: rgb(240, 240, 240);
+            /* color: white;
+            font-family: serif; */   
+        }
+        </style>
+  
+</head>
+<body>
+    <header>
+        <nav>
+            <div id="menu1">
+                
+                <li><a href="#">MongBTI</a></li>
+                <li><a href="#">chat</a></li>
+                <li><a href="#">mongs list</a></li>
+                <li><a href="#">adopt</a></li>
+                <li><a href="#">about us</a></li>
+                
+                
+            </div>
+            <div id="menu2">
+                <li><a href="#">register</a></li>
+                <li><a href="#">login</a></li>
+                <li><a href="#">my page</a></li>
+            </div>
+        </nav>
+
+    </header>
+    <main>
+
+    </main>
+    <footer>
+
+    </footer>
+</body>
+</html>
