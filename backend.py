@@ -16,6 +16,8 @@ def init_blueprint( app ):
     
     from controller import bp_db
     from controller import bp_main
+    from controller import bp_appeal
 
     app.register_blueprint(bp_db)
     app.register_blueprint(bp_main)
+    app.register_blueprint(bp_appeal)
