@@ -8,7 +8,7 @@ stable diffusion 옵션
 - resize to : 가로 세로 사이즈를 기존 사진과 동일하게 설정 ( 비율이 무너짐 )
 - batch count : 추출할 사진 개수
 - batch size : 사진 개수만큼 반복할 횟수
-- CFG scale : 프롬프트 참고할 비율
-- Denoising strength : img를 참고할 비율 
+- CFG scale : img를 참고할 비율 
+- Denoising strength : 프롬프트 참고할 비율
 - seed : 랜덤 사진 번호 ( 2023 사용예정 )
 - script -> 추후 알아볼 예정
