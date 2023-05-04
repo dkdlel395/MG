@@ -1,10 +1,46 @@
 from controller import bp_db as db
 from flask import Flask, render_template, request, redirect, url_for, flash
-'''
+
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 import base64
 
+app = Flask(__name__)
+username = 'admin'
+password = '123456789'
+host     = 'dbdbdb.c5rhgzrich8t.us-west-2.rds.amazonaws.com:3306'
+db_name  = 'db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{host}/{db_name}'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+mysql = SQLAlchemy(app), app
+
+
+# 인기있는 강아지의 id를 반환해준다
+def take_popular_dog( limit:int ):
+    dog_ides = list()
+
+    try:
+        with app.app_context():
+            cur = mysql.session.execute(text(
+                f"""
+                    SELECT [유기견ID] FROM 유기견테이블
+                    ORDER BY [늘어난 친구수] DESC
+                    LIMIT {limit};
+                """
+                ))
+
+            for dog_id in cur.fetchall():
+                dog_ides.append( dog_id )
+                
+    except Exception as e:
+        print(e)
+
+    print('db_controller파일에서 dog_ides : ', dog_ides)
+    return dog_ides
+
+
+'''
 def init_database():
     app = Flask(__name__)
     username = 'admin'
@@ -128,3 +164,4 @@ def image_selector( ):
         
     return redirect(url_for('main_bp.start', names=file_names))
 '''
+
