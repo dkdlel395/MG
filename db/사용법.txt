@@ -1,0 +1,5 @@
+* 순서대로 입력해주세요
+1.
+docker build -t dog_mariadb .
+2.
+docker run -itd --name dog_database dog_mariadb

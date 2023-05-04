@@ -1,0 +1,34 @@
+version: '1'
+services:
+    backend:
+        build: 
+          context: backend
+        stop_signal: SIGINT
+        ports:
+          - 8000:8000
+        environment:
+          FLASK_APP: backend.py
+        restart: always
+        networks:
+          - db_net
+        volumes:
+          - ~/.aws/:/root/.aws/:ro
+    db:
+        build: 
+          context: db
+        stop_signal: SIGINT
+        ports:
+          - 3306:3306
+        restart: always
+        networks:
+          - db_net
+        volumes:
+          - db_vol:/var/lib/mysql
+        
+
+networks:
+    db_net:
+volumes:
+    db_vol:
+
+

@@ -1,31 +1,32 @@
 from controller import bp_db as db
 from flask import Flask, render_template, request, redirect, url_for, flash
-
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
-import base64
+import pymysql
 
-app = Flask(__name__)
-username = 'admin'
-password = '123456789'
-host     = 'dbdbdb.c5rhgzrich8t.us-west-2.rds.amazonaws.com:3306'
-db_name  = 'db'
+def init_database( ):
+    app = Flask(__name__)
+    username = 'root'
+    password = '1234'
+    host     = '172.17.0.1'
+    db_name  = 'dog_db'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{host}/{db_name}'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-mysql = SQLAlchemy(app), app
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{host}/{db_name}'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    return app
 
 
 # 인기있는 강아지의 id를 반환해준다
-def take_popular_dog( limit:int ):
+def take_popular_dog( app, limit:int ):
+    mysql = SQLAlchemy(app)
     dog_ides = list()
 
     try:
         with app.app_context():
             cur = mysql.session.execute(text(
                 f"""
-                    SELECT [유기견ID] FROM 유기견테이블
-                    ORDER BY [늘어난 친구수] DESC
+                    SELECT animal_id FROM abandoned_animal
+                    ORDER BY increased_friends DESC
                     LIMIT {limit};
                 """
                 ))
