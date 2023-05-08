@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>멍결고리</title>
     <style>
         *{
@@ -125,7 +126,10 @@
 
     </main>
     <footer>
-
+        <div>
+            <input name=inputValue type="text" value="값이 없습니다">
+            $('input[name=inputValue]').attr('value',"{{ dogs | safe }}");
+        </div>
     </footer>
 </body>
 </html>

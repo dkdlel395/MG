@@ -102,3 +102,17 @@ CREATE TABLE `chat` (
 	INDEX `fk_chat_friend_list_no` (`friend_list_no`) USING BTREE,
 	CONSTRAINT `fk_chat_friend_list_no` FOREIGN KEY (`friend_list_no`) REFERENCES `dog_db`.`friend_list` (`no`) ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+
+insert into species_information values (1,'말티즈');
+
+insert into abandoned_animal values('1111111111',
+'쿠팡', 1,'암',1,2,'외향적',
+'주인사망',0,0,'없음',5,5,'안녕','인천','사랑보호소',10,10,'보호중','2023-05-03 21:26:51');
+
+insert into abandoned_animal values('1111111112',
+'뽀또', 1,'암',1,2,'외향적',
+'주인사망',0,0,'없음',5,5,'안녕','인천','사랑보호소',12,12,'보호중','2023-05-03 21:26:52');
+
+insert into abandoned_animal values('1111111113',
+'베이크', 1,'수',1,2,'외향적',
+'주인사망',0,0,'없음',5,5,'안녕','인천','사랑보호소',11,11,'보호중','2023-05-03 21:26:53');

@@ -15,10 +15,11 @@ def init_database( ):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     return app
 
+def init(app):
+    return SQLAlchemy(app)
 
 # 인기있는 강아지의 id를 반환해준다
-def take_popular_dog( app, limit:int ):
-    mysql = SQLAlchemy(app)
+def take_popular_dog( app, mysql, limit:int ):
     dog_ides = list()
 
     try:
@@ -32,7 +33,7 @@ def take_popular_dog( app, limit:int ):
                 ))
 
             for dog_id in cur.fetchall():
-                dog_ides.append( dog_id )
+                dog_ides.append( dog_id[0] )
                 
     except Exception as e:
         print(e)
