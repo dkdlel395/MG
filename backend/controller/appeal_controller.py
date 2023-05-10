@@ -3,11 +3,11 @@ from controller import bp_appeal as appeal
 from controller import db_controller
 import time
 
-'''
+
 db = db_controller
 app = db.init_database()
 mysql = db.init(app)
-'''
+
 messages = []  # 채팅 기록 저장
 
 @appeal.route('/', methods=['GET', 'POST'])
@@ -45,12 +45,14 @@ def answer():
     return jsonify(message) # message 안에는 (messsagetype(사용자인지,봇인지 판단), 강아지 이름, 강아지 채팅 내용, 시간) 으로 이루어져있다.
 
 
-# Flask 라우팅
+# 채팅 페이지
 @appeal.route("/chat", methods=["GET", "POST"])
 def chatting():
     user_input = request.form.get("msg")
     response = answer()
-    return render_template("chat.html", user_input=user_input, response=response, messages=messages)
+    chat_get_dog_info = db.chat_get_dog_info(app,mysql,1111111111) 
+    chat_user_id_name_pic = db.chat_user_id_name_pic()
+    return render_template("chat.html", user_input=user_input, response=response, messages=messages,chat_get_dog_info=chat_get_dog_info,chat_user_id_name_pic=chat_user_id_name_pic)
 
 # MGTI 시작 페이지
 @appeal.route('/mgti_start', methods=['GET', 'POST'])
@@ -74,12 +76,6 @@ def res2():
 @appeal.route('/mgti_res', methods=['GET', 'POST'])
 def mgti_res():
     return render_template("mgti_res.html")
-
-# 채팅 페이지
-@appeal.route('/chat', methods=['get','post'])
-def chat():
-    
-    return render_template('chat.html')
 
 @appeal.route('/mungbti_ing', methods=['get','post'])
 def mungbti_ing():
