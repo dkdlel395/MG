@@ -1,6 +1,15 @@
 ## 참고 사이트 : civit ai 
     - stable diffusion 예시
 
+### 스테이블 디퓨전 사용 시 필요한 필수 지식
+- webui 사용법 익히기
+
+### 스테이블 디퓨전 로라 사용법
+- 로라 모델 추가
+    - directory : sd -> Stable diffusion Webui -> models -> Lora -> 로라파일추가
+- img2img 에서 로라 적용
+
+
 ## stable diffusion 옵션
 - prompt : 명령어 작성
 - nagative prompt : 포함되지 않아야 하는 사항에 대한 명령어
