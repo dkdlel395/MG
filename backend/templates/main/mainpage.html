@@ -93,31 +93,6 @@
    
 }
 
-/* .dog-card {
-    position: relative;
-    display: inline-block;
-    width: 2730px;
-    height: 1800px;
-} */
-
-/* .dog_name {
-    border: 2px solid fuchsia;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: white;
-    padding: 5px;
-    font-size: 24px;
-    text-align: center;
-} */
-
-/* .dog-image {
-    display: inline-block;
-    width: 273px;
-    height: 185px;
-} */
-
 </style>
 </head>
 <body>  
@@ -126,7 +101,9 @@
             <div class="image-container">
                 {% for index in range(3) %}
                     <div class="dog-card">
-                        <img src="{{ main_dogs_img[index] }}" alt="{{ main_dogs_id[index] }}" class="dog-image">
+                        <a href="/main/introduction/{{ main_dogs_id[index] }}">
+                            <img src="{{ main_dogs_img[index] }}" alt="{{ main_dogs_id[index] }}" class="dog-image">
+                        </a>
                         <p class="dog_name">{{ main_dogs_name[index] }}</p>
                         <p class="dog_age">강아지 나이: {{ main_dogs_age[index] }}</p>
                     </div>

@@ -176,38 +176,19 @@
 </head>
 
 <body>
-    <header>
-        <div id="image">
-
-        </div>
-        <nav>
-            <div id="menu1">
-
-                <li><a href="mungbti_start">MungBTI</a></li>
-                <li><a href="chat">Chat</a></li>
-                <li><a href="introduction">Mung list</a></li>
-                <li><a href="#">Adopt</a></li>
-                <li><a href="#">About us</a></li>
-
-
-            </div>
-            <div id="menu2">
-                <li><a href="#">register</a></li>
-                <li class="separator">|</li>
-                <li><a href="#">login</a></li>
-                <li class="separator">|</li>
-                <li><a href="#">my page</a></li>
-            </div>
-        </nav>
-
-
-    </header>
 
     <head>
-        <div class="section" id="section1">나의 멍BTI는?</div>
+        <div class="section" id="section1">나의 MGTI는?</div>
 
     <body>
         <style>
+            @font-face {
+                font-family: 'S-CoreDream-3Light';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+                    }
+
             form {
                 display: flex;
                 flex-direction: row;
@@ -218,6 +199,12 @@
                 margin-left: 5px;
                 margin-right: 5px;
             }
+
+            body {
+                    background-color: #f2f2f2;
+                    font-family: 'S-CoreDream-3Light';
+                    text-align: center;
+                }
         </style>
         </head>
 
@@ -226,17 +213,17 @@
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>애견 카페에 갔을때, 나는</h2>
+                    <h2>애견 카페에 갔을때, 우리 강아지는</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(0, 0)">우리집 강쥐만 뚫어져라 쳐다본다</button>
-                        <button class="button" type="button" onclick="handleAnswer(0, 1)">다른 견주들과 하하호호 수다를 떤다</button>
+                        <button class="button" type="button" onclick="handleAnswer(0, 0)">주인 껌딱지! 나만 뚫어져라 쳐다본다</button>
+                        <button class="button" type="button" onclick="handleAnswer(0, 1)">다른 댕댕이 친구들과 신나게 뛰어논다</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>여유로운 주말, 나는 강아지와 함께</h2>
+                    <h2>여유로운 주말, 우리 강아지는</h2>
                     <form onsubmit="handleAnswer(event)">
                         <button class="button" type="button" onclick="handleAnswer(1, 0)">집에서 단둘이 꽁냥꽁냥</button>
                         <button class="button" type="button" onclick="handleAnswer(1, 1)">다른 댕댕이 친구들을 찾아 산책</button>
@@ -256,10 +243,10 @@
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>낯선 곳에 갔을때 우리 강아지는</h2>
+                    <h2>강아지가 애교를 부린다! 어떤 상황일까?</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(3, 0)">독립적이고 혼자서도 잘해요</button>
-                        <button class="button" type="button" onclick="handleAnswer(3, 1)">주인만 바라보는 주인 껌딱지!</button>
+                        <button class="button" type="button" onclick="handleAnswer(3, 0)">졸려~~~ 옆에 코 붙어서 잘래 멍~!</button>
+                        <button class="button" type="button" onclick="handleAnswer(3, 1)">나랑 같이 산책가죠!! 멍멍!!</button>
                     </form>
                 </div>
             </div>
@@ -276,112 +263,109 @@
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>집에 왔더니 강아지가 침대에 오줌을 쌌다! 그 때 나는?</h2>
+                    <h2>우리 강아지는 새로운 장난감을 발견했을때</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(5, 0)">이눔시끼! 때찌를 한다</button>
-                        <button class="button" type="button" onclick="handleAnswer(5, 1)">왜 그랬지? 배변교육을 다시 시킨다</button>
+                        <button class="button" type="button" onclick="handleAnswer(5, 0)">무서워어..경계한다 왈왈!</button>
+                        <button class="button" type="button" onclick="handleAnswer(5, 1)">멍멍! 이거모야? 신나서 건드려본다</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>강아지랑 산책할때 나는</h2>
+                    <h2>나랑 사이가 안좋은 친구를 강아지랑 산책하는 도중 만났다</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(6, 0)">매일 일정한 시간에 규칙적으로</button>
-                        <button class="button" type="button" onclick="handleAnswer(6, 1)">내가 가고싶을때 암때나~</button>
+                        <button class="button" type="button" onclick="handleAnswer(6, 0)">으르르르르렁 !! 멍멍!! 저리가!!</button>
+                        <button class="button" type="button" onclick="handleAnswer(6, 1)">앗 사람이다~!! 사람죠아 멍!!</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>가끔 잠들기전 나는</h2>
+                    <h2>새로운 가족이 된 우리강아지가 우리집 올 때 하는 생각은?</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(7, 0)">강아지와 산책가는 상상을 한다</button>
-                        <button class="button" type="button" onclick="handleAnswer(7, 1)">아이 졸려! 빨리 자야겠다</button>
+                        <button class="button" type="button" onclick="handleAnswer(7, 0)">집에 나말고 누가 있으면 어쩌지?ㅜㅜ 나 혼자였으면 좋겠어 멍..!</button>
+                        <button class="button" type="button" onclick="handleAnswer(7, 1)">집에 친구들이 더 있으면 좋겠어!! 많을수록 좋아~!</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>강아지가 사료를 안먹구 내 음식을 탐한다 그때 나는</h2>
+                    <h2>낯선 곳에 갔을때 우리 강아지는</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(8, 0)">오구구 먹고싶었어? 조금 나눠준다</button>
-                        <button class="button" type="button" onclick="handleAnswer(8, 1)">절대 안돼! 강쥐 건강 절대 지켜</button>
+                        <button class="button" type="button" onclick="handleAnswer(8, 0)">독립적이고 혼자서도 잘해요</button>
+                        <button class="button" type="button" onclick="handleAnswer(8, 1)">주인만 바라보는 주인 껌딱지</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>우리 강쥐는 혼자 있을때</h2>
+                    <h2>내가 엉엉 울고있을때 우리 강아지는</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(9, 0)">아싸 자유시간! 맘껏 장난감 가지구
-                            놀아야지</button>
-                        <button class="button" type="button" onclick="handleAnswer(9, 1)">주인님 언제왕 ㅜㅜ 보고파</button>
+                        <button class="button" type="button" onclick="handleAnswer(9, 0)">아무 생각 없이 평소처럼 행동한다</button>
+                        <button class="button" type="button" onclick="handleAnswer(9, 1)">집사야 울지망 ㅜㅜ 눈치채고 내 옆에 꼭 붙어있는다</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>강아지에게 사료를 줄때</h2>
+                    <h2>우리 강아지는 혼자 있을때</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(10, 0)">딱딱 정해진 시간에! 정량을 지급한다</button>
-                        <button class="button" type="button" onclick="handleAnswer(10, 1)">강쥐가 배고파하는거 같은데? 밥먹자!</button>
+                        <button class="button" type="button" onclick="handleAnswer(10, 0)">아싸 자유시간! 맘껏 장난감 가지구 놀아야지</button>
+                        <button class="button" type="button" onclick="handleAnswer(10, 1)">주인님 언제왕 ㅜㅜ 보고파</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>강아지를 씻길때</h2>
+                    <h2>집사와 간식중에 하나만 선택한다면 우리 강아지는</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(11, 0)">정해진 날짜에 정기적으로 씻긴다</button>
-                        <button class="button" type="button" onclick="handleAnswer(11, 1)">어우~꼬질꼬질해 인누와 씻자!</button>
+                        <button class="button" type="button" onclick="handleAnswer(11, 0)">나의 pick은 간식! 간식달라멍!</button>
+                        <button class="button" type="button" onclick="handleAnswer(11, 1)">간식 치워 우리 집사가 최고다멍!</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>강아지가 아파하며 낑낑거릴때 나는</h2>
+                    <h2>우리 강아지는 산책할때</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(12, 0)">헉! 우리 강아지 잘못되면 어떡하지..? 상상이 꼬리에
-                            꼬리를 문다</button>
-                        <button class="button" type="button" onclick="handleAnswer(12, 1)">침착하게 바로 병원에 달려간다</button>
+                        <button class="button" type="button" onclick="handleAnswer(12, 0)">매일 일정한 시간에 규칙적으로</button>
+                        <button class="button" type="button" onclick="handleAnswer(12, 1)">집사야 산책 가고싶다! 가고싶을때 암때나~</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>친구들과 1박 2일 여행이 잡혔다! 그런데 강아지가 집에 혼자 있게된다..?!</h2>
+                    <h2>우리 강아지는 사료를 먹을때</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(13, 0)">아몰랑~~ 여행 재밌겠다!!</button>
-                        <button class="button" type="button" onclick="handleAnswer(13, 1)">안돼!!~~ 우리 강아지 절대 혼자 둘 수 없지! 약속
-                            취소한다</button>
+                        <button class="button" type="button" onclick="handleAnswer(13, 0)">딱딱 정해진 시간에 규칙적으로 냠냠!</button>
+                        <button class="button" type="button" onclick="handleAnswer(13, 1)">아 배고파~집사야 밥을 대령하거라!</button>
                     </form>
                 </div>
             </div>
 
             <div class="section" id="section2">
                 <div class="container">
-                    <h2>어색한 친구가 너네집 강쥐 보고싶어!! 놀러갈래 했을때 나는</h2>
+                    <h2>새로운 산책코스 발견! 우리 강아지는?</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(14, 0)">우리집 강쥐 귀엽지!! 당장 놀러와</button>
-                        <button class="button" type="button" onclick="handleAnswer(14, 1)">앗..조금 불편한데..</button>
+                        <button class="button" type="button" onclick="handleAnswer(14, 0)">원래 다니던 산책코스가 아니자나!? 평소처럼 잘 따라오지 않는다</button>
+                        <button class="button" type="button" onclick="handleAnswer(14, 1)">킁킁! 냄새를 맡으며 잘 따라온다</button>
                     </form>
 
                 </div>
             </div>
 
             <div class="section" id="section3">
-                <form action="mbti_result.html">
+                <!-- <form action="mbti_result.html">
                     <input type="submit" onclick="submitAnswers()" value="결과보기">
-                </form>
+                </form> -->
             </div>
 
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -399,13 +383,13 @@
                     // 스크롤 이동이 완료된 후에 리다이렉션 로직 실행
                     setTimeout(() => {
                         if (currentSectionIndex === 16) {
-                        window.location.href = "./mbti_result.html";
+                        window.location.href = "/appeal/mgti_res";
                         }
                     }, 1000); // 적절한 대기 시간 설정 (1초로 설정한 예시)
 
                     // 백엔드로 데이터 전송
                     $.ajax({
-                        url: '/main/res2', // 백엔드 URL을 입력해야 합니다.
+                        url: '/appeal/res2', // 백엔드 URL을 입력해야 합니다.
                         type: 'POST', // 전송 방식 (POST, GET 등)
                         data: JSON.stringify(answers), // JSON 형식으로 데이터 전송
                         contentType: 'application/json', // 전송 데이터 타입 (JSON)
@@ -422,7 +406,6 @@
                 }
             </script>
 
-            <link rel="stylesheet" type="text/css" href="mbti_check.css">
             <script>
                 var answers = [];
 

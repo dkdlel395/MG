@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include 'main.html' %}
+<style>
+@font-face {
+  font-family: 'S-CoreDream-3Light';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+  h1 {
+  margin-bottom: 50px;
+}
+  h2 {
+  margin-bottom: 150px;
+}
+
+body {
+  background-color: #f2f2f2;
+  font-family: 'S-CoreDream-3Light';
+  text-align: center;
+  
+  
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+label {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.image-container img {
+  width: 200px;
+  height: 200px;
+  margin: 0 10px;
+}
+.container {
+  border: 4px solid rgb(210, 210, 210);
+  text-align: center;
+  padding: 50px;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+.highlight {
+  background-color: pink;
+  display: inline-block;
+  padding: 0 10px;
+  line-height: 0.5;
+}
+
+#frame{
+    position: absolute;
+    width:100%;
+    height: 1000px;
+    top: 150px;
+}
+</style>
+</head>
+<body>
+  <div id="frame">
+    <title>나의 MGTI는?</title>
+
+    <div class="container">
+    <h1><span class="highlight">나와 잘 어울리는 강아지 유형은</span></h1>
+    <h1><span class="highlight">"ISTP"</span></h1>
+    <h2>처음엔 낯을 가리지만, <br> 겁 없고 독립적이고 자유로운 멍친구들</h2>
+
+    <h1><span class="highlight">나와 잘 맞는 멍친구들</span></h1>
+    <div class="image-container">
+      <img src="image1.jpg" alt="Image 1">
+      <img src="image2.jpg" alt="Image 2">
+      <img src="image3.jpg" alt="Image 3">
+      <img src="image4.jpg" alt="Image 4">
+      
+    </div>
+    <span class="highlight">※ 멍 친구들과 대화를 원하면 회원가입을 진행하세요</span>
+    </div>
+  </div>
+</body>
+</html>

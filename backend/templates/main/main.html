@@ -23,10 +23,10 @@
             width: 95px;
             position:absolute;
             border: 2px solid orange;
-            position: absolute; /* 이미지를 절대 위치로 설정합니다. */
-            top: 50%; /* 이미지의 상단을 header의 중앙으로 정렬합니다. */
-            left: 50%; /* 이미지의 좌측을 header의 중앙으로 정렬합니다. */
-            transform: translate(-50%, -50%); /* 이미지를 정확히 header의 중앙에 위치시킵니다. */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
   
         }
         nav {
@@ -118,15 +118,12 @@
 </head>
 <body>
     <header>
-        <div id="image">
-
-        </div>
         <nav>
             <div id="menu1">
                 
-                <li><a href="mungbti_start">MungBTI</a></li>
-                <li><a href="chat">Chat</a></li>
-                <li><a href="introduction">Mung list</a></li>
+                <li><a href="/appeal/mgti_start">MGTI</a></li>
+                <li><a href="/appeal/chat">Chat</a></li>
+                <li><a href="/main/introduction">Mung list</a></li>
                 <li><a href="#">Adopt</a></li>
                 <li><a href="#">About us</a></li>
                 
@@ -140,7 +137,11 @@
                 <li><a href="#">my page</a></li>
             </div>
         </nav>
-
+        <div id="image">
+            <a href="/main/mainpage">
+                <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" width="95px" height="95px">
+            </a>
+        </div>
     </header>
     <main>
 

@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Chat</title>
-</head>
+<head>
+  {% include 'main.html' %}
 <style>
 
 #frame {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid gray;
-  background-color: rgb(242, 246, 255, 0.5);
-  width: 90%;
-  height: 80%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-}
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			border: 1px solid gray;
+			background-color: rgb(242, 246, 255, 0.5);
+			width: 90%;
+			height: 80%;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			padding: 20px;
+		}
 
-.chat-container {
+        .chat-container {
   height: calc(80% - 50px);
   overflow-y: scroll;
   padding: 10px;
@@ -90,97 +88,77 @@
   box-shadow: 0px 0px 3px #0084ff;
 }
 
+
+
+
+
 </style>
 </head>
 <body>
-  <div style="width:100%; height:1000px; position:absolute; top: 150px;">
-    <div id="frame">
-      <div class="chat-container"></div>
-      <div class="chat-input">
-        <input type="text" id="message-input" placeholder="메시지를 입력하세요...">
-        <button id="send-btn" onclick="sendMessage()">전송</button>
+    <div style="width:100%; height:1000px; position:absolute; top: 150px;">
+        <div id="frame" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 1px solid gray; background-color: rgb(242, 246, 255, 0.5); width: 90%; height: 80%;">
+          <div class="chat-container">
+            <div class="chat-box">
+              <div class="chat-bubble me">
+                <p>Hello!</p>
+              </div>
+            </div>
+            <div class="chat-box chat-box-alt">
+              <div class="chat-bubble chat-bubble-alt">
+                <p>Hi there!</p>
+              </div>
+            </div>
+            <div class="chat-box">
+              <div class="chat-bubble me">
+                <p>How are you?</p>
+              </div>
+            </div>
+            <div class="chat-box chat-box-alt">
+              <div class="chat-bubble chat-bubble-alt">
+                <p>I'm good, thanks. How about you?</p>
+              </div>
+            </div>
+            <div class="chat-box">
+              <div class="chat-bubble me">
+                <p>Doing well too!</p>
+              </div>
+            </div>
+          </div>
+          <div class="chat-input">
+            <input type="text" id="message-input" placeholder="메시지를 입력하세요...">
+            <button id="send-btn" onclick="sendMessage()">전송</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <script>
-    const messageInput = document.querySelector("#message-input");
-    const sendButton = document.querySelector("#send-btn");
-    const chatContainer = document.querySelector(".chat-container");
+      <script>
+        const messageInput = document.querySelector("#message-input");
+const sendButton = document.querySelector("#send-button");
+const chatContainer = document.querySelector(".chat-container");
 
-    sendButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      if (messageInput.value) {
-        const message = document.createElement("div");
-        const messageBubble = document.createElement("div");
-        const messageText = document.createElement("p");
-        const messageTime = document.createElement("span");
-        const messageSender = document.createElement("span");
+sendButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  if (messageInput.value) {
+    const message = document.createElement("div");
+    const messageBubble = document.createElement("div");
+    const messageText = document.createElement("p");
+    const messageTime = document.createElement("span");
+    const messageSender = document.createElement("span");
 
-        messageBubble.classList.add("chat-bubble", "me");
-        messageText.innerText = messageInput.value;
-        messageSender.innerText = "You";
-        messageTime.innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    messageBubble.classList.add("chat-bubble", "me");
+    messageText.innerText = messageInput.value;
+    messageSender.innerText = "You";
+    messageTime.innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-        messageBubble.appendChild(messageText);
-        messageBubble.appendChild(messageTime);
-        messageBubble.appendChild(messageSender);
-        message.appendChild(messageBubble);
-        chatContainer.appendChild(message);
+    messageBubble.appendChild(messageText);
+    messageBubble.appendChild(messageTime);
+    messageBubble.appendChild(messageSender);
+    message.appendChild(messageBubble);
+    chatContainer.appendChild(message);
 
-        // Backend code
-        fetch('/appeal/upload_text', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ msg: messageInput.value })
-        })
-          .then(response => response.json())
-          .then(data => {
-            fetch('/appeal/answer', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ message_type: 'chat', message_content: messageInput.value })
-            })
-              .then(response => response.json())
-              .then(data => {
-                const responseMessage = document.createElement("div");
-                const responseMessageBubble = document.createElement("div");
-                const responseMessageText = document.createElement("p");
-                const responseMessageTime = document.createElement("span");
-                const responseMessageSender = document.createElement("span");
-
-                responseMessageBubble.classList.add("chat-bubble", "chat-bubble-alt");
-                responseMessageText.innerText = data.message_content;
-                responseMessageSender.innerText = "뽀또";
-                responseMessageTime.innerText = new Date(data.time * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-                responseMessageBubble.appendChild(responseMessageText);
-                responseMessageBubble.appendChild(responseMessageTime);
-                responseMessageBubble.appendChild(responseMessageSender);
-                responseMessage.appendChild(responseMessageBubble);
-                chatContainer.appendChild(responseMessage);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-              })
-              .catch(error => console.error(error));
-          })
-          .catch(error => console.error(error));
-      }
-      messageInput.value = "";
-    });
-
-    function sendMessage() {
-      const event = new Event("click");
-      sendButton.dispatchEvent(event);
-    }
-
-    messageInput.addEventListener("keyup", (event) => {
-      if (event.keyCode === 13) {
-        sendMessage();
-      }
-    });
-  </script>
-</body>
+    messageInput.value = "";
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+});
+</script>
+  </body>
 </html>

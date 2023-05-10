@@ -81,7 +81,7 @@ def intro_dog( app, mysql, id, info ):
 ################ 종현이 영역 #######################
 
 # 강아지 정보 가져오기
-def chat_get_dog_info(app,mysql,selec_id):   # 이 함수는 인자로 준 id의 이름과 사진을 가져온다
+def get_dog_info(app,mysql,selec_id):   # 이 함수는 인자로 준 id의 이름과 사진을 가져온다
     try:
         dog_info = list()
         with app.app_context():
