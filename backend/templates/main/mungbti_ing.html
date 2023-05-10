@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멍결고리</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: rgba(242, 246, 255, 0.5);
+            height: 150px;
+            position: relative;
+            /* header를 relative로 설정 */
+
+        }
+
+
+        #image {
+            height: 95px;
+            width: 95px;
+            position: absolute;
+            border: 2px solid orange;
+            position: absolute;
+            /* 이미지를 절대 위치로 설정합니다. */
+            top: 50%;
+            /* 이미지의 상단을 header의 중앙으로 정렬합니다. */
+            left: 50%;
+            /* 이미지의 좌측을 header의 중앙으로 정렬합니다. */
+            transform: translate(-50%, -50%);
+            /* 이미지를 정확히 header의 중앙에 위치시킵니다. */
+
+        }
+
+        nav {
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            /* nav를 flex로 설정 */
+            width: 100%;
+            /* border: 2px solid crimson; */
+            height: 100%;
+        }
+
+        #menu1 {
+            height: 50px;
+            border: 3px solid green;
+            position: absolute;
+            /* nav를 absolute로 설정 */
+            flex-direction: row;
+            display: flex;
+            /* nav를 flex로 설정 */
+            list-style: none;
+            /* ul의 기본 스타일을 제거 */
+            width: 27%;
+            padding: 0;
+            top: 50px;
+            left: 40px;
+        }
+
+        #menu1 li {
+
+            text-decoration: none;
+            width: 20%;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 3px solid #98E0AD;
+            font-size: 11px;
+            left: 10px;
+            font-family: Georgia, serif;
+            letter-spacing: 0.5px;
+        }
+
+        #menu1 li a {
+            text-decoration: none;
+            text-decoration-line: none;
+            color: rgb(74, 74, 74);
+        }
+
+
+        #menu2 {
+            height: 40px;
+            border: 3px solid rgb(255, 255, 4);
+            position: absolute;
+            /* nav를 absolute로 설정 */
+            right: 10px;
+            display: flex;
+            /* nav를 flex로 설정 */
+            list-style: none;
+            /* ul의 기본 스타일을 제거 */
+            padding: 0;
+
+            top: 0px;
+        }
+
+        #menu2 li {
+            margin-right: 7px;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+            font-family: Georgia, serif;
+
+
+        }
+
+        #menu2 li a {
+            text-decoration: none;
+            text-decoration-line: none;
+            color: rgb(23, 22, 22);
+        }
+
+        main {
+            height: 1000px;
+
+        }
+
+        footer {
+            height: 120px;
+            width: 100%;
+            background-color: rgb(240, 240, 240);
+            /* color: white;
+            font-family: serif; */
+        }
+
+        /* 버튼 스타일 */
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            font-family: 'S-CoreDream-3Light';
+            background-color: #F5D5E0;
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #F29B9B;
+            color: #fff;
+        }
+    </style>
+
+
+    <title>One-page Scroll</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .section {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div id="image">
+
+        </div>
+        <nav>
+            <div id="menu1">
+
+                <li><a href="mungbti_start">MungBTI</a></li>
+                <li><a href="chat">Chat</a></li>
+                <li><a href="introduction">Mung list</a></li>
+                <li><a href="#">Adopt</a></li>
+                <li><a href="#">About us</a></li>
+
+
+            </div>
+            <div id="menu2">
+                <li><a href="#">register</a></li>
+                <li class="separator">|</li>
+                <li><a href="#">login</a></li>
+                <li class="separator">|</li>
+                <li><a href="#">my page</a></li>
+            </div>
+        </nav>
+
+
+    </header>
+
+    <head>
+        <div class="section" id="section1">나의 멍BTI는?</div>
+
+    <body>
+        <style>
+            form {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+
+            label {
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+        </style>
+        </head>
+
+        <body>
+
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>애견 카페에 갔을때, 나는</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(0, 0)">우리집 강쥐만 뚫어져라 쳐다본다</button>
+                        <button class="button" type="button" onclick="handleAnswer(0, 1)">다른 견주들과 하하호호 수다를 떤다</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>여유로운 주말, 나는 강아지와 함께</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(1, 0)">집에서 단둘이 꽁냥꽁냥</button>
+                        <button class="button" type="button" onclick="handleAnswer(1, 1)">다른 댕댕이 친구들을 찾아 산책</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>내가 원하는 강아지 성격은</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(2, 0)">얌전하고 조용조용</button>
+                        <button class="button" type="button" onclick="handleAnswer(2, 1)">활발한 댕댕이</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>낯선 곳에 갔을때 우리 강아지는</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(3, 0)">독립적이고 혼자서도 잘해요</button>
+                        <button class="button" type="button" onclick="handleAnswer(3, 1)">주인만 바라보는 주인 껌딱지!</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>낯선 사람을 만났을때 우리 강아지는</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(4, 0)">왈왈! 저리가</button>
+                        <button class="button" type="button" onclick="handleAnswer(4, 1)">멍! 예뻐해줘!</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>집에 왔더니 강아지가 침대에 오줌을 쌌다! 그 때 나는?</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(5, 0)">이눔시끼! 때찌를 한다</button>
+                        <button class="button" type="button" onclick="handleAnswer(5, 1)">왜 그랬지? 배변교육을 다시 시킨다</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>강아지랑 산책할때 나는</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(6, 0)">매일 일정한 시간에 규칙적으로</button>
+                        <button class="button" type="button" onclick="handleAnswer(6, 1)">내가 가고싶을때 암때나~</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>가끔 잠들기전 나는</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(7, 0)">강아지와 산책가는 상상을 한다</button>
+                        <button class="button" type="button" onclick="handleAnswer(7, 1)">아이 졸려! 빨리 자야겠다</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>강아지가 사료를 안먹구 내 음식을 탐한다 그때 나는</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(8, 0)">오구구 먹고싶었어? 조금 나눠준다</button>
+                        <button class="button" type="button" onclick="handleAnswer(8, 1)">절대 안돼! 강쥐 건강 절대 지켜</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>우리 강쥐는 혼자 있을때</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(9, 0)">아싸 자유시간! 맘껏 장난감 가지구
+                            놀아야지</button>
+                        <button class="button" type="button" onclick="handleAnswer(9, 1)">주인님 언제왕 ㅜㅜ 보고파</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>강아지에게 사료를 줄때</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(10, 0)">딱딱 정해진 시간에! 정량을 지급한다</button>
+                        <button class="button" type="button" onclick="handleAnswer(10, 1)">강쥐가 배고파하는거 같은데? 밥먹자!</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>강아지를 씻길때</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(11, 0)">정해진 날짜에 정기적으로 씻긴다</button>
+                        <button class="button" type="button" onclick="handleAnswer(11, 1)">어우~꼬질꼬질해 인누와 씻자!</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>강아지가 아파하며 낑낑거릴때 나는</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(12, 0)">헉! 우리 강아지 잘못되면 어떡하지..? 상상이 꼬리에
+                            꼬리를 문다</button>
+                        <button class="button" type="button" onclick="handleAnswer(12, 1)">침착하게 바로 병원에 달려간다</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>친구들과 1박 2일 여행이 잡혔다! 그런데 강아지가 집에 혼자 있게된다..?!</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(13, 0)">아몰랑~~ 여행 재밌겠다!!</button>
+                        <button class="button" type="button" onclick="handleAnswer(13, 1)">안돼!!~~ 우리 강아지 절대 혼자 둘 수 없지! 약속
+                            취소한다</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <div class="container">
+                    <h2>어색한 친구가 너네집 강쥐 보고싶어!! 놀러갈래 했을때 나는</h2>
+                    <form onsubmit="handleAnswer(event)">
+                        <button class="button" type="button" onclick="handleAnswer(14, 0)">우리집 강쥐 귀엽지!! 당장 놀러와</button>
+                        <button class="button" type="button" onclick="handleAnswer(14, 1)">앗..조금 불편한데..</button>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="section" id="section3">
+                <form action="mbti_result.html">
+                    <input type="submit" onclick="submitAnswers()" value="결과보기">
+                </form>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                var answers = [];
+
+                function handleAnswer(questionNumber, option) {
+                    //kkk = [questionNumber,option]
+                    answers[questionNumber] = option;
+                    console.log(answers);
+                    
+                    currentSectionIndex = questionNumber + 2;
+                    scrollToSection(currentSectionIndex);
+
+                    // 스크롤 이동이 완료된 후에 리다이렉션 로직 실행
+                    setTimeout(() => {
+                        if (currentSectionIndex === 16) {
+                        window.location.href = "./mbti_result.html";
+                        }
+                    }, 1000); // 적절한 대기 시간 설정 (1초로 설정한 예시)
+
+                    // 백엔드로 데이터 전송
+                    $.ajax({
+                        url: '/main/res2', // 백엔드 URL을 입력해야 합니다.
+                        type: 'POST', // 전송 방식 (POST, GET 등)
+                        data: JSON.stringify(answers), // JSON 형식으로 데이터 전송
+                        contentType: 'application/json', // 전송 데이터 타입 (JSON)
+                        success: function (response) {
+                            // 전송 성공 시 실행할 코드
+                            console.log('Data sent successfully!');
+                            console.log(response); // 백엔드에서 받은 응답을 출력
+                        },
+                        error: function (xhr, status, error) {
+                            // 전송 실패 시 실행할 코드
+                            console.log('Error occurred while sending data:', error);
+                        }
+                    });
+                }
+            </script>
+
+            <link rel="stylesheet" type="text/css" href="mbti_check.css">
+            <script>
+                var answers = [];
+
+                function handleOption1() {
+                    answers.push(0);
+                }
+
+                function handleOption2() {
+                    answers.push(1);
+                }
+
+                function submitAnswers() {
+                    // 서버로 응답 데이터 전송
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/submit-answers", true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                            // 응답 처리 완료
+                            var response = JSON.parse(xhr.responseText);
+                            console.log(response);
+                        }
+                    };
+                    xhr.send(JSON.stringify(answers));
+
+                    console.log(answers); // answers 배열의 값을 확인
+                }
+            </script>
+
+
+            </head>
+
+
+
+            <script>
+                const sections = document.querySelectorAll('.section');
+                let currentSectionIndex = 0;
+                let isScrolling = false;
+
+                function scrollToSection(index) {
+                    isScrolling = true;
+                    sections[index].scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => {
+                        isScrolling = false;
+                    }, 1000);
+                }
+
+                function handleScroll(event) {
+                    if (isScrolling) return;
+
+                    const direction = event.deltaY > 0 ? 1 : -1;
+                    currentSectionIndex += direction;
+
+                    if (currentSectionIndex < 0) {
+                        currentSectionIndex = 0;
+                    } else if (currentSectionIndex >= sections.length) {
+                        currentSectionIndex = sections.length - 1;
+                    }
+
+                    scrollToSection(currentSectionIndex);
+                }
+
+                window.addEventListener('wheel', handleScroll);
+            </script>
+        </body>
+
+</html>

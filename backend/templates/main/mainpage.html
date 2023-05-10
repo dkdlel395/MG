@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include 'main.html' %}
+<style>
+#title1{
+    border: 2px solid fuchsia;
+    top: 190px;
+    position: absolute;
+    display: inline-block; /* 텍스트 크기에 맞게 테두리를 조정하기 위해 인라인 블록으로 설정 */
+    padding: 5px; /* 텍스트와 테두리 간격 설정 */
+    font-size: 24px; /* 텍스트 크기 설정 */    
+    left: 30px;
+}
+
+#title2{
+    border: 2px solid fuchsia;
+    top: 720px;
+    position: absolute;
+    display: inline-block; /* 텍스트 크기에 맞게 테두리를 조정하기 위해 인라인 블록으로 설정 */
+    padding: 5px; /* 텍스트와 테두리 간격 설정 */
+    font-size: 24px; /* 텍스트 크기 설정 */
+
+    left: 650px;
+}
+
+.image-container{
+    position: absolute;
+    border: 2px solid rgb(255, 145, 0);
+    left: 40px;
+    width: 700px;
+    height: 80%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    margin-right: 10px;
+    border: 2px solid rgb(231, 202, 165);
+    width: 90%;
+    height: 80%;
+
+}
+
+#square1{
+    position: absolute;
+    border: 2px solid rgb(9, 255, 0);
+    width: 90%;
+    height: 305px;
+    top: 300px;
+    left: 40px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+#p1{
+    position: absolute;
+    border: 2px solid rgb(7, 123, 255);
+    vertical-align: middle;
+    left: 850px;
+}
+
+#p2{
+    position: absolute;
+    border: 2px solid rgb(7, 123, 255);
+    vertical-align: middle;
+    left: 100px;
+}
+
+#square2{
+    position: absolute;
+    border: 2px solid rgb(9, 255, 0);
+    width: 90%;
+    height: 305px;
+    top: 800px;
+    left: 40px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.board-container{
+    position: absolute;
+    border: 2px solid violet;
+    left: 600px;
+    width: 700px;
+    height: 80%;
+    padding: 10px;
+    display: flex;
+   
+}
+
+/* .dog-card {
+    position: relative;
+    display: inline-block;
+    width: 2730px;
+    height: 1800px;
+} */
+
+/* .dog_name {
+    border: 2px solid fuchsia;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 5px;
+    font-size: 24px;
+    text-align: center;
+} */
+
+/* .dog-image {
+    display: inline-block;
+    width: 273px;
+    height: 185px;
+} */
+
+</style>
+</head>
+<body>  
+        <h2 id="title1">Today's 멍</h2>
+        <div id="square1">
+            <div class="image-container">
+                {% for index in range(3) %}
+                    <div class="dog-card">
+                        <img src="{{ main_dogs_img[index] }}" alt="{{ main_dogs_id[index] }}" class="dog-image">
+                        <p class="dog_name">{{ main_dogs_name[index] }}</p>
+                        <p class="dog_age">강아지 나이: {{ main_dogs_age[index] }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="p1">
+            <p>매일 새로워지는 today’s 멍 </p><br>
+            <p>인기가 많은 친구들이에요. 한번 대화 나눠보실래요?</p>
+            </div>
+        </div>
+
+        <h2 id="title2">Board</h2>
+        <div id="square2">
+            <div id="p2">
+                <p>다른 멍결고리 유저들과의 소통공간이에요 </p><br>
+                <p>함께 여러 정보를 공유해보고 여러분의 멍즈를 자랑해보세요</p>
+            </div>
+            <div class="board-container">
+                
+            </div>
+
+        </div>
+
+
+
+
+</body>
+</html>
