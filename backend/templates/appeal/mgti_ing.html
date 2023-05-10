@@ -406,39 +406,7 @@
                 }
             </script>
 
-            <script>
-                var answers = [];
-
-                function handleOption1() {
-                    answers.push(0);
-                }
-
-                function handleOption2() {
-                    answers.push(1);
-                }
-
-                function submitAnswers() {
-                    // 서버로 응답 데이터 전송
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "/submit-answers", true);
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                            // 응답 처리 완료
-                            var response = JSON.parse(xhr.responseText);
-                            console.log(response);
-                        }
-                    };
-                    xhr.send(JSON.stringify(answers));
-
-                    console.log(answers); // answers 배열의 값을 확인
-                }
-            </script>
-
-
             </head>
-
-
 
             <script>
                 const sections = document.querySelectorAll('.section');
