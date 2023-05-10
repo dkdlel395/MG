@@ -77,3 +77,20 @@ def intro_dog( app, mysql, id, info ):
     except Exception as e:
         print(e)
     return dog_info
+
+################ 종현이 영역 #######################
+
+# 강아지 정보 가져오기
+def get_dog_info(app,mysql,selec_id):   # 이 함수는 인자로 준 id의 이름과 사진을 가져온다
+    try:
+        dog_info = list()
+        with app.app_context():
+            cur = mysql.session.execute(text(f"""SELECT animal_name,profile FROM abandoned_animal WHERE animal_id = {selec_id} """))
+            dog_info = cur.fetchall()
+            return dog_info
+    except Exception as e:
+        print(e)
+
+def chat_user_id_name_pic(): # 채팅 방에서 표시될 사용자 id,이름,사진을 받아오는 함수 (추후엔 db에 접근해야 되니 dbcontroller에 넣었다)
+    user_info = ["1","user name","www.userimage.com"]
+    return user_info

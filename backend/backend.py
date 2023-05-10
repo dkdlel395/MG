@@ -13,6 +13,7 @@ def init_environment( app ):
 def init_blueprint( app ):
     from controller import db_controller
     from controller import main_controller
+    from controller import appeal_controller
     
     from controller import bp_db
     from controller import bp_main

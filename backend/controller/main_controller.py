@@ -10,10 +10,7 @@ mysql = db.init(app)
 @main.route('/', methods=['get','post'])
 def home():
     popular_doges =  db.take_popular_dog( app, mysql, 3 )
-    popular_doges_image = db.send_popualr_dog_image() # db 컨트롤러에서 받아온 강아지 사진 주소 보내는 함수
-    print(popular_doges) 
-    print(popular_doges_image)
-    return render_template( 'main.html' , dogs=popular_doges ,dog_image_address=popular_doges_image) # dog_image_address는 강아지 사진 주소를 프론트엔드로 보낼때 사용하는 함수
+    return render_template( 'main.html' , dogs=popular_doges) # dog_image_address는 강아지 사진 주소를 프론트엔드로 보낼때 사용하는 함수
 
 # 메인페이지
 @main.route('/mainpage', methods=['get','post'])
@@ -33,28 +30,28 @@ def introduction(intro_input_dog_id):
     intro_dogs_img = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'propile') ]
     return render_template( 'introduction.html' ,intro_dogs_id=intro_dogs_id, intro_dogs_name=intro_dogs_name, intro_dogs_age=intro_dogs_age, intro_dogs_img=intro_dogs_img)
 
-# 멍bti 시작 페이지
-@main.route('/mungbti_start', methods=['get','post'])
-def mungbti_start():
+# # 멍bti 시작 페이지
+# @main.route('/mungbti_start', methods=['get','post'])
+# def mungbti_start():
     
-    return render_template('mungbti_start.html')
+#     return render_template('mungbti_start.html')
 
-# 멍bti 검사 페이지
-@main.route('/mungbti_ing', methods=['get','post'])
-def mungbti_ing():
+# # 멍bti 검사 페이지
+# @main.route('/mungbti_ing', methods=['get','post'])
+# def mungbti_ing():
     
-    return render_template('mungbti_ing.html')
+#     return render_template('mungbti_ing.html')
 
-# 멍bti 고른거 전송 라우트
-@main.route('/res2', methods=['get','post'])
-def res2():
-    if request.method == 'POST':
-        data = request.get_json()
+# # 멍bti 고른거 전송 라우트
+# @main.route('/res2', methods=['get','post'])
+# def res2():
+#     if request.method == 'POST':
+#         data = request.get_json()
 
-        return data
+#         return data
 
-# 채팅 페이지
-@main.route('/chat', methods=['get','post'])
-def chat():
+# # 채팅 페이지
+# @main.route('/chat', methods=['get','post'])
+# def chat():
     
-    return render_template('chat.html')
+#     return render_template('chat.html')
