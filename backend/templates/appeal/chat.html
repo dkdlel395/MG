@@ -128,7 +128,7 @@
         chatContainer.appendChild(message);
 
         // Backend code
-        fetch('/upload_text', {
+        fetch('/appeal/upload_text', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -137,7 +137,7 @@
         })
           .then(response => response.json())
           .then(data => {
-            fetch('/answer', {
+            fetch('/appeal/answer', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
