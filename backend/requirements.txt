@@ -1,4 +1,7 @@
 flask
 flask_sqlalchemy
+flask_socketio
 sqlalchemy
 pymysql
+requests
+openai
