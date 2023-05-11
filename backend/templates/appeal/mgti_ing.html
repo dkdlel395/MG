@@ -187,7 +187,7 @@
                 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
                 font-weight: normal;
                 font-style: normal;
-                    }
+            }
 
             form {
                 display: flex;
@@ -201,10 +201,10 @@
             }
 
             body {
-                    background-color: #f2f2f2;
-                    font-family: 'S-CoreDream-3Light';
-                    text-align: center;
-                }
+                background-color: #f2f2f2;
+                font-family: 'S-CoreDream-3Light';
+                text-align: center;
+            }
         </style>
         </head>
 
@@ -285,8 +285,10 @@
                 <div class="container">
                     <h2>새로운 가족이 된 우리강아지가 우리집 올 때 하는 생각은?</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(7, 0)">집에 나말고 누가 있으면 어쩌지?ㅜㅜ 나 혼자였으면 좋겠어 멍..!</button>
-                        <button class="button" type="button" onclick="handleAnswer(7, 1)">집에 친구들이 더 있으면 좋겠어!! 많을수록 좋아~!</button>
+                        <button class="button" type="button" onclick="handleAnswer(7, 0)">집에 나말고 누가 있으면 어쩌지?ㅜㅜ 나 혼자였으면
+                            좋겠어 멍..!</button>
+                        <button class="button" type="button" onclick="handleAnswer(7, 1)">집에 친구들이 더 있으면 좋겠어!! 많을수록
+                            좋아~!</button>
                     </form>
                 </div>
             </div>
@@ -306,7 +308,8 @@
                     <h2>내가 엉엉 울고있을때 우리 강아지는</h2>
                     <form onsubmit="handleAnswer(event)">
                         <button class="button" type="button" onclick="handleAnswer(9, 0)">아무 생각 없이 평소처럼 행동한다</button>
-                        <button class="button" type="button" onclick="handleAnswer(9, 1)">집사야 울지망 ㅜㅜ 눈치채고 내 옆에 꼭 붙어있는다</button>
+                        <button class="button" type="button" onclick="handleAnswer(9, 1)">집사야 울지망 ㅜㅜ 눈치채고 내 옆에 꼭
+                            붙어있는다</button>
                     </form>
                 </div>
             </div>
@@ -315,7 +318,8 @@
                 <div class="container">
                     <h2>우리 강아지는 혼자 있을때</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(10, 0)">아싸 자유시간! 맘껏 장난감 가지구 놀아야지</button>
+                        <button class="button" type="button" onclick="handleAnswer(10, 0)">아싸 자유시간! 맘껏 장난감 가지구
+                            놀아야지</button>
                         <button class="button" type="button" onclick="handleAnswer(10, 1)">주인님 언제왕 ㅜㅜ 보고파</button>
                     </form>
                 </div>
@@ -336,7 +340,8 @@
                     <h2>우리 강아지는 산책할때</h2>
                     <form onsubmit="handleAnswer(event)">
                         <button class="button" type="button" onclick="handleAnswer(12, 0)">매일 일정한 시간에 규칙적으로</button>
-                        <button class="button" type="button" onclick="handleAnswer(12, 1)">집사야 산책 가고싶다! 가고싶을때 암때나~</button>
+                        <button class="button" type="button" onclick="handleAnswer(12, 1)">집사야 산책 가고싶다! 가고싶을때
+                            암때나~</button>
                     </form>
                 </div>
             </div>
@@ -355,12 +360,13 @@
                 <div class="container">
                     <h2>새로운 산책코스 발견! 우리 강아지는?</h2>
                     <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(14, 0)">원래 다니던 산책코스가 아니자나!? 평소처럼 잘 따라오지 않는다</button>
+                        <button class="button" type="button" onclick="handleAnswer(14, 0)">원래 다니던 산책코스가 아니자나!? 평소처럼 잘
+                            따라오지 않는다</button>
                         <button class="button" type="button" onclick="handleAnswer(14, 1)">킁킁! 냄새를 맡으며 잘 따라온다</button>
                     </form>
-
                 </div>
             </div>
+
 
             <div class="section" id="section3">
                 <!-- <form action="mbti_result.html">
@@ -374,35 +380,55 @@
 
                 function handleAnswer(questionNumber, option) {
                     //kkk = [questionNumber,option]
-                    answers[questionNumber] = option;
-                    console.log(answers);
-                    
+                    const answer = { questionNumber, option };
+
+                    console.log('questionNumber', questionNumber)
+                    console.log('option', option)
+                    console.log('answer', answer)
+                    const answers = sessionStorage.setItem(questionNumber, option);
+
                     currentSectionIndex = questionNumber + 2;
                     scrollToSection(currentSectionIndex);
 
-                    // 스크롤 이동이 완료된 후에 리다이렉션 로직 실행
-                    setTimeout(() => {
-                        if (currentSectionIndex === 16) {
-                        window.location.href = "/appeal/mgti_res";
+                    // 15번째 질문일 경우 백엔드에 저장된 값 전송
+                    if (questionNumber === 14) {
+                        const answers = {};
+                        for (let i = 0; i < 15; i++) {
+                            answers[i] = sessionStorage.getItem(i);
                         }
-                    }, 1000); // 적절한 대기 시간 설정 (1초로 설정한 예시)
+                        console.log(answers)
+                        // 백엔드로 데이터 전송
 
-                    // 백엔드로 데이터 전송
-                    $.ajax({
-                        url: '/appeal/res2', // 백엔드 URL을 입력해야 합니다.
-                        type: 'POST', // 전송 방식 (POST, GET 등)
-                        data: JSON.stringify(answers), // JSON 형식으로 데이터 전송
-                        contentType: 'application/json', // 전송 데이터 타입 (JSON)
-                        success: function (response) {
-                            // 전송 성공 시 실행할 코드
-                            console.log('Data sent successfully!');
-                            console.log(response); // 백엔드에서 받은 응답을 출력
-                        },
-                        error: function (xhr, status, error) {
-                            // 전송 실패 시 실행할 코드
-                            console.log('Error occurred while sending data:', error);
-                        }
-                    });
+                        $.ajax({
+                            url: '/appeal/res2',
+                            type: 'POST',
+                            data: JSON.stringify(answers),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                // 전송 성공 시 실행할 코드
+                                console.log('Data sent successfully!');
+                                console.log(response);
+
+                                // 세션 스토리지 비우기
+                                // for (let i = 0; i < 15; i++) {
+                                //     sessionStorage.removeItem(i);
+                                // }
+
+                                // // 스크롤 이동이 완료된 후에 리다이렉션 로직 실행
+                               // setTimeout(() => {
+                                    //if (currentSectionIndex === 16) {
+                                        window.location.href = "/appeal/mgti_res";
+                                    //}
+                               // }, 1000); // 적절한 대기 시간 설정 (1초로 설정한 예시)
+                            },
+                            error: function (xhr, status, error) {
+                                // 전송 실패 시 실행할 코드
+                                console.log('Error occurred while sending data:', error);
+                            }
+                        });
+
+                    }
+
                 }
             </script>
 

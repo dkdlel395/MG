@@ -54,6 +54,14 @@ def chatting():
     chat_user_id_name_pic = db.chat_user_id_name_pic()
     return render_template("chat.html", user_input=user_input, response=response, messages=messages,chat_get_dog_info=chat_get_dog_info,chat_user_id_name_pic=chat_user_id_name_pic)
 
+# MGTI 고른거 전송 라우트
+@appeal.route('/res2', methods=['get','post'])
+def res2():
+    if request.method == 'POST':
+        data = request.get_json()
+        
+        return data
+
 # MGTI 시작 페이지
 @appeal.route('/mgti_start', methods=['GET', 'POST'])
 def mgti_start():
@@ -64,20 +72,10 @@ def mgti_start():
 def mgti_ing():
     return render_template("mgti_ing.html")
 
-# MGTI 고른거 전송 라우트
-@appeal.route('/res2', methods=['get','post'])
-def res2():
-    if request.method == 'POST':
-        data = request.get_json()
-
-        return data
 
 # MGTI 결과 페이지
 @appeal.route('/mgti_res', methods=['GET', 'POST'])
 def mgti_res():
-    return render_template("mgti_res.html")
+    data=res2()
+    return render_template("mgti_res.html",data=data)
 
-@appeal.route('/mungbti_ing', methods=['get','post'])
-def mungbti_ing():
-    
-    return render_template('mungbti_ing.html')
