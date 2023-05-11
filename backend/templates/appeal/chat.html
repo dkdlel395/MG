@@ -103,8 +103,10 @@
         const messageInput = document.querySelector("#message-input");
     const sendButton = document.querySelector("#send-btn");
     const chatContainer = document.querySelector(".chat-container");
-
+    
     sendButton.addEventListener("click", (event) => {
+      const text = messageInput.value
+      console.log(text)
       event.preventDefault();
       if (messageInput.value) {
         const message = document.createElement("div");
@@ -127,19 +129,19 @@
         // Backend code
         fetch('/appeal/upload_text', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ msg: messageInput.value })
+              headers: {
+                'Content-Type': 'text/plain'
+              },
+              body: text
         })
           .then(response => response.json())
           .then(data => {
             fetch('/appeal/answer', {
               method: 'POST',
               headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'text/plain'
               },
-              body: JSON.stringify({ message_type: 'chat', message_content: messageInput.value })
+              body: text
             })
               .then(response => response.json())
               .then(data => {

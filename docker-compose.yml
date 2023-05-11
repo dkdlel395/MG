@@ -24,7 +24,21 @@ services:
           - db_net
         volumes:
           - db_vol:/var/lib/mysql
-        
+    
+#    gpt:
+#        build: 
+#          context: chat_gpt
+#        stop_signal: SIGINT
+#        ports:
+#          - 5000:5000
+#        environment:
+#          FLASK_APP: gpt_plugin.py
+#        restart: always
+#        networks:
+#          - db_net
+#        volumes:
+#          - ~/.aws/:/root/.aws/:ro
+#        
 
 networks:
     db_net:
