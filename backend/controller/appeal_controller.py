@@ -84,9 +84,65 @@ def mgti_res():
     return render_template("mgti_res.html")
 
 # MGTI 고른거 전송 라우트
-@appeal.route('/res2', methods=['get','post'])
+@appeal.route('/res2', methods=['get', 'post'])
 def res2():
     if request.method == 'POST':
+        I, E, S, N, T, J, F, P = 0, 0, 0, 0, 0, 0, 0, 0
         data = request.get_json()
-        
-        return data['0']
+    for key, value in data.items():
+        if key == '0' or key == '1' or key == '3':
+            if value == '0':
+                I += 1
+            elif value == '1':
+                E += 1
+        elif key == '2' or key == '6' or key == '7':
+            if value == '0':
+                N += 2
+            elif value == '1':
+                S += 2
+        elif key == '4' or key == '5':
+            if value == '0':
+                N += 1
+            elif value == '1':
+                S += 1
+        elif key == '8' or key == '9' or key == '10' or key == '11':
+            if value == '0':
+                T += 1
+            elif value == '1':
+                F += 1
+        elif key == '12' or key == '13' or key == '14':
+            if value == '0':
+                J += 1
+            elif value == '1':
+                P += 1
+
+    if I > E:
+        A = "I"
+    elif E > I:
+        A = "E"
+    else:
+        A = ""
+
+    if N > S:
+        B = "N"
+    elif S > N:
+        B = "S"
+    else:
+        B = ""
+
+    if T > F:
+        C = "T"
+    elif F > T:
+        C = "F"
+    else:
+        C = ""
+
+    if J > P:
+        D = "J"
+    elif P > J:
+        D = "P"
+    else:
+        D = ""
+
+    mgti = f"{A}{B}{C}{D}"
+    return mgti
