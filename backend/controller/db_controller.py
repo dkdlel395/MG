@@ -66,10 +66,11 @@ def intro_dog( app, mysql, id, info ):
     try:
         with app.app_context():
             cur = mysql.session.execute(text(
+                # abc001
                 f"""
                     SELECT {info}
                     FROM abandoned_animal 
-                    WHERE animal_id = {id}
+                    WHERE animal_id = '{id}'
                 """
                 ))
             for dog_id in cur.fetchall():

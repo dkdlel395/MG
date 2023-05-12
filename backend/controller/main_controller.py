@@ -18,7 +18,7 @@ def mainpage():
     main_dogs_id =  [dog[0] for dog in db.main_dog( app, mysql, 3 , 'animal_id') ]
     main_dogs_name = [dog[0] for dog in db.main_dog( app, mysql, 3 , 'animal_name') ]
     main_dogs_age =  [dog[0] for dog in db.main_dog( app, mysql, 3 , 'age') ]
-    main_dogs_img = [dog[0] for dog in db.main_dog( app, mysql, 3 , 'propile') ]
+    main_dogs_img = [dog[0] for dog in db.main_dog( app, mysql, 3 , 'profile_image') ]
     return render_template( 'mainpage.html' , main_dogs_id=main_dogs_id, main_dogs_img=main_dogs_img, main_dogs_name=main_dogs_name, main_dogs_age=main_dogs_age)
 
 # 소개페이지
@@ -27,5 +27,5 @@ def introduction(intro_input_dog_id):
     intro_dogs_id = intro_input_dog_id
     intro_dogs_name = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'animal_name') ]
     intro_dogs_age = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'age') ]
-    intro_dogs_img = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'propile') ]
+    intro_dogs_img = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'profile_image') ]
     return render_template( 'introduction.html' ,intro_dogs_id=intro_dogs_id, intro_dogs_name=intro_dogs_name, intro_dogs_age=intro_dogs_age, intro_dogs_img=intro_dogs_img)

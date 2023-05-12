@@ -73,6 +73,10 @@ label {
   <div id="frame">
     <title>나의 MGTI는?</title>
 
+    <div id="root2">
+      Result : <textarea id="result" class="result"></textarea>
+    </div>
+
     <div class="container">
     <h1><span class="highlight">나와 잘 어울리는 강아지 유형은{{data}}</span></h1>
     <h1><span class="highlight">"ISTP"</span></h1>
@@ -89,12 +93,30 @@ label {
     <span class="highlight">※ 멍 친구들과 대화를 원하면 회원가입을 진행하세요</span>
     </div>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     const answers = {};
-                        for (let i = 0; i < 15; i++) {
-                            answers[i] = sessionStorage.getItem(i);
-                        }
-                        console.log(answers)
+    for (let i = 0; i < 15; i++) {
+        answers[i] = sessionStorage.getItem(i);
+    }
+    console.log(answers)
+
+    $.ajax({
+      url: '/appeal/res2',
+      type: 'POST',
+      data: JSON.stringify(answers),
+      contentType: 'application/json',
+      success: function (response) {
+          // 전송 성공 시 실행할 코드
+          console.log('Data sent successfully!');
+          console.log(response);
+          document.getElementById("result").innerHTML = response
+      },
+      error: function (xhr, status, error) {
+          // 전송 실패 시 실행할 코드
+          console.log('Error occurred while sending data:', error);
+      }
+  });
   </script>
 </body>
 </html>
