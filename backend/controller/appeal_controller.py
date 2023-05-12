@@ -1,4 +1,5 @@
 from flask import render_template, request, Flask, jsonify
+import requests
 from controller import bp_appeal as appeal
 from controller import db_controller
 import time
