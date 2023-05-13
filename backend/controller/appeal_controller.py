@@ -17,38 +17,24 @@ def home():
     return 'appeal'
 
 
-# 프론트에서 쓰여진 채팅 받아오는 함수
-@appeal.route("/upload_text", methods=["POST"])
-def upload_text():
-    user_name = "user_name"
-    message_content = request.form.get('msg')
-    current_time = time.time()
-    message = {
-        'message_type': 'chat',
-        'user_name': user_name,
-        'message_content': message_content,
-        'time': current_time
-    }
-    messages.append(message)
-    # message 안에는 (messsagetype(사용자인지,봇인지 판단), 사용자 이름, 사용자 채팅 내용, 시간) 으로 이루어져있다.
-    return jsonify(message)
-
-# 챗봇 응답 처리
 
 
 @appeal.route("/answer", methods=["POST"])
 def answer():
-    answer = "gpt답변"
+    data = request.data.decode('utf-8')
+
+    from chat_gpt import gpt_plugin
+    text = gpt_plugin.gpt(data)
+
     current_time = time.time()
     message = {
         'message_type': 'bot',
         'dog_name': '뽀또',
-        'message_content': answer,
+        'message_content': text,
         'time': current_time
     }
     messages.append(message)
-    # message 안에는 (messsagetype(사용자인지,봇인지 판단), 강아지 이름, 강아지 채팅 내용, 시간) 으로 이루어져있다.
-    return jsonify(message)
+    return jsonify(message) # message 안에는 (messsagetype(사용자인지,봇인지 판단), 강아지 이름, 강아지 채팅 내용, 시간) 으로 이루어져있다.
 
 
 # 채팅 페이지

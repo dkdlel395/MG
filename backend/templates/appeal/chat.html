@@ -99,76 +99,70 @@
           </div>
         </div>
       </div>
-      <script>
-        const messageInput = document.querySelector("#message-input");
+  <script>
+    //test
+    var user_name = '예찬';
+    var dog_name = '뽀또';
+
+    const messageInput = document.querySelector("#message-input");
     const sendButton = document.querySelector("#send-btn");
     const chatContainer = document.querySelector(".chat-container");
+
+    const chat_contents = []
+
+    async function makeBubble( target, name, userMsg){
+      const message = document.createElement("div");
+      const messageBubble = document.createElement("div");
+      const messageText = document.createElement("p");
+      const messageTime = document.createElement("span");
+      const messageSender = document.createElement("span");
+      message.style.marginTop = '20px';
+
+      messageBubble.classList.add("chat-bubble", target);
+      messageText.innerText = userMsg;
+      console.log(messageText.id)
+      messageSender.innerText = name;
+      messageTime.innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+      messageBubble.appendChild(messageText);
+      messageBubble.appendChild(messageTime);
+      messageBubble.appendChild(messageSender);
+      message.appendChild(messageBubble);
+      chatContainer.appendChild(message);
+
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
     
     sendButton.addEventListener("click", (event) => {
-      const text = messageInput.value
-      console.log(text)
+      const user_msg = messageInput.value
+
       event.preventDefault();
-      if (messageInput.value) {
-        const message = document.createElement("div");
-        const messageBubble = document.createElement("div");
-        const messageText = document.createElement("p");
-        const messageTime = document.createElement("span");
-        const messageSender = document.createElement("span");
+      if (user_msg) {
+        makeBubble( 'me', user_name , user_msg)
 
-        messageBubble.classList.add("chat-bubble", "me");
-        messageText.innerText = messageInput.value;
-        messageSender.innerText = "You";
-        messageTime.innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-        messageBubble.appendChild(messageText);
-        messageBubble.appendChild(messageTime);
-        messageBubble.appendChild(messageSender);
-        message.appendChild(messageBubble);
-        chatContainer.appendChild(message);
-
-        // Backend code
-        fetch('/appeal/upload_text', {
-          method: 'POST',
-              headers: {
-                'Content-Type': 'text/plain'
-              },
-              body: text
-        })
-          .then(response => response.json())
-          .then(data => {
             fetch('/appeal/answer', {
               method: 'POST',
               headers: {
                 'Content-Type': 'text/plain'
               },
-              body: text
+              body: user_msg
             })
               .then(response => response.json())
               .then(data => {
-                const responseMessage = document.createElement("div");
-                const responseMessageBubble = document.createElement("div");
-                const responseMessageText = document.createElement("p");
-                const responseMessageTime = document.createElement("span");
-                const responseMessageSender = document.createElement("span");
-
-                responseMessageBubble.classList.add("chat-bubble", "chat-bubble-alt");
-                responseMessageText.innerText = data.message_content;
-                responseMessageSender.innerText = "뽀또";
-                responseMessageTime.innerText = new Date(data.time * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-                responseMessageBubble.appendChild(responseMessageText);
-                responseMessageBubble.appendChild(responseMessageTime);
-                responseMessageBubble.appendChild(responseMessageSender);
-                responseMessage.appendChild(responseMessageBubble);
-                chatContainer.appendChild(responseMessage);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
+                const contents = data.message_content.toString().split('.');
+                contents.forEach(content => {
+                  
+                  setTimeout(function() {
+                    makeBubble( 'chat-bubble-alt', dog_name, content)
+                  }, 1000);
+                });
+                
               })
               .catch(error => console.error(error));
-          })
-          .catch(error => console.error(error));
       }
       messageInput.value = "";
     });
+    
 
     function sendMessage() {
       // 클릭 이벤트 디스패치
@@ -185,6 +179,7 @@
         sendMessage();
       }
     });
-</script>
-  </body>
+
+  </script>
+</body>
 </html>

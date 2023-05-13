@@ -43,6 +43,10 @@ def create_personas_prompt( prompt, persona,nickname, name, species, age ):
     prompt = prompt.format( persona=persona, nickname=nickname, name=name,species=species,age=age )
     return prompt
 
+def create_prompt( prompt, text ):
+    prompt = prompt.format( text=text )
+    return prompt
+
 
 # 과거 진위 판별 함수
 def make_distinguish_chat( model, messages ):
@@ -93,6 +97,7 @@ def gpt( query ):
     # prompt 저장소에서 prompt를 가져옴
     with open('chat_gpt/prompt_save.json','r', encoding='utf-8') as f:
         prompt_file = json.load(f)
+        prompt = prompt_file["prompt"][0]["content"]
         dog_persona_prompt = prompt_file["prompt"][1]["content"]
 
     prompt_persona = create_personas_prompt( dog_persona_prompt, dog_info['persona'],dog_info['nickname'], dog_info['name'] , dog_info['species'], dog_info['age'] )
@@ -103,6 +108,10 @@ def gpt( query ):
         messages_dog = create_message( prompt_persona )
         flag=False
 
+    messages = [{"role": "system", "content": create_prompt( prompt, query ) }]
+    emotion = create_chat_summary( model, messages )
+    print(emotion)
+    
     append_query_message(messages_dog, query)
 
     rep = create_chat_dog(model, messages_dog)
@@ -116,4 +125,3 @@ def gpt( query ):
         messages_dog = del_message(messages=messages_dog, idx=1)
 
     return answer
-      
