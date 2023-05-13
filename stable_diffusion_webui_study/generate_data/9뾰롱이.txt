@@ -1,0 +1,5 @@
+dog:1.5, <lora:blindbox_v1_mix:1> , (masterpiece),(best quality),(ultra-detailed)
+Negative prompt: (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality
+Steps: 35, Sampler: Euler a, CFG scale: 8, Seed: 2023, Size: 480x360, Model hash: 7f96a1a9ca, Model: AnythingV5_v5PrtRE, Denoising strength: 0.39
+
+Saved: 00005-2025.png
