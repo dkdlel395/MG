@@ -14,7 +14,7 @@
   height: 90%;
   left: 10%;
   right:10%;
-  top: 40%;
+  top: 30%;
 
 }
 
@@ -32,7 +32,8 @@
   max-width: 100%;
   max-height: 100%;
   position: absolute;
-  margin-top:-100px;
+  margin-top:-300px;
+  margin-left: -40px;
 }
 
 
@@ -45,7 +46,7 @@
   display: flex;
   margin-left: 5%;
   flex-direction: column;
-  
+  margin-top:-150px;
   
 }
 
@@ -112,8 +113,30 @@
 .name ,.species, .age{
   display: inline;
 }
+#dogname{
+  margin-top: 80px;
 
-
+}
+#dogns{
+  display: flex;
+  margin-top: 100px;
+  margin-left: 70px;
+}
+#dogspecies{
+  line-height: 1.5;
+  text-align: center;
+}
+#dogage{
+  line-height: 1.5;
+  margin-left: 200px;
+  text-align: center;
+}
+.species, .age {
+    background-color: rgb(215, 204, 196);
+    display: inline-block;
+    padding: 0 10px;
+    line-height: 0.5;
+}
 </style>
 </head>
 <body>
@@ -121,41 +144,56 @@
     <div class="image-container">
       {% for index in range(1) %}
         <div class="dog-card">
-            <img src="{{ intro_dogs_img[index] }}" alt="{{ intro_dogs_id[index] }}" class="dog-image" width="350px">
+            <img src="{{ intro_dogs_img[index] }}" alt="{{ intro_dogs_id[index] }}" class="dog-image" width="550px">
         </div>
       {% endfor %} 
     </div>
        
-        <div id="text-container" style="border: 2px solid rgb(255, 128, 0);  ">
-          <div style="border: 2px solid rgb(52, 67, 9);  height:90%; align-items: center; margin-left: 25px; margin-right: 25px;">
-            <div style="border: 2px solid rgb(175, 210, 247); text-align: center;">
-              <h2>정보</h2>
-            </div>
-            <div style="border: 2px solid rgb(205, 160, 200); margin-top: 20px; ">
+        <div id="text-container">
+          <div style="  height:90%; align-items: center; margin-left: 25px; margin-right: 25px;">
               {% for index in range(1) %}
-                <h4 class="name"> 이름: </h4>
-                <div class="name" name="dog_name">{{ intro_dogs_name[index] }}</div><br>
-                <h4 class="species" > 종: </h4>
-                <div class="species" name="dog_species">{{ intro_dogs_species[index] }}</div><br>
-                <h4 class="age"> 나이: </h4>
-                <div class="age" name="dog_age">{{ intro_dogs_age[index] }}</div>
+                <div id="dogname">
+                  <h4 class="name" name="dog_name" style="font-size: 60px;">{{ intro_dogs_name[index] }}</h4><br>
+                </div>
+                <div id="dogns">
+                  <div id="dogspecies">
+                    <h4 class="species"  style="font-size: 30px;"> 종 </h4><br>
+                    <div class="species2" name="dog_species" style="font-size: 30px;">푸들</div><br>
+                  </div>
+                  <div id="dogage">
+                    <h4 class="age" style="font-size: 30px;"> 나이 </h4><br>
+                    <div class="age2" name="dog_age" style="font-size: 30px;">{{ intro_dogs_age[index] }}(세)</div>
+                  </div>
+                </div>
               {% endfor %} 
-            </div>
-
-            <div style="border: 2px solid rgb(175, 210, 247); text-align: center; margin-top:50px;">
-              <h2>소개</h2>
-            </div>
-            <div style="border: 2px solid rgb(205, 160, 200); margin-top: 20px; ">
-              <h4> gpt 소개글</h4>
-            </div>
           </div>
-          <button id="start-chat" type="button">채팅 시작</button>
+            <form action="/main/introduction/{{ intro_dogs_id }}" method="POST">
+              <input type="hidden" name="dogid" value="{{ intro_dogs_id }}">
+              <input type="submit" value="채팅 시작" href="/appeal/chat">
+            </form>
         </div>
-      
-        
       </div>
     
   </div>
-    
+  <!-- <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const data = urlParams.get('data');
+    document.getElementById("result").innerHTML = data;
+  
+    $.ajax({
+      url: '/appeal/res2',
+      type: 'POST',
+      data: JSON.stringify(answers),
+      contentType: 'application/json',
+      success: function (response) {
+        console.log('Data sent successfully!');
+        console.log(response);
+      },
+      error: function (xhr, status, error) {
+        console.log('Error occurred while sending data:', error);
+      }
+    });
+  </script> -->
+  
 </body>
 </html>

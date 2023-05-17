@@ -94,7 +94,7 @@
         <div id="frame" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 1px solid gray; background-color: rgb(242, 246, 255, 0.5); width: 90%; height: 80%;">
           <div class="chat-container"></div>
           <div class="chat-input">
-            <input type="text" id="message-input" placeholder="메시지를 입력하세요...">
+            <input type="text" id="message-input" placeholder="메시지를 입력하세요...{{dogid}}">
             <button id="send-btn" onclick="sendMessage()">전송</button>
           </div>
         </div>
@@ -102,7 +102,7 @@
   <script>
     //test
     var user_name = '예찬';
-    var dog_name = '뽀또';
+    var dog_name = '';
 
     const messageInput = document.querySelector("#message-input");
     const sendButton = document.querySelector("#send-btn");
@@ -153,7 +153,7 @@
                 contents.forEach(content => {
                   
                   setTimeout(function() {
-                    makeBubble( 'chat-bubble-alt', dog_name, content)
+                    makeBubble( 'chat-bubble-alt',"{{chat_dog_name}}", content)
                   }, 1000);
                 });
                 

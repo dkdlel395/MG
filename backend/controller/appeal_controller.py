@@ -39,12 +39,15 @@ def answer():
 
 # 채팅 페이지
 @appeal.route("/chat", methods=["GET", "POST"])
-def chatting():
+def chat():
+    dogid = request.args.get('dogid')
     user_input = request.form.get("msg")
     response = answer()
-    chat_get_dog_info = db.chat_get_dog_info(app, mysql, 1111111111)
-    chat_user_id_name_pic = db.chat_user_id_name_pic()
-    return render_template("chat.html", user_input=user_input, response=response, messages=messages, chat_get_dog_info=chat_get_dog_info, chat_user_id_name_pic=chat_user_id_name_pic)
+    chat_dog_name = db.chat_get_dog_name(app, mysql, dogid)[0]
+    clean_dog_name =f"{chat_dog_name}"[2:-3]
+    chat_dog_pic = db.chat_get_dog_pic(app,mysql,dogid)
+    clean_dog_pic = f"{chat_dog_pic}"[2:-3]
+    return render_template("chat.html", user_input=user_input, response=response, messages=messages, chat_dog_name=clean_dog_name,chat_dog_pic=clean_dog_pic, dogid=dogid)
 
 # MGTI 시작 페이지
 
@@ -140,4 +143,7 @@ def res2():
         D = ""
 
     mgti = f"{A}{B}{C}{D}"
-    return mgti
+    mgti_info = db.mgti_commantary(app,mysql,mgti)
+    fl_info = list(mgti_info[0])
+    fl_info.append(mgti)
+    return fl_info

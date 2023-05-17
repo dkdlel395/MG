@@ -107,16 +107,39 @@ def species_dog(app, mysql, id, species_name):
 ################ 종현이 영역 #######################
 
 # 강아지 정보 가져오기
-def chat_get_dog_info(app,mysql,selec_id):   # 이 함수는 인자로 준 id의 이름과 사진을 가져온다
+def chat_get_dog_name(app,mysql,selec_id):   # 이 함수는 인자로 준 id의 이름과 사진을 가져온다
     try:
-        dog_info = list()
+        dog_name=list()
         with app.app_context():
-            cur = mysql.session.execute(text(f"""SELECT animal_name,profile FROM abandoned_animal WHERE animal_id = {selec_id} """))
-            dog_info = cur.fetchall()
-            return dog_info
+            cur = mysql.session.execute(text(f"""SELECT animal_name FROM abandoned_animal WHERE animal_id = '{selec_id}' """))
+            dog_name = cur.fetchall()
+            return dog_name
+    except Exception as e:
+        print(e)
+
+def chat_get_dog_pic(app,mysql,selec_id):   # 이 함수는 인자로 준 id의 이름과 사진을 가져온다
+    try:
+        dog_pic=list()
+        with app.app_context():
+            cur = mysql.session.execute(text(f"""SELECT profile_image FROM abandoned_animal WHERE animal_id = '{selec_id}' """))
+            dog_pic = cur.fetchall()
+            return dog_pic
     except Exception as e:
         print(e)
 
 def chat_user_id_name_pic(): # 채팅 방에서 표시될 사용자 id,이름,사진을 받아오는 함수 (추후엔 db에 접근해야 되니 dbcontroller에 넣었다)
     user_info = ["1","user name","www.userimage.com"]
     return user_info
+
+def mgti_commantary(app,mysql,mgti_type):
+    try:
+        with app.app_context():
+            cur = mysql.session.execute(text(f"""
+            SELECT  species_one, species_two, species_one_photo, species_two_photo, mbti_introduction 
+            FROM species_for_mbti 
+            WHERE mbti_type = '{mgti_type}'
+            """))
+            mgti_commant = cur.fetchall()
+            return [mgti_commant[0]]
+    except Exception as e:
+        print(e)

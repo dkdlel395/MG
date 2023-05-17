@@ -75,15 +75,16 @@ label {
 
     <div class="container">
     <h1><span class="highlight">나와 잘 어울리는 강아지 유형은</span></h1>
-    <h1><span class="highlight">"<a id="result"></a>"</span></h1>
-    <h2>처음엔 낯을 가리지만, <br> 겁 없고 독립적이고 자유로운 멍친구들</h2>
+    <h1><span class="highlight">"<a id="mbti"></a>"</span></h1>
+    <h2><span class="highlight">"<a id="mbti_introduction"></a>"</span></h2>
 
     <h1><span class="highlight">나와 잘 맞는 멍친구들</span></h1>
     <div class="image-container">
-      <img src="image1.jpg" alt="Image 1">
-      <img src="image2.jpg" alt="Image 2">
-      <img src="image3.jpg" alt="Image 3">
-      <img src="image4.jpg" alt="Image 4">
+      <img id="image1" alt="species_one_photo"></img>
+      <img id="image1" alt="species_one_photo"></img>
+      <img id="image2" alt="species_two_photo"></img>
+      <img id="image2" alt="species_two_photo"></img>
+      
       
     </div>
     <span class="highlight">※ 멍 친구들과 대화를 원하면 회원가입을 진행하세요</span>
@@ -106,7 +107,11 @@ label {
           // 전송 성공 시 실행할 코드
           console.log('Data sent successfully!');
           console.log(response);
-          document.getElementById("result").innerHTML = response
+
+          document.getElementById("image1").src = response[2]
+          document.getElementById("image2").src = response[3]
+          document.getElementById("mbti_introduction").innerHTML = response[4]
+          document.getElementById("mbti").innerHTML = response[5]
       },
       error: function (xhr, status, error) {
           // 전송 실패 시 실행할 코드

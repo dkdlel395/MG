@@ -4,17 +4,52 @@
   {% include 'main.html' %}
 <style>
 #title1{
-    border: 2px solid fuchsia;
+    /* border: 2px solid fuchsia; */
     top: 190px;
     position: absolute;
     display: inline-block; /* 텍스트 크기에 맞게 테두리를 조정하기 위해 인라인 블록으로 설정 */
     padding: 5px; /* 텍스트와 테두리 간격 설정 */
     font-size: 24px; /* 텍스트 크기 설정 */    
     left: 30px;
+    align-items:center;
+    vertical-align: middle;
 }
 
+#mungtext::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 100px);
+    transform: translateY(-50%);
+    width: 600px;
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: rgb(29, 29, 29);
+    border-radius: 20px;
+    padding: 5px;
+    opacity: 0;
+    z-index: 1;
+    font-weight: lighter;
+    font-family: Arial, Helvetica, sans-serif;
+
+    transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+}   
+
+
+
+#mungtext:hover::after {
+    content: '매일 새로워지는today’s 멍!\A인기가 많은 친구들이에요. 한번 대화 나눠보실래요?\A유저들이 하루동안 가장 많이 관심을 보인 친구들입니다.\A순위는 매일 자정에 업데이트합니다';
+    font-weight: lighter;
+    width:600px;
+    height: 160px;
+    opacity: 1;
+    font-size: 13px;
+    white-space: pre-line;
+}
+
+
 #title2{
-    border: 2px solid fuchsia;
+    /* border: 2px solid fuchsia; */
     top: 720px;
     position: absolute;
     display: inline-block; /* 텍스트 크기에 맞게 테두리를 조정하기 위해 인라인 블록으로 설정 */
@@ -25,42 +60,71 @@
 }
 
 .image-container{
-    position: absolute;
-    border: 2px solid rgb(255, 145, 0);
-    left: 40px;
-    width: 700px;
-    height: 80%;
-    padding: 10px;
+    position: relative;
+    /* border: 2px solid rgb(255, 145, 0); */
+    background-color: rgba(161, 161, 161, 0.3);
+    padding: 30px;
+    width: 90%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 20px;
 }
 
+
 .image-container img {
-    margin-right: 10px;
-    border: 2px solid rgb(231, 202, 165);
+    /* border: 3px dashed rgb(202, 173, 216); */
+    width: 90%;
+    height: 85%;
+    
+
+}
+
+.dog-card {
+
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  border: 4px dotted rgb(255, 135, 221);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  margin-left:10px;
+  margin-right:10px;
+}
+
+.dog-card a {
     width: 90%;
     height: 80%;
 
 }
 
+
+
 #square1{
     position: absolute;
-    border: 2px solid rgb(9, 255, 0);
+    border: 2px dashed rgb(239, 239, 239);
     width: 90%;
-    height: 305px;
+    height: 310px;
     top: 300px;
     left: 40px;
     display: flex; 
     align-items: center; 
     justify-content: center;
+    
 }
 
 #p1{
     position: absolute;
-    border: 2px solid rgb(7, 123, 255);
+    /* border: 2px solid rgb(7, 123, 255); */
     vertical-align: middle;
     left: 850px;
+    background-color: rgb(225, 225, 225, 0.5);
+    height: 400px;
+    width: 600px;    
 }
 
 #p2{
@@ -68,6 +132,7 @@
     border: 2px solid rgb(7, 123, 255);
     vertical-align: middle;
     left: 100px;
+    
 }
 
 #square2{
@@ -80,15 +145,16 @@
     display: flex; 
     align-items: center; 
     justify-content: center;
+    
 }
 
 .board-container{
     position: absolute;
-    border: 2px solid violet;
+    border: 2px solid rgb(0, 0, 0);
     left: 600px;
     width: 700px;
     height: 80%;
-    padding: 10px;
+    
     display: flex;
    
 }
@@ -96,31 +162,41 @@
 </style>
 </head>
 <body>  
-        <h2 id="title1">Today's 멍</h2>
+        <h2 id="title1">
+            <div style="position: relative; display: inline-block; align-items:center; vertical-align: middle; display: flex; justify-content: center;">
+                <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/Today%20mung.png?alt=media&token=4eefd391-4e7c-44d9-ad3f-f9840f94ac52" width=auto height="70px" alt="로고">
+                <div id="mungtext" style="position: absolute; border: 2px solid black; height: 50px; width: 150px; text-align: center;"></div>
+            </div>
+        </h2>
         <div id="square1">
             <div class="image-container">
-                {% for index in range(3) %}
+                
+                    {% for index in range(3) %}
                     <div class="dog-card">
                         <a href="/main/introduction/{{ main_dogs_id[index] }}">
-                            <img src="{{ main_dogs_img[index] }}" alt="{{ main_dogs_id[index] }}" class="dog-image">
+                            <img src="{{ main_dogs_img[index] }}" alt="{{ main_dogs_id[index] }}" >
                         </a>
+                        <div style="border:2px solid violet;">
+                            <p class="dog_name">{{ main_dogs_name[index] }}</p>
+                            <p class="dog_age">강아지 나이: {{ main_dogs_age[index] }}</p>
+                        </div>
                         
-                        <p class="dog_name">{{ main_dogs_name[index] }}</p>
-                        <p class="dog_age">강아지 나이: {{ main_dogs_age[index] }}</p>
                     </div>
-                {% endfor %}
+                    {% endfor %} 
+               
             </div>
-            <div id="p1">
-                {{main_dogs_id}}
-                {{main_dogs_name}}
-                {{main_dogs_img}}
-            <p>매일 새로워지는 today’s 멍 </p><br>
-            <p>인기가 많은 친구들이에요. 한번 대화 나눠보실래요?</p>
+            <div style="position:relative; ">
+                <div id="p1">
+                    <p>매일 새로워지는 today’s 멍 </p><br>
+                    <p>인기가 많은 친구들이에요. 한번 대화 나눠보실래요?</p>
+                </div>
             </div>
+            
         </div>
-        
 
-        <h2 id="title2">Board</h2>
+        <h2 id="title2">
+            <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/Board.png?alt=media&token=2f4eeeaa-8a8b-40a2-8874-f81566d94854" width=auto height="80px" alt="로고">
+        </h2>
         <div id="square2">
             <div id="p2">
                 <p>다른 멍결고리 유저들과의 소통공간이에요 </p><br>
@@ -133,7 +209,6 @@
         </div>
 
 
-
-        {{dog}}
+       
 </body>
 </html>
