@@ -79,6 +79,31 @@ def intro_dog( app, mysql, id, info ):
         print(e)
     return dog_info
 
+# 소개페이지(품종 : 품종번호->품종이름으로 전달)
+def species_dog(app, mysql, id, species_name):
+    species_info = list()
+    try:
+        with app.app_context():
+            cur = mysql.session.execute(text(
+                f"""
+                SELECT {species_name}
+                FROM species_information
+                WHERE no = (
+                    SELECT species
+                    FROM abandoned_animal
+                    WHERE animal_id = '{id}'
+                )
+                """
+            ))
+
+            for row in cur.fetchall():
+                species_info.append(row)
+
+    except Exception as e:
+        print(e)
+    
+    return species_info
+
 ################ 종현이 영역 #######################
 
 # 강아지 정보 가져오기

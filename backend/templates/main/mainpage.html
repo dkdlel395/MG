@@ -104,16 +104,21 @@
                         <a href="/main/introduction/{{ main_dogs_id[index] }}">
                             <img src="{{ main_dogs_img[index] }}" alt="{{ main_dogs_id[index] }}" class="dog-image">
                         </a>
+                        
                         <p class="dog_name">{{ main_dogs_name[index] }}</p>
                         <p class="dog_age">강아지 나이: {{ main_dogs_age[index] }}</p>
                     </div>
                 {% endfor %}
             </div>
             <div id="p1">
+                {{main_dogs_id}}
+                {{main_dogs_name}}
+                {{main_dogs_img}}
             <p>매일 새로워지는 today’s 멍 </p><br>
             <p>인기가 많은 친구들이에요. 한번 대화 나눠보실래요?</p>
             </div>
         </div>
+        
 
         <h2 id="title2">Board</h2>
         <div id="square2">
@@ -129,6 +134,6 @@
 
 
 
-
+        {{dog}}
 </body>
 </html>
