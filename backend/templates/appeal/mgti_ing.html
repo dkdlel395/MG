@@ -205,14 +205,50 @@
                 font-family: 'S-CoreDream-3Light';
                 text-align: center;
             }
+
+        /* 진행바 스타일 */
+        #progress {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-bottom: 17px;
+            appearance: none;
+            width: 700px;
+            
+        }
+
+        #progress::-webkit-progress-bar {
+            background: #f0f0f0;
+            border-radius: 12px;
+            border: 1px solid #eeeeee;
+            height: 28px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #progress::-webkit-progress-value {
+            background: #fdd4d6;
+            border-radius: 0px;
+            height: 28px;
+            width: 48px;
+        }
         </style>
         </head>
 
         <body>
 
+            <progress
+            class="progress"
+            id="progress"
+            value="0"
+            min="0"
+            max="100"
+        ></progress>
 
             <div class="section" id="section2">
                 <div class="container">
+
                     <h2>애견 카페에 갔을때, 우리 강아지는</h2>
                     <form onsubmit="handleAnswer(event)">
                         <button class="button" type="button" onclick="handleAnswer(0, 0)">주인 껌딱지! 나만 뚫어져라 쳐다본다</button>
@@ -438,13 +474,18 @@
                 const sections = document.querySelectorAll('.section');
                 let currentSectionIndex = 0;
                 let isScrolling = false;
+                var progress = document.getElementById("progress"); // 진행바 요소
 
                 function scrollToSection(index) {
                     isScrolling = true;
                     sections[index].scrollIntoView({ behavior: 'smooth' });
                     setTimeout(() => {
                         isScrolling = false;
-                    }, 1000);
+                        // 페이지를 넘길 때마다 진행바의 게이지를 7씩 증가시킴
+                        var currentValue = parseInt(progress.value);
+                        var newValue = Math.min(currentValue + 7, 100);
+                        progress.value = newValue;
+                    }, 500);
                 }
 
                 function handleScroll(event) {
@@ -463,6 +504,8 @@
                 }
 
                 window.addEventListener('wheel', handleScroll);
+
+
             </script>
         </body>
 
