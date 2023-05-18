@@ -138,6 +138,8 @@ CREATE TABLE species_for_mbti
     `mbti_type`          CHAR(4)         NOT NULL    COMMENT 'mbti_type', 
     `species_one`        int(11)         NULL        COMMENT '품종추천1', 
     `species_two`        int(11)         NULL        COMMENT '품종추천2', 
+    `species_one_photo`      VARCHAR(300)    NULL        COMMENT '품종사진1', 
+    `species_two_photo`      VARCHAR(300)    NULL        COMMENT '품종사진2', 
     `mbti_introduction`  VARCHAR(300)    NULL        COMMENT 'mbti소개', 
      PRIMARY KEY (mbti_type)
 );
@@ -219,7 +221,7 @@ ALTER TABLE chat
 -- DROP FOREIGN KEY fk_chat_friend_list_no;
 
 
--- 강아지 품종
+
 INSERT INTO `species_information` (`no`, `species_name`) VALUES (1, '말티즈');
 INSERT INTO `species_information` (`no`, `species_name`) VALUES (2, '푸들');
 INSERT INTO `species_information` (`no`, `species_name`) VALUES (3, '웰시코기');
@@ -261,7 +263,7 @@ INSERT INTO `species_information` (`no`, `species_name`) VALUES (38, '요크셔�
 INSERT INTO `species_information` (`no`, `species_name`) VALUES (39, '진돗개');
 INSERT INTO `species_information` (`no`, `species_name`) VALUES (40, '그레이 하운드');
 
---mgti 정보
+
 INSERT INTO `species_for_mbti` (`mbti_type`, `species_one`, `species_two`, `species_one_photo`, `species_two_photo`, `mbti_introduction`) VALUES ('enfj', 23, 24, 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%ED%92%88%EC%A2%85%2F%EC%98%AC%EB%93%9C%20%EC%9E%89%EA%B8%80%EB%A6%AC%EC%89%AC%20%EC%89%BD%EB%8F%85.jpg?alt=media&token=a9e4d211-5c80-4fe5-be2c-fc3753a427ea', 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%ED%92%88%EC%A2%85%2F%EC%82%AC%EB%AA%A8%EC%98%88%EB%93%9C.jpg?alt=media&token=325721c3-c7e5-4ca7-942b-8d8ffa548040', '친화력이 좋지만 겁 많고 주인 껌딱지에 규칙적인 멍친구들');
 INSERT INTO `species_for_mbti` (`mbti_type`, `species_one`, `species_two`, `species_one_photo`, `species_two_photo`, `mbti_introduction`) VALUES ('enfp', 21, 22, 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%ED%92%88%EC%A2%85%2F%ED%8D%BC%EA%B7%B8.jpg?alt=media&token=862c29b2-207b-4e2c-b652-e4f22e9a0434', 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%ED%92%88%EC%A2%85%2F%EC%8B%9C%EC%B8%84.jpg?alt=media&token=e5cc9b25-eed5-4f91-87c0-00d90f88601d', '친화력이 좋지만 겁 많고 주인 껌딱지에 자유로운 멍친구들');
 INSERT INTO `species_for_mbti` (`mbti_type`, `species_one`, `species_two`, `species_one_photo`, `species_two_photo`, `mbti_introduction`) VALUES ('entj', 17, 18, 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%ED%92%88%EC%A2%85%2F%EC%85%B0%ED%8D%BC%EB%93%9C.jpg?alt=media&token=c8fada5e-866e-4395-8832-f11c3db96d6e', 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%ED%92%88%EC%A2%85%2F%EB%8F%84%EB%B2%A0%EB%A5%B4%EB%A7%8C.jfif?alt=media&token=e085a7a3-2e73-4c26-8e66-c84156d68701', '친화력이 좋지만 겁 많고 독립적이고 규칙적인 멍친구들');
@@ -280,7 +282,6 @@ INSERT INTO `species_for_mbti` (`mbti_type`, `species_one`, `species_two`, `spec
 INSERT INTO `species_for_mbti` (`mbti_type`, `species_one`, `species_two`, `species_one_photo`, `species_two_photo`, `mbti_introduction`) VALUES ('istp', 27, 28, 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%ED%92%88%EC%A2%85%2F%EB%B9%84%EC%88%91%20%ED%94%84%EB%A6%AC%EC%A0%9C.jpg?alt=media&token=22d2705d-ea7f-49b7-ae4d-4b590aa184bc', 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%ED%92%88%EC%A2%85%2F%ED%8F%AC%EB%A9%94%EB%9D%BC%EB%8B%88%EC%95%88.jpg?alt=media&token=b78d80eb-ec49-44f4-9552-79ae3e18a28d', '처음엔 낯을 가리지만 겁 없고 독립적이고 자유로운 멍친구들');
 
 
---유기견 정보
 INSERT INTO `abandoned_animal` (`animal_id`, `animal_name`, `species`, `gender`, `age`, `weight`, `personality`, `reason_for_abandonment`, `potty_training`, `abuse`, `disease`, `shyness`, `loneliness`, `introduction`, `location`, `shelter_name`, `increased_friends`, `total_friends`, `upload_status`, `registration_date`, `profile_image`, `diffusion_profile_image`) VALUES ('abc000', '티몽', 2, '수컷', 3, 5.14, '내향적', '주인사망', b'0', b'0', '없음', 5, 10, '겁많고 소심하지만, 사람만큼은 최고로 좋아하는 강아지 티몽.', '서울', '서울동물복지센터 마포', 0, 0, '보호중', '2022-12-02', 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%ED%8B%B0%EB%AA%BD.JPG?alt=media&token=97095a31-edfb-43f0-87c2-e6fab1e98871', 'https://firebasestorage.googleapis.com/v0/b/rookies-93984.appspot.com/o/1%ED%8B%B0%EB%AA%BD.png?alt=media&token=6967a4d0-8cc9-4b68-8621-a9a4103bd17d');
 INSERT INTO `abandoned_animal` (`animal_id`, `animal_name`, `species`, `gender`, `age`, `weight`, `personality`, `reason_for_abandonment`, `potty_training`, `abuse`, `disease`, `shyness`, `loneliness`, `introduction`, `location`, `shelter_name`, `increased_friends`, `total_friends`, `upload_status`, `registration_date`, `profile_image`, `diffusion_profile_image`) VALUES ('abc001', '로렌', 1, '암컷', 4, 3.83, '외향적', '파양', b'0', b'0', '심한 호흡기 감염, 유선종양', 0, 0, '귀여운 외모와 애교 만점의 활발하고 앙증맞은 외모의 로렌은 사람을 좋아하는 말티즈 아이입니다.', '서울', '서울동물복지센터 마포', 0, 0, '보호중', '2023-04-03', 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%EB%A1%9C%EB%A0%8C.JPG?alt=media&token=1a3123e3-05e4-4187-bf2f-98bad2ce3b3c', 'https://firebasestorage.googleapis.com/v0/b/rookies-93984.appspot.com/o/2%EB%A1%9C%EB%A0%8C.png?alt=media&token=f63490d9-cb5a-486f-8d5e-18c59c8e2fad');
 INSERT INTO `abandoned_animal` (`animal_id`, `animal_name`, `species`, `gender`, `age`, `weight`, `personality`, `reason_for_abandonment`, `potty_training`, `abuse`, `disease`, `shyness`, `loneliness`, `introduction`, `location`, `shelter_name`, `increased_friends`, `total_friends`, `upload_status`, `registration_date`, `profile_image`, `diffusion_profile_image`) VALUES ('abc002', '버터', 1, '암컷', 10, 3.95, '외향적', '파양', b'0', b'0', '귓병, 당뇨병', 10, 10, '분리불안이 있고 하루 한번 인슐린 주사를 맞아야 되기 때문에 집에 항시 사람이 있는\r\n다인 가족이 적합합니다.', '서울', '서울동물복지센터 마포', 0, 0, '보호중', '2022-06-10', 'https://firebasestorage.googleapis.com/v0/b/chubinibini.appspot.com/o/cloud%2F%EB%B2%84%ED%84%B0.JPG?alt=media&token=161b827c-83e2-4138-b6f3-3eccc9a50eeb', 'https://firebasestorage.googleapis.com/v0/b/rookies-93984.appspot.com/o/3%EB%B2%84%ED%84%B0.png?alt=media&token=34ef2dfe-014d-4a38-bad7-e16b61662d3c');
