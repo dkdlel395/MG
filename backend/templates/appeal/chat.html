@@ -102,7 +102,6 @@
   <script>
     //test
     var user_name = '예찬';
-    var dog_name = '';
 
     const messageInput = document.querySelector("#message-input");
     const sendButton = document.querySelector("#send-btn");
@@ -153,7 +152,7 @@
                 contents.forEach(content => {
                   
                   setTimeout(function() {
-                    makeBubble( 'chat-bubble-alt',"{{chat_dog_name}}", content)
+                    makeBubble( 'chat-bubble-alt',"{{chat_dog_name}}", content) //{{chat_dog_name}}는 백엔드에서 보내준 강아지 이름이다
                   }, 1000);
                 });
                 

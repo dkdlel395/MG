@@ -19,15 +19,15 @@ def home():
 
 
 
-@appeal.route("/answer", methods=["POST"])
+@appeal.route("/answer", methods=["POST"]) 
 def answer():
     data = request.data.decode('utf-8')
 
-    from chat_gpt import gpt_plugin
+    from chat_gpt import gpt_plugin   # GPT 프롬프트 엔지니어링 부분 모듈 로드
     text = gpt_plugin.gpt(data)
 
     current_time = time.time()
-    message = {
+    message = {                       # 주고받는 메세지의 속성값을 저장한다
         'message_type': 'bot',
         'dog_name': '뽀또',
         'message_content': text,
@@ -40,11 +40,11 @@ def answer():
 # 채팅 페이지
 @appeal.route("/chat", methods=["GET", "POST"])
 def chat():
-    dogid = request.args.get('dogid')
+    dogid = request.args.get('dogid')             # 멍소개 페이지에서 보낸 유기견의 id를 받아온다
     user_input = request.form.get("msg")
     response = answer()
-    chat_dog_name = db.chat_get_dog_name(app, mysql, dogid)[0]
-    clean_dog_name =f"{chat_dog_name}"[2:-3]
+    chat_dog_name = db.chat_get_dog_name(app, mysql, dogid)[0] # 이 함수의 결과는 (' 결과 ',)로 나온다
+    clean_dog_name =f"{chat_dog_name}"[2:-3]      # 문자열로 변환 시켜서 ( , ' 를 없앤다
     chat_dog_pic = db.chat_get_dog_pic(app,mysql,dogid)
     clean_dog_pic = f"{chat_dog_pic}"[2:-3]
     return render_template("chat.html", user_input=user_input, response=response, messages=messages, chat_dog_name=clean_dog_name,chat_dog_pic=clean_dog_pic, dogid=dogid)
@@ -76,7 +76,7 @@ def mgti_res():
 def res2():
     if request.method == 'POST':
         I, E, S, N, T, J, F, P = 0, 0, 0, 0, 0, 0, 0, 0
-        data = request.get_json()
+        data = request.get_json()       # mgti_res페이지에서 보낸 mgti결과 딕셔너리를 받는다
     for key, value in data.items():
         if key == '0' or key == '1' or key == '2':
             if value == '0':
@@ -140,10 +140,10 @@ def res2():
     elif P > J:
         D = "P"
     else:
-        D = ""
+        D = ""      # 받아온 딕셔너리의 내용을 바탕으로 mgti를 도출하는 용도
 
     mgti = f"{A}{B}{C}{D}"
-    mgti_info = db.mgti_commantary(app,mysql,mgti)
+    mgti_info = db.mgti_commantary(app,mysql,mgti) # mgti_commantary는 db에 접근해 mgti관련 정보를 가져오는 함수이다
     fl_info = list(mgti_info[0])
-    fl_info.append(mgti)
+    fl_info.append(mgti) # fl_info에 mgti_commantary 결과값과 mgti를 넣는다(html에서 한번에 리스트로 받기 위함)
     return fl_info

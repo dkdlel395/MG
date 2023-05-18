@@ -108,10 +108,10 @@ label {
           console.log('Data sent successfully!');
           console.log(response);
 
-          document.getElementById("image1").src = response[2]
-          document.getElementById("image2").src = response[3]
+          document.getElementById("image1").src = response[2]   
+          document.getElementById("image2").src = response[3]   
           document.getElementById("mbti_introduction").innerHTML = response[4]
-          document.getElementById("mbti").innerHTML = response[5]
+          document.getElementById("mbti").innerHTML = response[5]  // 백엔드에서 받아온 리스트들의 원소들을 각각 역활을 보여주는 id에 넣어둠
       },
       error: function (xhr, status, error) {
           // 전송 실패 시 실행할 코드

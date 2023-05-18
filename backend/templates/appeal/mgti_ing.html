@@ -421,7 +421,7 @@
                     console.log('questionNumber', questionNumber)
                     console.log('option', option)
                     console.log('answer', answer)
-                    const answers = sessionStorage.setItem(questionNumber, option);
+                    const answers = sessionStorage.setItem(questionNumber, option); // 선택지를 골라서 나온 0,1을 세션 스토리지에 저장한다
 
                     currentSectionIndex = questionNumber + 2;
                     scrollToSection(currentSectionIndex);

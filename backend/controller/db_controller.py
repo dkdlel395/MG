@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 import pymysql
 
-def init_database( ):
+def init_database( ):   # DB접근을 위한 함수
     app = Flask(__name__)
     username = 'root'
     password = '1234'
@@ -106,8 +106,8 @@ def species_dog(app, mysql, id, species_name):
 
 ################ 종현이 영역 #######################
 
-# 강아지 정보 가져오기
-def chat_get_dog_name(app,mysql,selec_id):   # 이 함수는 인자로 준 id의 이름과 사진을 가져온다
+# 강아지 정보 가져오기(이름)
+def chat_get_dog_name(app,mysql,selec_id): 
     try:
         dog_name=list()
         with app.app_context():
@@ -117,7 +117,8 @@ def chat_get_dog_name(app,mysql,selec_id):   # 이 함수는 인자로 준 id의
     except Exception as e:
         print(e)
 
-def chat_get_dog_pic(app,mysql,selec_id):   # 이 함수는 인자로 준 id의 이름과 사진을 가져온다
+# 강아지 정보 가져오기(사진)
+def chat_get_dog_pic(app,mysql,selec_id):  
     try:
         dog_pic=list()
         with app.app_context():
@@ -127,10 +128,12 @@ def chat_get_dog_pic(app,mysql,selec_id):   # 이 함수는 인자로 준 id의 
     except Exception as e:
         print(e)
 
-def chat_user_id_name_pic(): # 채팅 방에서 표시될 사용자 id,이름,사진을 받아오는 함수 (추후엔 db에 접근해야 되니 dbcontroller에 넣었다)
+# 채팅 방에서 표시될 사용자 id,이름,사진을 받아오는 함수 (추후엔 db에 접근해야 되니 dbcontroller에 넣었다,지금은 사용안하고 있음)
+def chat_user_id_name_pic():
     user_info = ["1","user name","www.userimage.com"]
     return user_info
 
+# mgti를 받아 종,종의 사진,mgti설명을 받아오는 함수
 def mgti_commantary(app,mysql,mgti_type):
     try:
         with app.app_context():
