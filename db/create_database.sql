@@ -15,7 +15,7 @@ CREATE TABLE species_information
 -- 테이블 생성 SQL - auth
 CREATE TABLE auth
 (
-    `no`    VARCHAR(2)    NOT NULL    DEFAULT '' COMMENT '유저구분(번호)', 
+    `no`     int(11)    NOT NULL    DEFAULT '' COMMENT '유저구분(번호)', 
     `auth`  CHAR(6)       NOT NULL    DEFAULT '' COMMENT '유저구분(텍스트)', 
      PRIMARY KEY (no)
 );
@@ -76,7 +76,7 @@ CREATE TABLE user
     `phone`            CHAR(11)      NOT NULL    COMMENT '유저전화번호', 
     `address`          CHAR(64)      NOT NULL    COMMENT '유저주소', 
     `business_number`  CHAR(10)      NULL        DEFAULT NULL COMMENT '사업자번호', 
-    `auth`             VARCHAR(2)    NULL        DEFAULT '' COMMENT '유저구분(번호)', 
+    `auth`             int(11)    NULL        DEFAULT '' COMMENT '유저구분(번호)', 
      PRIMARY KEY (user_id)
 );
 
@@ -198,7 +198,6 @@ ALTER TABLE mbti_information
 CREATE TABLE chat
 (
     `no`                int(11)         NOT NULL    AUTO_INCREMENT COMMENT 'no', 
-    `user_id`    CHAR(15)    NOT NULL    COMMENT '유저아이디', 
     `friend_list_no`    int(11)         NULL        DEFAULT NULL COMMENT 'friend_list_no', 
     `chat_content`      VARCHAR(500)    NULL        DEFAULT NULL COMMENT '채팅내용', 
     `sent_or_received`  BIT(1)          NULL        DEFAULT b'0' COMMENT '수발신여부', 
@@ -216,9 +215,6 @@ CREATE INDEX fk_chat_friend_list_no
 ALTER TABLE chat
     ADD CONSTRAINT fk_chat_friend_list_no FOREIGN KEY (friend_list_no)
         REFERENCES friend_list (no) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
--- Foreign Key 설정 SQL - chat(user_id) -> user(user_id)
-ALTER TABLE chat ADD CONSTRAINT fk_chat_user_id FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- Foreign Key 삭제 SQL - chat(friend_list_no)
 -- ALTER TABLE chat
