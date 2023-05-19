@@ -1,0 +1,4 @@
+arcane offset                   https://civitai.com/models/7094/arcane-style-lora
+blindbox_v1_mix                 https://civitai.com/models/25995/blindbox
+Lowra                           https://civitai.com/models/48139/lowra
+on_fire                         https://civitai.com/models/54524/on-fire
