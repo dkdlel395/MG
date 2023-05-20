@@ -14,6 +14,7 @@ services:
           - was_net
         volumes:
           - ~/.aws/:/root/.aws/:ro
+          
     db:
         build: 
           context: db
@@ -25,6 +26,7 @@ services:
           - db_net
         volumes:
           - db_vol:/var/lib/mysql
+
     proxy:
       # proxy 폴더 밑에가서 Dockerfile을 찾아서 빌드
       build: proxy
@@ -33,12 +35,10 @@ services:
       # 포트 설정, Dockerfile 내에 EXPOSE 미사용
       ports:
         - 80:80
-      # 구동시 의존성 부여 -> backend(was)가 가동된후에 가동
-      depends_on:
-        - backend
       # 네트워크 
       networks:
       - was_net
+
 #    gpt:
 #        build: 
 #          context: chat_gpt
