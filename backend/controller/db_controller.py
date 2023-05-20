@@ -138,11 +138,21 @@ def mgti_commantary(app,mysql,mgti_type):
     try:
         with app.app_context():
             cur = mysql.session.execute(text(f"""
-            SELECT  species_one, species_two, species_one_photo, species_two_photo, mbti_introduction 
-            FROM species_for_mbti 
-            WHERE mbti_type = '{mgti_type}'
+            SELECT s.mbti_introduction,
+                s.species_one,
+                s.species_two,
+                a.species AS abandoned_species,
+                a.diffusion_profile_image,
+                s.species_one_photo,
+                s.species_one_photo_two,
+                s.species_two_photo,
+                s.species_two_photo_two
+            FROM species_for_mbti s
+            LEFT JOIN abandoned_animal a ON s.species_one = a.species OR s.species_two = a.species
+            WHERE s.mbti_type = '{mgti_type}'
+
             """))
             mgti_commant = cur.fetchall()
-            return [mgti_commant[0]]
+            return mgti_commant#len(mgti_commant[0])
     except Exception as e:
         print(e)

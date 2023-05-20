@@ -81,9 +81,9 @@ label {
     <h1><span class="highlight">나와 잘 맞는 멍친구들</span></h1>
     <div class="image-container">
       <img id="image1" alt="species_one_photo"></img>
-      <img id="image1" alt="species_one_photo"></img>
-      <img id="image2" alt="species_two_photo"></img>
-      <img id="image2" alt="species_two_photo"></img>
+      <img id="image2" alt="species_one_photo"></img>
+      <img id="image3" alt="species_two_photo"></img>
+      <img id="image4" alt="species_two_photo"></img>
       
       
     </div>
@@ -107,11 +107,47 @@ label {
           // 전송 성공 시 실행할 코드
           console.log('Data sent successfully!');
           console.log(response);
+          // console.log(response[8])
+          // console.log(len(response));
+          
 
-          document.getElementById("image1").src = response[2]   
-          document.getElementById("image2").src = response[3]   
-          document.getElementById("mbti_introduction").innerHTML = response[4]
-          document.getElementById("mbti").innerHTML = response[5]  // 백엔드에서 받아온 리스트들의 원소들을 각각 역활을 보여주는 id에 넣어둠
+          var image1 = [];
+          var image2 = [];
+          var image3 = [];
+          var image4 = [];
+          var mbtiIntroduction = response[0];
+          var mbtiType = response[9];
+          var abandonedSpecies = response[3];
+
+          // species_for_mbti.species_one와 abandoned_animal.species 비교
+          if (response[1] === abandonedSpecies) {
+              // abandoned_animal.diffusion_profile_image 반환
+              image1.push(response[4]);
+              image2.push(response[10]);
+          } else {
+              // species_for_mbti.species_one_photo 반환
+              image1.push(response[5]);
+              image2.push(response[6]);
+          }
+
+          // species_for_mbti.species_two와 abandoned_animal.species 비교
+          if (response[2] === abandonedSpecies) {
+              // abandoned_animal.diffusion_profile_image 반환
+              image3.push(response[4]);
+              image4.push(response[10]);
+          } else {
+              // species_for_mbti.species_two_photo 반환
+              image3.push(response[7]);
+              image4.push(response[8]);
+          }
+
+          document.getElementById("image1").src = image1;
+          // document.getElementById("image1").src = image1;
+          document.getElementById("image2").src = image2;
+          document.getElementById("image3").src = image3;
+          document.getElementById("image4").src = image4;
+          document.getElementById("mbti_introduction").innerHTML = mbtiIntroduction;
+          document.getElementById("mbti").innerHTML = mbtiType;
       },
       error: function (xhr, status, error) {
           // 전송 실패 시 실행할 코드
