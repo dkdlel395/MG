@@ -122,7 +122,7 @@ def chat_get_dog_pic(app,mysql,selec_id):
     try:
         dog_pic=list()
         with app.app_context():
-            cur = mysql.session.execute(text(f"""SELECT profile_image FROM abandoned_animal WHERE animal_id = '{selec_id}' """))
+            cur = mysql.session.execute(text(f"""SELECT diffusion_profile_image FROM abandoned_animal WHERE animal_id = '{selec_id}' """))
             dog_pic = cur.fetchall()
             return dog_pic
     except Exception as e:
