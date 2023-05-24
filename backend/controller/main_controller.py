@@ -22,7 +22,7 @@ def mainpage():
     #main_dogs_age =  [dog[0] for dog in db.main_dog( app, mysql, 3 , 'age') ]
     #main_dogs_img = [dog[0] for dog in db.main_dog( app, mysql, 3 , 'profile_image') ] 
     dogs=list()
-    dogs.append(db.main_dog( app, mysql, 3 , 'animal_id, animal_name, age, diffusion_profile_image'))
+    dogs.append(db.main_dog( app, mysql, 3 , 'animal_id, animal_name, age, profile_image'))
 
     main_dogs_id = list()
     main_dogs_name = list()
@@ -44,11 +44,11 @@ def introduction(intro_input_dog_id):
     intro_dogs_id = intro_input_dog_id
     intro_dogs_name = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'animal_name') ]
     intro_dogs_age = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'age') ]
-    intro_dogs_img = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'diffusion_profile_image') ]
+    intro_dogs_img = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'profile_image') ]
     intro_dogs_species = [dog[0] for dog in db.species_dog(app, mysql, intro_input_dog_id , 'species_name')]
 
     if request.method == 'GET':
         return render_template( 'introduction.html' ,intro_dogs_id=intro_dogs_id, intro_dogs_name=intro_dogs_name, intro_dogs_age=intro_dogs_age, intro_dogs_img=intro_dogs_img, intro_dogs_species=intro_dogs_species)
     else:
         dogid = request.form.get('dogid')
-        return redirect(url_for('appeal_bp.chat', dogid=dogid))
+        return redirect(url_for('appeal_bp.load_chat_page', dogid=dogid))

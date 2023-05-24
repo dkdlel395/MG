@@ -1,15 +1,24 @@
-from flask import render_template, request, Flask, jsonify, session
-from controller import bp_appeal as appeal
 from controller import db_controller
-import time
+from flask import render_template, request, Flask, jsonify, session, make_response
+from controller import bp_appeal as appeal
+from controller import db_controller as db
+from chat_gpt import gpt_plugin
+import json
+import jwt
+import logging
+import urllib
 
-
-db = db_controller
 app = db.init_database()
 mysql = db.init(app)
 
 
-messages = []  # 채팅 기록 저장
+###
+# 로깅 레벨 설정
+app.logger.setLevel(logging.DEBUG)
+
+# 로깅 핸들러 추가
+stream_handler = logging.StreamHandler()
+app.logger.addHandler(stream_handler)
 
 
 @appeal.route('/', methods=['GET', 'POST'])
@@ -21,37 +30,83 @@ def home():
 
 @appeal.route("/answer", methods=["POST"]) 
 def answer():
-    data = request.data.decode('utf-8')
+    user_msg = request.get_data(as_text=True).strip()
+    info = json.loads( f"{user_msg}" )
 
-    from chat_gpt import gpt_plugin   # GPT 프롬프트 엔지니어링 부분 모듈 로드
-    text = gpt_plugin.gpt(data)
+    
+    query = info['query']
+    user_id = info['userId']
+    dog_id = info['dogId']
+    frend_number = 1
+    
+    db.save_chat_content( app, mysql, frend_number, query , 0, 'NULL' , 'NULL' )
 
-    current_time = time.time()
+    # GPT 프롬프트 엔지니어링 부분 모듈 로드
+    answer = gpt_plugin.gpt(query)
+
+    answer_date = db.save_chat_content( app, mysql, frend_number , answer , 1, 'NULL' , 'NULL' )
+    
+
     message = {                       # 주고받는 메세지의 속성값을 저장한다
         'message_type': 'bot',
         'dog_name': '뽀또',
-        'message_content': text,
-        'time': current_time
+        'message_content': answer,
+        'time': answer_date
     }
-    messages.append(message)
+    
+
     return jsonify(message) # message 안에는 (messsagetype(사용자인지,봇인지 판단), 강아지 이름, 강아지 채팅 내용, 시간) 으로 이루어져있다.
 
 
 # 채팅 페이지
-@appeal.route("/chat", methods=["GET", "POST"])
-def chat():
-    dogid = request.args.get('dogid')             # 멍소개 페이지에서 보낸 유기견의 id를 받아온다
-    user_input = request.form.get("msg")
-    response = answer()
-    chat_dog_name = db.chat_get_dog_name(app, mysql, dogid)[0] # 이 함수의 결과는 (' 결과 ',)로 나온다
-    clean_dog_name =f"{chat_dog_name}"[2:-3]      # 문자열로 변환 시켜서 ( , ' 를 없앤다
-    chat_dog_pic = db.chat_get_dog_pic(app,mysql,dogid)
-    clean_dog_pic = f"{chat_dog_pic}"[2:-3]
-    return render_template("chat.html", user_input=user_input, response=response, messages=messages, chat_dog_name=clean_dog_name,chat_dog_pic=clean_dog_pic, dogid=dogid)
+@appeal.route("/load_chat_page", methods=["GET", "POST"])
+def load_chat_page():
+    dog_id = request.args.get('dogid')             # 멍소개 페이지에서 보낸 유기견의 id를 받아온다
+    user_id = 'yc'
+    friend_number = 1
+
+    
+    
+    dog_info = db.get_dog_info(app, mysql, dog_id) # 이 함수의 결과는 (' 결과 ',)로 나온다
+    dog_info = [t for t in dog_info[0]]
+    dog_info_json = {"dog_id":dog_id,"dog_name":dog_info[0], "img_src":dog_info[1],"user_id":user_id}
+
+
+    # app.logger.info(dog_info)
+    return render_template("chat.html", dog_info=dog_info_json)
+
+@appeal.route("/load_before_chat", methods=["POST"])
+def load_before_chat():
+    friend_number = request.get_data(as_text=True).strip()
+
+    # 데이터베이스 채팅 10개 가져오기
+    cookie_name = f'{friend_number}_friend_chat_list'
+    chat_info = db.load_chat(app,mysql,friend_number)
+    
+    chat_contents = [{ "no":idx, "content":urllib.parse.quote(content.encode("utf-8")),"send":int.from_bytes(send), "date":str(date) } for idx, (content, send, date) in enumerate(chat_info)]
+    current_chat_list = {
+            "chat": chat_contents
+        }
+    
+    # 쿠키로 던져준다
+
+    resp = make_response('쿠키가 설정되었습니다')
+    
+
+    app.logger.info(current_chat_list)
+    resp.set_cookie(cookie_name, json.dumps(current_chat_list).encode('utf-8'))
+    
+
+    # 저장 내용이 있다면
+
+    #   쿠키에 json 스트링을 파싱한다
+
+    #   구분하여 채팅 Bubble을 만들어준다
+
+    return resp
+
 
 # MGTI 시작 페이지
-
-
 @appeal.route('/mgti_start', methods=['GET', 'POST'])
 def mgti_start():
     return render_template("mgti_start.html")
