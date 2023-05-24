@@ -146,6 +146,6 @@ def res2():
     mgti_info = db.mgti_commantary(app,mysql,mgti) # mgti_commantary는 db에 접근해 mgti관련 정보를 가져오는 함수이다
     fl_info = list(mgti_info[0])
     fl_info.append(mgti) # fl_info에 mgti_commantary 결과값과 mgti를 넣는다(html에서 한번에 리스트로 받기 위함)
-    if mgti_info[1][4] != None:
+    if None not in fl_info:
         fl_info.append(mgti_info[1][4]) # 디퓨전 프사가 없다면 null값일수 있음
     return fl_info
