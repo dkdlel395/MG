@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>멍결고리</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <!-- Google fonts link-->
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+
+
+    <!--For Plugins external css-->
+    <link rel="stylesheet" href="../static/css/plugins.css" />
+
+    <!--Theme custom css -->
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <!--Theme Responsive css-->
+    <link rel="stylesheet" href="../static/css/responsive.css" />
+
+    <script src="../static/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    
+    <title>멍결고리</title>
+    <style>
+        
+        *{
+            margin:0;
+            padding:0;
+        }
+        header{           
+            background-color:rgba(91, 91, 91, 1);
+            height: 75px;
+            position: relative; /* header를 relative로 설정 */
+            
+        }
+
+
+        #footer{
+            position: relative;
+            width: 100%;
+            height:100%;
+        }
+
+        .navbar-brand > img{
+            margin-left:100px;
+            height: 70px;
+            width: auto;
+            position:relative;
+            margin-top: -25px;
+        }
+
+
+        .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+    margin-left: -100px;
+        }
+    </style>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const menuItems = document.querySelectorAll('#menu1 li');
+
+        menuItems.forEach((menuItem) => {
+            menuItem.addEventListener('click', () => {
+                menuItems.forEach((item) => {
+                    item.classList.remove('active'); // 다른 메뉴 항목의 active 클래스 제거
+                });
+                menuItem.classList.add('active'); // 선택한 메뉴 항목에 active 클래스 추가
+            });
+        });
+    });
+</script>
+
+</head>
+
+<body data-spy="scroll" data-target=".navbar-collapse">
+    <div class='preloader'><div class='loaded'>&nbsp;</div></div>
+        <header id="main_menu" class="header navbar-fixed-top">            
+            <div class="main_menu_bg">
+                <div class="menu_container">
+                    <div class="row">
+                        <div class="nave_menu">
+                            <nav class="navbar navbar-default">
+                                <div class="container-fluid">
+                                    <!-- Brand and toggle get grouped for better mobile display -->
+                                    <div class="navbar-header">
+                                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                            <span class="sr-only">Toggle navigation</span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                        <a class="navbar-brand" href="/main/mainpage">
+                                            <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/5.png?alt=media&token=02e78363-897f-4648-b8b9-42d9f730d9d5"/>
+                                        </a>
+                                    </div>
+
+                                    <!-- Collect the nav links, forms, and other content for toggling -->
+
+
+
+                                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li><a href="/appeal/mgti_start">MGTI</a></li>
+                                            <li><a href="/appeal/chat">Chat</a></li>
+                                            <li><a href="#munglist">Mung list</a></li>
+                                            <li><a href="#adopt">Adopt</a></li>
+                                            <li><a href="#aboutus">About us</a></li>
+
+
+                                            <li>
+                                                <a href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <form class="navbar-form" role="search">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" placeholder="Search">
+                                                            </div>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+
+                                    </div>
+
+                                </div>
+                            </nav>
+                        </div>   
+                    </div>
+
+                </div>
+
+            </div>
+        </header> <!--End of header -->
+
+
+        
+        {% block content %}
+        
+        {% endblock %}
+        
+
+        <footer id="footer" class="footer">
+            <div class="container">
+                <div class="main_footer text-center">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="copyright_text">
+                                <p class=" wow fadeInRight" data-wow-duration="1s">(팀) 핫바<br>
+                                    서울특별시 중구 필동로 1길30 (동국대학교)<br>
+                                    TEL : 010-2329-9893 팀장 윤예찬<br>
+                                    사업자 등록번호 : 619-48-00505<br>
+                                    MAIL : dpcks9893@naver.com<br>
+                                    <a href="https://github.com/dkdlel395/MG">Github</a>
+                                    2023. All Rights Reserved
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- START SCROLL TO TOP  -->
+
+        <div class="scrollup">
+            <a href="#"><i class="fa fa-chevron-up"></i></a>
+        </div>
+
+        <script src="../static/js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="../static/js/vendor/bootstrap.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+        <script src="../static/js/jquery.mixitup.min.js"></script>
+        <script src="../static/js/jquery.easing.1.3.js"></script>
+        <script src="../static/js/jquery.masonry.min.js"></script>
+        <script src="../static/js/jquery.fancybox.pack.js"></script>
+        <!--This is link only for gmaps-->
+        <script src="http://maps.google.com/maps/api/js"></script>
+        <script src="../static/js/gmaps.min.js"></script>
+
+
+        <script>
+
+            function showmap() {
+                var mapOptions = {
+                    zoom: 8,
+                    scrollwheel: false,
+                    center: new google.maps.LatLng(-34.397, 150.644),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            }
+
+        </script>
+
+
+        <script src="../static/js/plugins.js"></script>
+        <script src="../static/js/main.js"></script>
+</body>
+</html>

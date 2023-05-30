@@ -1,18 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  {% include 'main.html' %}
+{% extends "main.html" %}
+
+{% block content %}
 <style>
+#main_frame {
+    height: 1800px;
+    width: 100%;
+    position:relative
+}
+
+#Popular_dog_container{
+    position: relative;
+    width: 100%;
+    height: 600px;
+    padding-top: 10%;
+    border: 2px dashed rgb(0, 0, 0);
+}
+
 #title1{
     /* border: 2px solid fuchsia; */
-    top: 190px;
-    position: absolute;
+
+    height: 80px;
+    position: relative;
     display: inline-block; /* 텍스트 크기에 맞게 테두리를 조정하기 위해 인라인 블록으로 설정 */
     padding: 5px; /* 텍스트와 테두리 간격 설정 */
     font-size: 24px; /* 텍스트 크기 설정 */    
     left: 30px;
     align-items:center;
     vertical-align: middle;
+    border: 2px dashed rgb(0, 0, 0);
+}
+
+#square1{
+    position: relative;
+    border: 2px dashed rgb(239, 239, 239);
+    width: 100%;
+    height: 370px;
+    justify-content: center;
+
+}
+
+.image-container{
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 3%;
+    padding-right: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 84%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(161, 161, 161, 0.3);
+    border-radius: 20px;
+}
+
+.dog-card {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  border: 4px dotted rgb(255, 135, 221);
+  display: inline;
+  position: relative;
+  width: 250px;
+  height: 300px;
+}
+
+
+.image-container img {
+    /* border: 3px dashed rgb(202, 173, 216); */
+    width: 250px;
+    height: 250px;
+    position: relative;
+
+}
+
+
+
+#p_container{
+    width: 250px;
+    height: 50px;
+    position: relative;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+#p_container > p {
+    position: relative;
+    border: 1px dotted rgb(255, 135, 221);
+    width: 250px;
+    height: 24px;
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.dog-card a {
+    position: relative;
+    width: 250px;
+    height: 250px;
+}
+
+.dog-card a img{
+    position: relative;
+    width: 250px;
+    height: 250px;
 }
 
 #mungtext::after {
@@ -47,168 +139,113 @@
     white-space: pre-line;
 }
 
+#board_container {
+    padding-top: 50px;
+    width: 100%;
+    height: 50%;
+    position: relative;
+    border: 4px dashed rgb(253, 0, 0);
+}
+
 
 #title2{
     /* border: 2px solid fuchsia; */
-    top: 720px;
-    position: absolute;
-    display: inline-block; /* 텍스트 크기에 맞게 테두리를 조정하기 위해 인라인 블록으로 설정 */
+    border: 2px dashed rgb(0, 0, 0);
+    position: relative;
+    height: 100px;
+    width: 100%;
+    text-align: center;
     padding: 5px; /* 텍스트와 테두리 간격 설정 */
     font-size: 24px; /* 텍스트 크기 설정 */
-
-    left: 650px;
 }
 
-.image-container{
-    position: relative;
-    /* border: 2px solid rgb(255, 145, 0); */
-    background-color: rgba(161, 161, 161, 0.3);
-    padding: 30px;
-    width: 90%;
-    height: 100%;
+
+
+
+
+#board{
+    width: 100%;
+    height: 350px;
+
     display: flex;
+    border: 1px solid rgb(7, 123, 255);
+    position: relative;
     justify-content: center;
-    align-items: center;
-    border-radius: 20px;
 }
 
 
-.image-container img {
-    /* border: 3px dashed rgb(202, 173, 216); */
-    width: 90%;
-    height: 85%;
-    
-
-}
-
-.dog-card {
-
-  align-items: center;
-  justify-content: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  border: 4px dotted rgb(255, 135, 221);
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  margin-left:10px;
-  margin-right:10px;
-}
-
-.dog-card a {
-    width: 90%;
-    height: 80%;
-
-}
-
-
-
-#square1{
-    position: absolute;
-    border: 2px dashed rgb(239, 239, 239);
-    width: 90%;
-    height: 310px;
-    top: 300px;
-    left: 40px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    
-}
-
-#p1{
-    position: absolute;
-    /* border: 2px solid rgb(7, 123, 255); */
-    vertical-align: middle;
-    left: 850px;
-    background-color: rgb(225, 225, 225, 0.5);
-    height: 400px;
-    width: 600px;    
+#square2{
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 50px;
+    position: relative;
+    border: 2px solid rgb(9, 255, 0);
+    width: 1200px;
+    height: 300px;
 }
 
 #p2{
     position: absolute;
+    width: 450px;
     border: 2px solid rgb(7, 123, 255);
     vertical-align: middle;
-    left: 100px;
-    
 }
 
-#square2{
+.board-contents{
     position: absolute;
-    border: 2px solid rgb(9, 255, 0);
-    width: 90%;
-    height: 305px;
-    top: 800px;
-    left: 40px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    
+    border: 2px solid rgb(255, 51, 0);
+    left: 450px;
+    width: 600px;
+    height: 250px;  
 }
 
-.board-container{
-    position: absolute;
-    border: 2px solid rgb(0, 0, 0);
-    left: 600px;
-    width: 700px;
-    height: 80%;
-    
-    display: flex;
-   
-}
+
 
 </style>
-</head>
-<body>  
-        <h2 id="title1">
-            <div style="position: relative; display: inline-block; align-items:center; vertical-align: middle; display: flex; justify-content: center;">
-                <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/Today%20mung.png?alt=media&token=4eefd391-4e7c-44d9-ad3f-f9840f94ac52" width=auto height="70px" alt="로고">
-                <div id="mungtext" style="position: absolute; border: 2px solid black; height: 50px; width: 150px; text-align: center;"></div>
-            </div>
-        </h2>
-        <div id="square1">
-            <div class="image-container">
-                
-                    {% for index in range(3) %}
-                    <div class="dog-card">
-                        <a href="/main/introduction/{{ main_dogs_id[index] }}">
-                            <img src="{{ main_dogs_img[index] }}" alt="{{ main_dogs_id[index] }}" >
-                        </a>
-                        <div style="border:2px solid violet;">
-                            <p class="dog_name">{{ main_dogs_name[index] }}</p>
-                            <p class="dog_age">강아지 나이: {{ main_dogs_age[index] }}</p>
+    <div id="main_frame">
+
+        <div id="Popular_dog_container">
+            <h2 id="title1">
+                <div style="position: relative; display: inline-block; align-items:center; vertical-align: middle; display: flex; justify-content: center;">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/Today%20mung.png?alt=media&token=4eefd391-4e7c-44d9-ad3f-f9840f94ac52" width=auto height="70px" alt="로고">
+                    <div id="mungtext" style="position: absolute; border: 2px solid black; height: 50px; width: 150px; text-align: center;"></div>
+                </div>
+            </h2>
+            <div id="square1">
+                <div class="image-container">
+                    
+                        {% for index in range(3) %}
+                        <div class="dog-card">
+                            <a href="/main/introduction/{{ main_dogs_id[index] }}">
+                                <img src="{{ main_dogs_img[index] }}" alt="{{ main_dogs_id[index] }}" >
+                            </a>
+                            <div id="p_container" style="border:2px solid violet;">
+                                <p class="dog_name">{{ main_dogs_name[index] }}</p>
+                                <p class="dog_age">강아지 나이: {{ main_dogs_age[index] }}</p>
+                            </div>
+                            
                         </div>
-                        
-                    </div>
-                    {% endfor %} 
-               
-            </div>
-            <div style="position:relative; ">
-                <div id="p1">
-                    <p>매일 새로워지는 today’s 멍 </p><br>
-                    <p>인기가 많은 친구들이에요. 한번 대화 나눠보실래요?</p>
+                        {% endfor %} 
+                
                 </div>
             </div>
-            
         </div>
 
-        <h2 id="title2">
-            <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/Board.png?alt=media&token=2f4eeeaa-8a8b-40a2-8874-f81566d94854" width=auto height="80px" alt="로고">
-        </h2>
-        <div id="square2">
-            <div id="p2">
-                <p>다른 멍결고리 유저들과의 소통공간이에요 </p><br>
-                <p>함께 여러 정보를 공유해보고 여러분의 멍즈를 자랑해보세요</p>
+        <div id="board-container">
+            <h2 id="title2">
+                <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/Board.png?alt=media&token=2f4eeeaa-8a8b-40a2-8874-f81566d94854" width=auto height="80px" alt="로고">
+            </h2>
+            <div id="board">
+                <div id="square2">
+                    <div id="p2">
+                        <p>다른 멍결고리 유저들과의 소통공간이에요 </p><br>
+                        <p>함께 여러 정보를 공유해보고 여러분의 멍즈를 자랑해보세요</p>
+                    </div>
+                    <div class="board-contents">
+                        
+                    </div>
+                </div>
             </div>
-            <div class="board-container">
-                
-            </div>
-
         </div>
-
-
-       
-</body>
-</html>
+    </div>
+{% endblock %}

@@ -4,6 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 import pymysql
 import datetime
+import logging
+
+
 
 def init_database( ):   # DB접근을 위한 함수
     app = Flask(__name__)
@@ -14,6 +17,13 @@ def init_database( ):   # DB접근을 위한 함수
 
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{host}/{db_name}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    ###
+    # 로깅 레벨 설정
+    app.logger.setLevel(logging.DEBUG)
+
+    # 로깅 핸들러 추가
+    stream_handler = logging.StreamHandler()
     return app
 
 def init(app):
@@ -108,6 +118,7 @@ def species_dog(app, mysql, id, species_name):
 ################ 종현이 영역 #######################
 
 # 강아지 정보 가져오기(이름)
+# 강아지 정보 가져오기(이름)
 def get_dog_info(app,mysql,selec_id): 
     try:
         dog_name=list()
@@ -129,8 +140,9 @@ def load_chat(app,mysql, friend_number):
         with app.app_context():
             cur = mysql.session.execute(text(f"""
                                                 SELECT chat_content, sent_or_received, chat_date
-                                                FROM chat 
-                                                WHERE friend_list_no = '{friend_number}' 
+                                                FROM chat
+                                                WHERE friend_list_no = '{friend_number}'
+                                                ORDER BY chat_date DESC
                                                 LIMIT 10;
                                             """))
             dog_name = cur.fetchall()
@@ -143,23 +155,6 @@ def load_chat(app,mysql, friend_number):
 def chat_user_id_name_pic():
     user_info = ["1","user name","www.userimage.com"]
     return user_info
-
-
-
-# mgti를 받아 종,종의 사진,mgti설명을 받아오는 함수
-def mgti_commantary(app,mysql,mgti_type):
-    try:
-        with app.app_context():
-            cur = mysql.session.execute(text(f"""
-            SELECT  species_one, species_two, species_one_photo, species_two_photo, mbti_introduction 
-            FROM species_for_mbti 
-            WHERE mbti_type = '{mgti_type}'
-            """))
-            mgti_commant = cur.fetchall()
-            return [mgti_commant[0]]
-    except Exception as e:
-        print(e)
-
 
 def save_chat_content( app, mysql, friend_list_no, chat_content, sent_or_received, suitability_type, suitability ):
     chat_date = str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
@@ -180,3 +175,29 @@ def save_chat_content( app, mysql, friend_list_no, chat_content, sent_or_receive
     except Exception as e:
         print(e)
         return chat_date
+
+
+# mgti를 받아 종,종의 사진,mgti설명을 받아오는 함수
+def mgti_commantary(app,mysql,mgti_type):
+    try:
+        with app.app_context():
+            cur = mysql.session.execute(text(f"""
+            SELECT s.mbti_introduction,
+                s.species_one,
+                s.species_two,
+                a.species AS abandoned_species,
+                a.diffusion_profile_image,
+                s.species_one_photo,
+                s.species_one_photo_two,
+                s.species_two_photo,
+                s.species_two_photo_two,
+                a.animal_id
+            FROM species_for_mbti s
+            LEFT JOIN abandoned_animal a ON s.species_one = a.species OR s.species_two = a.species
+            WHERE s.mbti_type = '{mgti_type}'
+
+            """))
+            mgti_commant = cur.fetchall()
+            return mgti_commant#len(mgti_commant[0])
+    except Exception as e:
+        print(e)

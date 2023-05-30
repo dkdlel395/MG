@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  {% include 'main.html' %}
+
+{% extends "main.html" %}
+
+{% block content %}
+
 <style>
 @font-face {
   font-family: 'S-CoreDream-3Light';
@@ -49,6 +50,8 @@ label {
 }
 .container {
   border: 4px solid rgb(210, 210, 210);
+  width: 100%;
+  height: 100%;
   text-align: center;
   padding: 50px;
   border-radius: 20px;
@@ -62,14 +65,13 @@ label {
 }
 
 #frame{
-    position: absolute;
-    width:100%;
-    height: 1000px;
-    top: 150px;
+  height: 1200px;
+  width: 100%;
+  margin-top: 75px;
+  position:relative
 }
 </style>
-</head>
-<body>
+
   <div id="frame">
     <title>나의 MGTI는?</title>
 
@@ -81,15 +83,17 @@ label {
     <h1><span class="highlight">나와 잘 맞는 멍친구들</span></h1>
     <div class="image-container">
       <img id="image1" alt="species_one_photo"></img>
-      <img id="image1" alt="species_one_photo"></img>
-      <img id="image2" alt="species_two_photo"></img>
-      <img id="image2" alt="species_two_photo"></img>
+      <img id="image2" alt="species_one_photo"></img>
+      <img id="image3" alt="species_two_photo"></img>
+      <img id="image4" alt="species_two_photo"></img>
       
       
     </div>
     <span class="highlight">※ 멍 친구들과 대화를 원하면 회원가입을 진행하세요</span>
     </div>
   </div>
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     const answers = {};
@@ -107,17 +111,80 @@ label {
           // 전송 성공 시 실행할 코드
           console.log('Data sent successfully!');
           console.log(response);
+          console.log(response[4]);
+          // console.log(response[8])
+          // console.log(len(response));
+          
 
-          document.getElementById("image1").src = response[2]   
-          document.getElementById("image2").src = response[3]   
-          document.getElementById("mbti_introduction").innerHTML = response[4]
-          document.getElementById("mbti").innerHTML = response[5]  // 백엔드에서 받아온 리스트들의 원소들을 각각 역활을 보여주는 id에 넣어둠
+          var image1 = [];
+          var image2 = [];
+          var image3 = [];
+          var image4 = [];
+          var mbtiIntroduction = response[0];
+          var mbtiType = response[10];
+          var abandonedSpecies = response[3];
+          var dogid_1 = response[9];
+          var dogid_2 = response[12];
+
+          // species_for_mbti.species_one와 abandoned_animal.species 비교
+          if (response[1] === abandonedSpecies) {
+              // abandoned_animal.diffusion_profile_image 반환
+              image1.push(response[4]);
+              image2.push(response[11]);
+              document.getElementById("image1").addEventListener("click", function() {
+              window.location.href = "/main/introduction/" + dogid_1;
+          });
+          document.getElementById("image2").addEventListener("click", function() {
+              window.location.href = "/main/introduction/" + dogid_2;
+          });
+          } else {
+              // species_for_mbti.species_one_photo 반환
+              image1.push(response[5]);
+              image2.push(response[6]);
+          }
+
+          // species_for_mbti.species_two와 abandoned_animal.species 비교
+          if (response[2] === abandonedSpecies) {
+              // abandoned_animal.diffusion_profile_image 반환
+              image3.push(response[4]);
+              image4.push(response[11]);
+              document.getElementById("image3").addEventListener("click", function() {
+              window.location.href = "/main/introduction/" + dogid_1;
+          });
+          document.getElementById("image4").addEventListener("click", function() {
+              window.location.href = "/main/introduction/" + dogid_2;
+          });
+          } else {
+              // species_for_mbti.species_two_photo 반환
+              image3.push(response[7]);
+              image4.push(response[8]);
+          }
+
+          document.getElementById("image1").src = image1;
+          // document.getElementById("image1").src = image1;
+          document.getElementById("image2").src = image2;
+          document.getElementById("image3").src = image3;
+          document.getElementById("image4").src = image4;
+          document.getElementById("mbti_introduction").innerHTML = mbtiIntroduction;
+          document.getElementById("mbti").innerHTML = mbtiType;
+
+          // clickable-image 클래스 추가
+          document.getElementById("image1").classList.add("clickable-image");
+          document.getElementById("image2").classList.add("clickable-image");
+          document.getElementById("image3").classList.add("clickable-image");
+          document.getElementById("image4").classList.add("clickable-image");
       },
       error: function (xhr, status, error) {
           // 전송 실패 시 실행할 코드
           console.log('Error occurred while sending data:', error);
       }
   });
-  </script>
-</body>
-</html>
+</script>
+
+<style>
+    .clickable-image {
+        cursor: pointer;
+    }
+</style>
+
+{% endblock %}
