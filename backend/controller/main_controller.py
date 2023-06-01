@@ -38,7 +38,7 @@ def introduction(intro_input_dog_id):
     intro_dogs_id = intro_input_dog_id
     intro_dogs_name = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'animal_name') ]
     intro_dogs_age = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'age') ]
-    intro_dogs_img = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'profile_image') ]
+    intro_dogs_img = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'diffusion_profile_image') ]
     intro_dogs_species = [dog[0] for dog in db.species_dog(app, mysql, intro_input_dog_id , 'species_name')]
 
     if request.method == 'GET':
