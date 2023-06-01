@@ -60,5 +60,3 @@ networks:
 
 volumes:
     db_vol:
-
-
