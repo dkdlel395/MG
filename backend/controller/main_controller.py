@@ -46,3 +46,14 @@ def introduction(intro_input_dog_id):
     else:
         dogid = request.form.get('dogid')
         return redirect(url_for('appeal_bp.load_chat_page', dogid=dogid))
+
+
+
+@main.route('/aboutus', methods=['get','post'])
+def aboutus():
+    return render_template( 'aboutus.html') # dog_image_address는 강아지 사진 주소를 프론트엔드로 보낼때 사용하는 함수
+
+
+@main.route('/index', methods=['get','post'])
+def index():
+    return render_template( 'index.html') # dog_image_address는 강아지 사진 주소를 프론트엔드로 보낼때 사용하는 함수
