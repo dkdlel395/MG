@@ -45,4 +45,4 @@ def introduction(intro_input_dog_id):
         return render_template( 'introduction.html' ,intro_dogs_id=intro_dogs_id, intro_dogs_name=intro_dogs_name, intro_dogs_age=intro_dogs_age, intro_dogs_img=intro_dogs_img, intro_dogs_species=intro_dogs_species)
     else:
         dogid = request.form.get('dogid')
-        return redirect(url_for('appeal_bp.chat', dogid=dogid))
+        return redirect(url_for('appeal_bp.load_chat_page', dogid=dogid))

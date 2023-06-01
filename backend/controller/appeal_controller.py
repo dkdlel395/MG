@@ -1,13 +1,21 @@
-from flask import render_template, request, Flask, jsonify, session
+from flask import render_template, request, Flask, jsonify, session, make_response
 from controller import bp_appeal as appeal
-from controller import db_controller
-import time
+from controller import db_controller as db
+from chat_gpt import gpt_plugin
+import json
+import logging
+import urllib
 
 
-db = db_controller
 app = db.init_database()
 mysql = db.init(app)
 
+###
+# 로깅 레벨 설정
+app.logger.setLevel(logging.DEBUG)
+
+# 로깅 핸들러 추가
+stream_handler = logging.StreamHandler()
 
 messages = []  # 채팅 기록 저장
 
@@ -16,40 +24,79 @@ messages = []  # 채팅 기록 저장
 def home():
     return 'appeal'
 
-
-
-
 @appeal.route("/answer", methods=["POST"]) 
 def answer():
-    data = request.data.decode('utf-8')
+    user_msg = json.loads(request.data.decode('utf-8'))
+    
+    query = user_msg["chat"][-1]["content"]
+    app.logger.info("=======================")
+    app.logger.info(user_msg["chat"])
+    app.logger.info(user_msg["chat"][-1])
+    app.logger.info("=======================")
+    user_id = user_msg['userId']
+    dog_id = user_msg['dogId']
+    frend_number = 1
+    
+    db.save_chat_content( app, mysql, frend_number, query , 0, 'NULL' , 'NULL' )
 
-    from chat_gpt import gpt_plugin   # GPT 프롬프트 엔지니어링 부분 모듈 로드
-    text = gpt_plugin.gpt(data)
+    # GPT 프롬프트 엔지니어링 부분 모듈 로드
+    answer = gpt_plugin.gpt(user_msg, app=app)
 
-    current_time = time.time()
+    answer_date = db.save_chat_content( app, mysql, frend_number , answer , 1, 'NULL' , 'NULL' )
+    
+
     message = {                       # 주고받는 메세지의 속성값을 저장한다
-        'message_type': 'bot',
+        'message_type': 'bot', 
         'dog_name': '뽀또',
-        'message_content': text,
-        'time': current_time
+        'message_content': answer,
+        'time': answer_date
     }
-    messages.append(message)
+    
+
     return jsonify(message) # message 안에는 (messsagetype(사용자인지,봇인지 판단), 강아지 이름, 강아지 채팅 내용, 시간) 으로 이루어져있다.
 
 
 # 채팅 페이지
-@appeal.route("/chat", methods=["GET", "POST"])
-def chat():
-    dogid = request.args.get('dogid')             # 멍소개 페이지에서 보낸 유기견의 id를 받아온다
-    user_input = request.form.get("msg")
-    response = answer()
-    chat_dog_name = db.chat_get_dog_name(app, mysql, dogid)[0] # 이 함수의 결과는 (' 결과 ',)로 나온다
-    clean_dog_name =f"{chat_dog_name}"[2:-3]      # 문자열로 변환 시켜서 ( , ' 를 없앤다
-    chat_dog_pic = db.chat_get_dog_pic(app,mysql,dogid)
-    clean_dog_pic = f"{chat_dog_pic}"[2:-3]
-    return render_template("chat.html", user_input=user_input, response=response, messages=messages, chat_dog_name=clean_dog_name,chat_dog_pic=clean_dog_pic, dogid=dogid)
+@appeal.route("/load_chat_page", methods=["GET", "POST"])
+def load_chat_page():
+    
+    dog_id = request.args.get('dogid')             # 멍소개 페이지에서 보낸 유기견의 id를 받아온다
+    user_id = 'yc'
+    friend_number = 1
 
-# MGTI 시작 페이지
+    
+    
+    dog_info = db.get_dog_info(app, mysql, dog_id) # 이 함수의 결과는 (' 결과 ',)로 나온다
+    dog_info = [t for t in dog_info[0]]
+    dog_info_json = {"dog_id":dog_id,"dog_name":dog_info[0], "img_src":dog_info[1],"user_id":user_id}
+
+    return render_template("chat.html", dog_info=dog_info_json)
+
+@appeal.route("/load_before_chat", methods=["POST"])
+def load_before_chat():
+    friend_number = request.get_data(as_text=True).strip()
+
+    # 추후에 바꿔야함
+    user_id = 'yc'
+    dog_id  = 'abc000'
+
+    # 데이터베이스 채팅 10개 가져오기
+    cookie_name = f'{friend_number}_friend_chat_list'
+    chat_info = db.load_chat(app,mysql,friend_number)
+    
+    chat_contents = [{ "no":idx, "content":urllib.parse.quote(content.encode("utf-8")),"send":int.from_bytes(send), "date":str(date) } for idx, (content, send, date) in enumerate(chat_info)]
+    current_chat_list = {
+            "user_id" : user_id,
+            "dog_id"  : dog_id,
+            "chat": chat_contents
+        }
+
+    resp = make_response('쿠키가 설정되었습니다')
+    app.logger.info(chat_contents)
+
+    resp.set_cookie(cookie_name, json.dumps(current_chat_list).encode('utf-8'))
+
+    return resp
 
 
 @appeal.route('/mgti_start', methods=['GET', 'POST'])
@@ -148,4 +195,5 @@ def res2():
     fl_info.append(mgti) # fl_info에 mgti_commantary 결과값과 mgti를 넣는다(html에서 한번에 리스트로 받기 위함)
     if None not in fl_info:
         fl_info.append(mgti_info[1][4]) # 디퓨전 프사가 없다면 null값일수 있음
+        fl_info.append(mgti_info[1][9])
     return fl_info

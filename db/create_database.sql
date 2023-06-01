@@ -136,7 +136,9 @@ CREATE TABLE IF NOT EXISTS `species_for_mbti` (
   `species_one` int(11) DEFAULT NULL COMMENT '품종추천1',
   `species_two` int(11) DEFAULT NULL COMMENT '품종추천2',
   `species_one_photo` varchar(300) DEFAULT NULL COMMENT '품종사진1',
+  `species_one_photo_two` varchar(300) DEFAULT NULL COMMENT '품종사진1-2',
   `species_two_photo` varchar(300) DEFAULT NULL COMMENT '품종사진2',
+  `species_two_photo_two` varchar(300) DEFAULT NULL COMMENT '품종사진2-2',
   `mbti_introduction` varchar(300) DEFAULT NULL COMMENT 'mbti소개',
   PRIMARY KEY (`mbti_type`),
   KEY `fk_species_for_mbti_species_one` (`species_one`),
@@ -144,7 +146,6 @@ CREATE TABLE IF NOT EXISTS `species_for_mbti` (
   CONSTRAINT `FK_species_for_mbti_species_one_abandoned_animal_species` FOREIGN KEY (`species_one`) REFERENCES `species_information` (`no`),
   CONSTRAINT `fk_species_for_mbti_species_two` FOREIGN KEY (`species_two`) REFERENCES `species_information` (`no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 
 

@@ -6,6 +6,8 @@ import pymysql
 import datetime
 import logging
 
+
+
 def init_database( ):   # DB접근을 위한 함수
     app = Flask(__name__)
     username = 'root'
@@ -116,6 +118,7 @@ def species_dog(app, mysql, id, species_name):
 ################ 종현이 영역 #######################
 
 # 강아지 정보 가져오기(이름)
+# 강아지 정보 가져오기(이름)
 def get_dog_info(app,mysql,selec_id): 
     try:
         dog_name=list()
@@ -187,7 +190,8 @@ def mgti_commantary(app,mysql,mgti_type):
                 s.species_one_photo,
                 s.species_one_photo_two,
                 s.species_two_photo,
-                s.species_two_photo_two
+                s.species_two_photo_two,
+                a.animal_id
             FROM species_for_mbti s
             LEFT JOIN abandoned_animal a ON s.species_one = a.species OR s.species_two = a.species
             WHERE s.mbti_type = '{mgti_type}'
