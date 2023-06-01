@@ -16,13 +16,7 @@ def home():
 # 메인페이지
 @main.route('/mainpage', methods=['get','post'])
 def mainpage():
-    #뿡뿡이 오류 수정
-    #main_dogs_id =  [dog[0] for dog in db.main_dog( app, mysql, 3 , 'animal_id') ]
-    #main_dogs_name = [dog[0] for dog in db.main_dog( app, mysql, 3 , 'animal_name') ]
-    #main_dogs_age =  [dog[0] for dog in db.main_dog( app, mysql, 3 , 'age') ]
-    #main_dogs_img = [dog[0] for dog in db.main_dog( app, mysql, 3 , 'profile_image') ] 
-    dogs=list()
-    dogs.append(db.main_dog( app, mysql, 3 , 'animal_id, animal_name, age, profile_image'))
+    dogs=[db.main_dog( app, mysql, 3 , 'animal_id, animal_name, age, diffusion_profile_image')]
 
     main_dogs_id = list()
     main_dogs_name = list()

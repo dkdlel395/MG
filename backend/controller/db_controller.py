@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 import pymysql
+import datetime
+import logging
 
 def init_database( ):   # DB접근을 위한 함수
     app = Flask(__name__)
@@ -13,6 +15,13 @@ def init_database( ):   # DB접근을 위한 함수
 
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{host}/{db_name}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    ###
+    # 로깅 레벨 설정
+    app.logger.setLevel(logging.DEBUG)
+
+    # 로깅 핸들러 추가
+    stream_handler = logging.StreamHandler()
     return app
 
 def init(app):
@@ -107,31 +116,63 @@ def species_dog(app, mysql, id, species_name):
 ################ 종현이 영역 #######################
 
 # 강아지 정보 가져오기(이름)
-def chat_get_dog_name(app,mysql,selec_id): 
+def get_dog_info(app,mysql,selec_id): 
     try:
         dog_name=list()
         with app.app_context():
-            cur = mysql.session.execute(text(f"""SELECT animal_name FROM abandoned_animal WHERE animal_id = '{selec_id}' """))
+            cur = mysql.session.execute(text(f"""
+                                                SELECT animal_name, profile_image
+                                                FROM abandoned_animal 
+                                                WHERE animal_id = '{selec_id}' 
+                                            """))
             dog_name = cur.fetchall()
             return dog_name
     except Exception as e:
         print(e)
 
-# 강아지 정보 가져오기(사진)
-def chat_get_dog_pic(app,mysql,selec_id):  
+# 채팅 페이지 로드시 content, send, date를 받아온다
+def load_chat(app,mysql, friend_number):
     try:
-        dog_pic=list()
+        dog_name=list()
         with app.app_context():
-            cur = mysql.session.execute(text(f"""SELECT profile_image FROM abandoned_animal WHERE animal_id = '{selec_id}' """))
-            dog_pic = cur.fetchall()
-            return dog_pic
+            cur = mysql.session.execute(text(f"""
+                                                SELECT chat_content, sent_or_received, chat_date
+                                                FROM chat
+                                                WHERE friend_list_no = '{friend_number}'
+                                                ORDER BY chat_date DESC
+                                                LIMIT 10;
+                                            """))
+            dog_name = cur.fetchall()
+            return dog_name
     except Exception as e:
         print(e)
+
 
 # 채팅 방에서 표시될 사용자 id,이름,사진을 받아오는 함수 (추후엔 db에 접근해야 되니 dbcontroller에 넣었다,지금은 사용안하고 있음)
 def chat_user_id_name_pic():
     user_info = ["1","user name","www.userimage.com"]
     return user_info
+
+def save_chat_content( app, mysql, friend_list_no, chat_content, sent_or_received, suitability_type, suitability ):
+    chat_date = str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+    try:
+        with app.app_context():
+            
+            mysql.session.execute(text(f"""
+                INSERT INTO chat( friend_list_no, chat_content, chat_date, sent_or_received, suitability_type, suitability )
+                VALUES          ( {friend_list_no}, '{chat_content}', '{chat_date}', {sent_or_received}, NULL, NULL );
+            """))
+
+            mysql.session.flush()
+            mysql.session.commit()
+
+        return chat_date
+
+    except Exception as e:
+        print(e)
+        return chat_date
+
 
 # mgti를 받아 종,종의 사진,mgti설명을 받아오는 함수
 def mgti_commantary(app,mysql,mgti_type):

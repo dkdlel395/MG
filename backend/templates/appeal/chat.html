@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  {% include 'main.html' %}
+{% extends "main.html" %}
+
+{% block content %}
+
 <style>
 
 #frame {
 			position: absolute;
-			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			border: 1px solid gray;
@@ -87,29 +86,115 @@
   outline: none;
   box-shadow: 0px 0px 3px #0084ff;
 }
+
+#main_frame {
+    height: 1200px;
+    width: 100%;
+    margin-top: 75px;
+    position:relative
+}
 </style>
-</head>
-<body>
-    <div style="width:100%; height:1000px; position:absolute; top: 150px;">
+  <div id="main_frame">
         <div id="frame" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 1px solid gray; background-color: rgb(242, 246, 255, 0.5); width: 90%; height: 80%;">
           <div class="chat-container"></div>
           <div class="chat-input">
-            <input type="text" id="message-input" placeholder="메시지를 입력하세요...{{dogid}}">
+            <input type="text" id="message-input" placeholder="메시지를 입력하세요...">
             <button id="send-btn" onclick="sendMessage()">전송</button>
           </div>
         </div>
-      </div>
+    </div>
   <script>
-    //test
-    var user_name = '예찬';
+    // dogId, userId, dog_name, profile, chat_number가 들어있는 json을 백엔드에서 받음
+    var dog_info_json = `{{ dog_info | tojson }}`;
+
+    var dog_info = JSON.parse(dog_info_json);
+    var dogId = dog_info.dog_id;
+    var userId = dog_info.user_id;
+    var dog_name = dog_info.dog_name;
+    var profile = dog_info.img_src;
+    var chat_number = 1
+ 
+
+    // 로컬 스토리지
+    var userKey = `${userId}_${dogId}`
+    var storageUserChat = localStorage.getItem(userKey);
 
     const messageInput = document.querySelector("#message-input");
     const sendButton = document.querySelector("#send-btn");
-    const chatContainer = document.querySelector(".chat-container");
 
-    const chat_contents = []
+    
+    var recodingChatContents = {}
+    // 로컬 스토리지가 true or null 이면 getCookie() 실행
+    if (storageUserChat == null || storageUserChat == "true"){
+      console.log("??")
+      recodingChatContents = getCookie()
+      localStorage.setItem( userKey, false )
+    }
+    else{
+      console.log("?")
+      recodingChatContents = getCookieData(document.cookie)
+    }
+    
+    
 
-    async function makeBubble( target, name, userMsg){
+
+    async function getCookieData(cookieString){
+      var recodingChatContent = {}
+
+      if(cookieString!=""){
+        // 쿠키데이터 정규화
+        var cookies = cookieString.split(';')[0].split('=')[1];
+        cookieString = cookies.replaceAll("\\054",",");
+        console.log(cookieString)
+        cookieString = cookieString.replaceAll("\\n",".");
+        var decodedData = decodeURIComponent(cookieString)
+        var chatData = decodedData.replace(/ +$/, '').replace(/\\/g, "").slice(1,-1).trim()
+        console.log(chatData)
+        var friendChatList = JSON.parse( chatData );
+        console.log(friendChatList)
+
+        // 쿠키 메세지 json으로 저장
+        recodingChatContent = JSON.parse(JSON.stringify(friendChatList.chat))
+      }
+      
+      // 쿠키에서 추출한 데이터를 이용하여 채팅버블 생성
+      if (recodingChatContent.length != 0){
+        friendChatList.chat.slice().reverse().forEach(chat => {
+        var content = chat.content
+        var send    = chat.send == 0 ? 'me' : 'chat-bubble-alt'
+        var date    = chat.date
+        var name    = chat.send == 0 ? dogId : userId
+
+        makeBubble( send, name, content, date)
+        }); 
+      }
+
+      // 채팅 버블 개수
+      return recodingChatContent
+  
+    }
+    
+    
+
+    async function getCookie() {
+      try {
+        const response  = await fetch('/appeal/load_before_chat', 
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "text/plain"
+            },
+            body: chat_number
+          });
+        return getCookieData(document.cookie);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function makeBubble( target, name, userMsg, date){
+      const chatContainer = document.querySelector(".chat-container");
       const message = document.createElement("div");
       const messageBubble = document.createElement("div");
       const messageText = document.createElement("p");
@@ -119,9 +204,8 @@
 
       messageBubble.classList.add("chat-bubble", target);
       messageText.innerText = userMsg;
-      console.log(messageText.id)
       messageSender.innerText = name;
-      messageTime.innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      messageTime.innerText = date;
 
       messageBubble.appendChild(messageText);
       messageBubble.appendChild(messageTime);
@@ -131,35 +215,64 @@
 
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
-    
-    sendButton.addEventListener("click", (event) => {
-      const user_msg = messageInput.value
 
-      event.preventDefault();
-      if (user_msg) {
-        makeBubble( 'me', user_name , user_msg)
+    var msgCnt = 0
+    recodingChatContents.then(result => {
+      recodingChatContents = result
+      msgCnt = recodingChatContents.length
+    }).catch(error => {
+      console.log('에러가 발생했습니다:', error);
+    });
 
-            fetch('/appeal/answer', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'text/plain'
-              },
-              body: user_msg
-            })
-              .then(response => response.json())
-              .then(data => {
-                const contents = data.message_content.toString().split('.');
-                contents.forEach(content => {
-                  
-                  setTimeout(function() {
-                    makeBubble( 'chat-bubble-alt',"{{chat_dog_name}}", content) //{{chat_dog_name}}는 백엔드에서 보내준 강아지 이름이다
-                  }, 1000);
-                });
-                
-              })
-              .catch(error => console.error(error));
-      }
+
+
+    sendButton.addEventListener("click", async (event) => {
+      // 로컬 스토리지 true로 변경
+      // 다음 채팅 이용시 새로운 쿠키를 가져온다
+      localStorage.setItem( userKey, true )
+      // 메세지 입력칸 값 가져오기
+      var query = messageInput.value
+      // 메세지 입력칸 초기화
       messageInput.value = "";
+      // 백엔드로 보내기 위해 json 형식으로 구성하기
+      const user_msg  = `{"query": "${query}", "dogId": "${dogId}", "userId": "${userId}"}`
+      // send 0 유저 1 강아지
+        
+      recodingChatContents.push({"no": msgCnt, "content": query, "send": 0, "date": new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})});
+      if (recodingChatContents.length == 10)
+        recodingChatContents.shift()
+      
+      msgCnt++
+
+      if (user_msg) {
+        makeBubble('me', userId, query, new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+        try {
+          console.log(recodingChatContents.length)
+          const response = await fetch('/appeal/answer', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"userId":userId, "dogId":dogId, "chat":recodingChatContents.length == 0 ? 
+            {"no": msgCnt, "content": query, "send": 0, "date": new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} :recodingChatContents})
+          });
+          const data = await response.json();
+          console.log(data);
+          const contents = data.message_content.toString().split('.');
+          for (const content of contents) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            makeBubble('chat-bubble-alt', dog_name, content, new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})); // {{chat_dog_name}}는 백엔드에서 보내준 강아지 이름입니다.
+          }  
+            
+          recodingChatContents.push({"no": msgCnt, "content": data.message_content, "send": 1, "date": new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})})
+          if (recodingChatContents.length == 10)
+            recodingChatContents.shift()
+          msgCnt++
+
+        } catch (error) {
+          console.error(error);
+        }
+      }
     });
     
 
@@ -180,5 +293,5 @@
     });
 
   </script>
-</body>
-</html>
+
+{% endblock %}

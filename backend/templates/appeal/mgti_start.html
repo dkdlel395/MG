@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include 'main.html' %}
+{% extends "main.html" %}
+
+{% block content %}
+
 <style>
 @font-face {
     font-family: 'S-CoreDream-3Light';
@@ -58,11 +58,12 @@ h1 {
     position: absolute;
     width:100%;
     height: 1000px;
-    top: 150px;
+    margin-top: 150px;
+    padding:150px;
+    position:relative;
 }
 </style>
-</head>
-<body>
+
     <div id="frame">
         <title>나의 멍BTI는?</title>
         <h1><span class="highlight">나의 MGTI는?</h1>
@@ -70,6 +71,4 @@ h1 {
         <p>나의 MGTI에 맞는 강아지를 찾고 싶니?</p>
         <button type="button" class="navyBtn" onClick="location.href='/appeal/mgti_ing'">시작</button>
     </div>
-   
-</body>
-</html>
+{% endblock %}

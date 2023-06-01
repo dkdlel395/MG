@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  {% include 'main.html' %}
+
+{% extends "main.html" %}
+
+{% block content %}
+
 <style>
 @font-face {
   font-family: 'S-CoreDream-3Light';
@@ -49,6 +50,8 @@ label {
 }
 .container {
   border: 4px solid rgb(210, 210, 210);
+  width: 100%;
+  height: 100%;
   text-align: center;
   padding: 50px;
   border-radius: 20px;
@@ -62,14 +65,13 @@ label {
 }
 
 #frame{
-    position: absolute;
-    width:100%;
-    height: 1000px;
-    top: 150px;
+  height: 1200px;
+  width: 100%;
+  margin-top: 75px;
+  position:relative
 }
 </style>
-</head>
-<body>
+
   <div id="frame">
     <title>나의 MGTI는?</title>
 
@@ -90,6 +92,8 @@ label {
     <span class="highlight">※ 멍 친구들과 대화를 원하면 회원가입을 진행하세요</span>
     </div>
   </div>
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     const answers = {};
@@ -117,14 +121,22 @@ label {
           var image3 = [];
           var image4 = [];
           var mbtiIntroduction = response[0];
-          var mbtiType = response[9];
+          var mbtiType = response[10];
           var abandonedSpecies = response[3];
+          var dogid_1 = response[9];
+          var dogid_2 = response[12];
 
           // species_for_mbti.species_one와 abandoned_animal.species 비교
           if (response[1] === abandonedSpecies) {
               // abandoned_animal.diffusion_profile_image 반환
               image1.push(response[4]);
-              image2.push(response[10]);
+              image2.push(response[11]);
+              document.getElementById("image1").addEventListener("click", function() {
+              window.location.href = "/main/introduction/" + dogid_1;
+          });
+          document.getElementById("image2").addEventListener("click", function() {
+              window.location.href = "/main/introduction/" + dogid_2;
+          });
           } else {
               // species_for_mbti.species_one_photo 반환
               image1.push(response[5]);
@@ -135,7 +147,13 @@ label {
           if (response[2] === abandonedSpecies) {
               // abandoned_animal.diffusion_profile_image 반환
               image3.push(response[4]);
-              image4.push(response[10]);
+              image4.push(response[11]);
+              document.getElementById("image3").addEventListener("click", function() {
+              window.location.href = "/main/introduction/" + dogid_1;
+          });
+          document.getElementById("image4").addEventListener("click", function() {
+              window.location.href = "/main/introduction/" + dogid_2;
+          });
           } else {
               // species_for_mbti.species_two_photo 반환
               image3.push(response[7]);
@@ -149,12 +167,24 @@ label {
           document.getElementById("image4").src = image4;
           document.getElementById("mbti_introduction").innerHTML = mbtiIntroduction;
           document.getElementById("mbti").innerHTML = mbtiType;
+
+          // clickable-image 클래스 추가
+          document.getElementById("image1").classList.add("clickable-image");
+          document.getElementById("image2").classList.add("clickable-image");
+          document.getElementById("image3").classList.add("clickable-image");
+          document.getElementById("image4").classList.add("clickable-image");
       },
       error: function (xhr, status, error) {
           // 전송 실패 시 실행할 코드
           console.log('Error occurred while sending data:', error);
       }
   });
-  </script>
-</body>
-</html>
+</script>
+
+<style>
+    .clickable-image {
+        cursor: pointer;
+    }
+</style>
+
+{% endblock %}
