@@ -1,23 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+
+<html class="no-js" lang="">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>멍결고리</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <!-- Google fonts link-->
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+
+    <!--For Plugins external css-->
+    <link rel="stylesheet" href="../static/css/plugins.css" />
+
+    <!--Theme custom css -->
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <!--Theme Responsive css-->
+    <link rel="stylesheet" href="../static/css/responsive.css" />
+
+    <script src="../static/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <style>
         body{
             height: 100%;
             width: 100%;
             margin: 0;
+            background-color: #f2f2f2;
         }
         header{           
-            background-color:rgba(242, 246, 255, 0.5);
+            background-color:rgba(233, 236, 241, 0.5);
             height: 150px;
             width: 100%;
             position: relative; /* header를 relative로 설정 */
-        }
+            transition: background-color 0.3s ease; /* 배경색 변화에 대한 트랜지션 효과 추가 */
+            }
+    
+        
 
+            header.scrolled {
+            background-color: rgba(233, 236, 241, 0.4); /* 스크롤을 내릴 때 배경색 변경 */
+            }
         
         #image{
             height: 95px;
@@ -56,7 +86,7 @@
             flex-direction: row;
             display: flex; /* nav를 flex로 설정 */
             list-style: none; /* ul의 기본 스타일을 제거 */
-            width: 27%;
+            width: 30%;
             padding: 0;
             top:50px;
             left: 40px;
@@ -69,9 +99,9 @@
             line-height: 50px;
             text-align:center;
             /* border: 3px solid #98E0AD ; */
-            font-size: 13px;
+            font-size: 10px;
             left:10px;
-            font-family:Georgia, serif;
+            font-family: 'S-CoreDream-3Light';
             letter-spacing :0.5px;
             transition: background-color 0.3s ease; /* 배경색 변화에 대한 트랜지션 효과 추가 */
             border-radius: 45px;
@@ -128,7 +158,7 @@
       
         footer{
             position: relative;
-            height: 120px;
+            height: 100%;
             width: 100%;
             background-color: rgb(240, 240, 240); 
             color: rgb(91, 88, 88);
@@ -148,70 +178,98 @@
             height: 100%;
         }
     </style>
-
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        const menuItems = document.querySelectorAll('#menu1 li');
-
-        menuItems.forEach((menuItem) => {
-            menuItem.addEventListener('click', () => {
-                menuItems.forEach((item) => {
-                    item.classList.remove('active'); // 다른 메뉴 항목의 active 클래스 제거
-                });
-                menuItem.classList.add('active'); // 선택한 메뉴 항목에 active 클래스 추가
-            });
-        });
-    });
-</script>
-  
 </head>
+
 <body>
     <div style="width: 100%;height: 100%;">
-    <header>
-        <nav>
-            <div id="menu1">
-                
-                <li><a href="/appeal/mgti_start">MGTI</a></li>
-                <li><a href="/appeal/chat">Chat</a></li>
-                <li><a href="/main/introduction">Mung list</a></li>
-                <li><a href="#">Adopt</a></li>
-                <li><a href="#">About us</a></li>
-                
-                
-            </div>
-            <div id="menu2">
-                <li><a href="#">register</a></li>
-                <li class="separator">|</li>
-                <li><a href="#">login</a></li>
-                <li class="separator">|</li>
-                <li><a href="#">my page</a></li>
-            </div>
-        </nav>
-        <div id="image">
-            <a href="/main/mainpage">
-                <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/%EB%A1%9C%EA%B3%A0%EC%B5%9C%EC%A2%851.png?alt=media&token=883a5e1f-c410-40ac-92dd-e61653012ecd" width=auto height="140px" alt="로고">
-    
-            </a>
-        </div>
-    </header>
-    </div>
-    {% block content %}
-    
-    {% endblock %}
+        <header>
+            <nav>
+                <div id="menu1">
 
-    <footer>
-            <div id="ment">
-                (팀) 핫바<br>
-                서울특별시 중구 필동로 1길30 (동국대학교)<br><br>
-                TEL : 010-2329-9893 팀장 윤예찬<br>
-                사업자 등록번호 : 619-48-00505<br>
-                MAIL : dpcks9893@naver.com<br>
-            </div>
-            <div id="img2">
-                <a href="https://github.com/dkdlel395/MG">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/2.png?alt=media&token=f6c54fd6-f39d-4bf5-a43f-47539c4b7609" width="30px" height="30px" alt="Github">
+                    <li><a href="/appeal/mgti_start">MGTI</a></li>
+                    <li><a href="/main/instruct">MY mung</a></li>
+                    <li><a href="/main/munglist">Mung list</a></li>
+                    <li><a href="/main/instruct">Adopt</a></li>
+                    <li><a href="/main/aboutus">About us</a></li>
+                </div>
+                <div id="menu2">
+                    <li><a href="#">register</a></li>
+                    <li class="separator">|</li>
+                    <li><a href="#">login</a></li>
+                    <li class="separator">|</li>
+                    <li><a href="#">my page</a></li>
+                </div>
+            </nav>
+            <div id="image">
+                <a href="/main/mainpage">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/aiml-47eec.appspot.com/o/%EB%A1%9C%EA%B3%A0%EC%B5%9C%EC%A2%851.png?alt=media&token=883a5e1f-c410-40ac-92dd-e61653012ecd"
+                        width=140px height="140px" alt="로고">
                 </a>
             </div>
+        </header>
+    </div>
+    <main style="background: #f8f8f8; height: 100%; ">
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="container">
+            <div class="main_footer text-center">
+                <div class="row">
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="copyright_text">
+                            <p class=" wow fadeInRight animated" data-wow-duration="1s"
+                                style="visibility: visible; animation-duration: 1s; animation-name: fadeInRight;"><i
+                                    class="fa fa-heart"></i>Made by <i class="fa fa-heart"></i><br>
+                                (팀) 핫바<br>
+                                서울특별시 중구 필동로 1길30 (동국대학교)<br>
+                                TEL : 010-2329-9893 <br>
+
+                                MAIL : dpcks9893@naver.com<br>
+                                <a href="https://github.com/dkdlel395/MG">Github</a>
+                                2023. All Rights Reserved
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
+    <!-- START SCROLL TO TOP  -->
+    <div class="scrollup">
+        <a href="#"><i class="fa fa-chevron-up"></i></a>
+    </div>
+    <script>
+        function showmap() {
+            var mapOptions = {
+                zoom: 8,
+                scrollwheel: false,
+                center: new google.maps.LatLng(-34.397, 150.644),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+        }
+        /*
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 0) {
+                $('header').addClass('scrolled');
+            } else {
+                $('header').removeClass('scrolled');
+            }
+        });*/
+    </script>
+    <script src="../static/js/vendor/jquery-1.11.2.min.js"></script>
+    <script src="../static/js/vendor/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="../static/js/jquery.mixitup.min.js"></script>
+    <script src="../static/js/jquery.easing.1.3.js"></script>
+    <script src="../static/js/jquery.masonry.min.js"></script>
+    <script src="../static/js/jquery.fancybox.pack.js"></script>
+    <script src="../static/js/plugins.js"></script>
+    <script src="../static/js/main.js"></script>
 </body>
+
 </html>

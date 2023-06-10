@@ -3,295 +3,292 @@
 {% block content %}
 
 <style>
-
-#frame {
-			position: absolute;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			border: 1px solid gray;
-			background-color: rgb(242, 246, 255, 0.5);
-			width: 90%;
-			height: 80%;
-			overflow: hidden;
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-end;
-			padding: 20px;
-		}
-
-        .chat-container {
-  height: calc(80% - 50px);
-  overflow-y: scroll;
-  padding: 10px;
-}
-
-.chat-box {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
-}
-
-.chat-box-alt {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
-
-.chat-bubble {
-  background-color: #0084ff;
-  color: #fff;
-  border-radius: 10px;
-  padding: 10px;
-  max-width: 70%;
-  word-wrap: break-word;
-}
-
-.chat-bubble-alt {
-  background-color: #ddd;
-  color: #000;
-}
-
-.me {
-  margin-left: 30%;
-}
-
-.chat-input {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 10px;
-}
-
-.chat-input input[type="text"] {
-  width: 80%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-}
-
-.chat-input button {
-  width: 18%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #0084ff;
-  color: #fff;
-  cursor: pointer;
-}
-
-.chat-input input[type="text"]:focus {
-  outline: none;
-  box-shadow: 0px 0px 3px #0084ff;
-}
-
-#main_frame {
-    height: 1200px;
+  #main_frame {
     width: 100%;
-    margin-top: 75px;
-    position:relative
-}
-</style>
-  <div id="main_frame">
-        <div id="frame" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 1px solid gray; background-color: rgb(242, 246, 255, 0.5); width: 90%; height: 80%;">
-          <div class="chat-container"></div>
-          <div class="chat-input">
-            <input type="text" id="message-input" placeholder="메시지를 입력하세요...">
-            <button id="send-btn" onclick="sendMessage()">전송</button>
-          </div>
-        </div>
-    </div>
-  <script>
-    // dogId, userId, dog_name, profile, chat_number가 들어있는 json을 백엔드에서 받음
-    var dog_info_json = `{{ dog_info | tojson }}`;
-
-    var dog_info = JSON.parse(dog_info_json);
-    var dogId = dog_info.dog_id;
-    var userId = dog_info.user_id;
-    var dog_name = dog_info.dog_name;
-    var profile = dog_info.img_src;
-    var chat_number = 1
- 
-
-    // 로컬 스토리지
-    var userKey = `${userId}_${dogId}`
-    var storageUserChat = localStorage.getItem(userKey);
-
-    const messageInput = document.querySelector("#message-input");
-    const sendButton = document.querySelector("#send-btn");
-
-    
-    var recodingChatContents = {}
-    // 로컬 스토리지가 true or null 이면 getCookie() 실행
-    if (storageUserChat == null || storageUserChat == "true"){
-      console.log("??")
-      recodingChatContents = getCookie()
-      localStorage.setItem( userKey, false )
-    }
-    else{
-      console.log("?")
-      recodingChatContents = getCookieData(document.cookie)
-    }
-    
-    
-
-
-    async function getCookieData(cookieString){
-      var recodingChatContent = {}
-
-      if(cookieString!=""){
-        // 쿠키데이터 정규화
-        var cookies = cookieString.split(';')[0].split('=')[1];
-        cookieString = cookies.replaceAll("\\054",",");
-        console.log(cookieString)
-        cookieString = cookieString.replaceAll("\\n",".");
-        var decodedData = decodeURIComponent(cookieString)
-        var chatData = decodedData.replace(/ +$/, '').replace(/\\/g, "").slice(1,-1).trim()
-        console.log(chatData)
-        var friendChatList = JSON.parse( chatData );
-        console.log(friendChatList)
-
-        // 쿠키 메세지 json으로 저장
-        recodingChatContent = JSON.parse(JSON.stringify(friendChatList.chat))
-      }
-      
-      // 쿠키에서 추출한 데이터를 이용하여 채팅버블 생성
-      if (recodingChatContent.length != 0){
-        friendChatList.chat.slice().reverse().forEach(chat => {
-        var content = chat.content
-        var send    = chat.send == 0 ? 'me' : 'chat-bubble-alt'
-        var date    = chat.date
-        var name    = chat.send == 0 ? dogId : userId
-
-        makeBubble( send, name, content, date)
-        }); 
-      }
-
-      // 채팅 버블 개수
-      return recodingChatContent
+    height: 1000px;
+    position: relative;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+  }
   
-    }
-    
-    
-
-    async function getCookie() {
-      try {
-        const response  = await fetch('/appeal/load_before_chat', 
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "text/plain"
-            },
-            body: chat_number
-          });
-        return getCookieData(document.cookie);
-
-      } catch (error) {
-        console.log(error);
+  
+  #frame {
+    position: absolute;
+      background-color: rgb(242, 246, 255, 0.5);
+      width: 55%;
+      height: 600px;
+      margin: 0 auto;
+      top: 30px;
       }
-    }
+  
+    .chat-container {
+    width: 100%;
+    height: 89%;
+    overflow-y: scroll;
+    padding: 10px;
+  }
+  
+  .chat-box {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  
+  .chat-box-alt {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+  
+  .chat-bubble {
+    font-family: 'S-CoreDream-3Light';
+    background-color: #F5D5E0;
+    color: #333;
+    font-size: 1.0rem;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px;
+    max-width:fit-content;
+    word-wrap: break-word;
+  }
+  
+  .chat-bubble-alt {
+    background-color: #ddd;
+    color: #000;
+  }
+  
+  .me {
+    margin-right: 5%;
+  }
+  
+  .chat-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 20px;
+  }
+  
+  .chat-input input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .chat-input button {
+    width: 18%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0084ff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .chat-input input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0px 0px 3px #0084ff;
+  }
 
-    async function makeBubble( target, name, userMsg, date){
-      const chatContainer = document.querySelector(".chat-container");
-      const message = document.createElement("div");
-      const messageBubble = document.createElement("div");
-      const messageText = document.createElement("p");
-      const messageTime = document.createElement("span");
-      const messageSender = document.createElement("span");
-      message.style.marginTop = '20px';
+  #profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 
-      messageBubble.classList.add("chat-bubble", target);
-      messageText.innerText = userMsg;
-      messageSender.innerText = name;
-      messageTime.innerText = date;
+  }
+  
+  
+  .chat_wrap { border:1px solid #999; width:100%; padding:5px; font-size:13px; color:#333;  height: 100%;}
+  .chat_wrap .inner{background-color:#F5D5E0; border-radius:5px; padding:10px; height: 100%;overflow-y: scroll;}
+  .chat_wrap .item{margin-top:15px}
+  .chat_wrap .item:first-child{margin-top:0px;}
+  .chat_wrap .item .box{display:inline-block; max-width:250px; position:relative}
+  .chat_wrap .item .box::before{content:""; position:absolute; top: 5px; left:-8px; top:9px; margin-left: 6px; border-top:0px solid transparent; border-bottom:8px solid transparent;border-right:8px solid #fff;}
+  .chat_wrap .item .box .msg {background:#fff; border-radius:10px; padding:8px; margin-left: 6px; text-align:left; word-break: break-word;}
+  .chat_wrap .item .box .time {font-size:11px; color:#999; position:absolute; right: -75px; bottom:5px; width:70px}
+  .chat_wrap .item.mymsg{text-align:right}
+  .chat_wrap .item.mymsg .box::before{left:auto; right:-8px; border-left:8px solid #fee600; border-right:0;  }
+  .chat_wrap .item.mymsg .box .msg{background:#fee600; display: block;}
+  .chat_wrap .item.mymsg .box .time{right:auto; left:-75px}
+  .chat_wrap .item .box{transition:all .3s ease-out; margin:0 0 0 20px;opacity:0}
+  .chat_wrap .item.mymsg .box{transition:all .3s ease-out; margin:0 20px 0 0;}
+  .chat_wrap .item.mymsg.on {height: fit-content; align-items: start; display: block;}
+  
+  .chat_wrap .item.on {height: fit-content; align-items: start; display: flex;}
+  .chat_wrap .item.on .box{margin:0; opacity: 1; left: 3px;}
+  .chat_wrap .item.on .box.img{margin:0; opacity: 1; height: 100%; position: relative;}
+  .chat_wrap .item .box.img::before{content:""; position:relative; left:-8px; top:0px; border-top:0px solid transparent; border-bottom:8px solid transparent;border-right:8px}
 
-      messageBubble.appendChild(messageText);
-      messageBubble.appendChild(messageTime);
-      messageBubble.appendChild(messageSender);
-      message.appendChild(messageBubble);
-      chatContainer.appendChild(message);
+  input[type="text"]{border:0; width:100%;background:#ddd; border-radius:5px; height:30px; padding-left:5px; box-sizing:border-box; margin-top:5px}
+  input[type="text"]::placeholder{color:#999}
+  
+  </style>
 
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
+<div id="main_frame">
+  <div id="frame">
+    <div class="chat_wrap">
+      <div class="inner" id="inner">  
+      </div>
+      <div class="chat-input">
+        <input type="text" id="message-input" class="mymsg" placeholder="메시지를 입력하세요...">
+        <button id="send-btn" onclick="sendMessage()">전송</button>
+      </div>                       
+    </div>          
+  </div>
+</div>
 
-    var msgCnt = 0
-    recodingChatContents.then(result => {
-      recodingChatContents = result
-      msgCnt = recodingChatContents.length
-    }).catch(error => {
-      console.log('에러가 발생했습니다:', error);
-    });
+<script>
+  var dog_info_json = `{{ dog_info | tojson }}`;
+  
 
+  var dog_info = JSON.parse(dog_info_json);
+  console.log(dog_info)
+  var dogId = dog_info.dog_id;
+  var userId = dog_info.user_id;
+  var dog_name = dog_info.dog_name;
+  var profile = dog_info.img_src;
+  var frendNum = dog_info.friend_no
+  console.log(frendNum)
+  const messageInput = document.querySelector("#message-input");
+  const sendButton = document.querySelector("#send-btn");
 
-
-    sendButton.addEventListener("click", async (event) => {
-      // 로컬 스토리지 true로 변경
-      // 다음 채팅 이용시 새로운 쿠키를 가져온다
-      localStorage.setItem( userKey, true )
-      // 메세지 입력칸 값 가져오기
-      var query = messageInput.value
-      // 메세지 입력칸 초기화
-      messageInput.value = "";
-      // 백엔드로 보내기 위해 json 형식으로 구성하기
-      const user_msg  = `{"query": "${query}", "dogId": "${dogId}", "userId": "${userId}"}`
-      // send 0 유저 1 강아지
-        
-      recodingChatContents.push({"no": msgCnt, "content": query, "send": 0, "date": new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})});
-      if (recodingChatContents.length == 10)
-        recodingChatContents.shift()
+  cookie = getCookie()
+  async function getCookie() {
+        const response = await fetch('/appeal/load_before_chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"friendNo":frendNum, "dogId":dogId, "userId":userId})
+      });
       
-      msgCnt++
+          const cookie = await response.json();
 
-      if (user_msg) {
-        makeBubble('me', userId, query, new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
-        try {
-          console.log(recodingChatContents.length)
-          const response = await fetch('/appeal/answer', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"userId":userId, "dogId":dogId, "chat":recodingChatContents.length == 0 ? 
-            {"no": msgCnt, "content": query, "send": 0, "date": new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} :recodingChatContents})
+          await cookie.chat.slice().reverse().forEach(chat => {
+            var content = chat.content
+            var send = chat.send == 0 ? 'me' : 'chat-bubble-alt'
+            var date = set_date_format(chat.date).toString()//.then(value => value.toString())
+            var name = chat.send == 0 ? dogId : userId
+            console.log(date)
+            makeBubble(send, name, content, date)
           });
-          const data = await response.json();
-          console.log(data);
-          const contents = data.message_content.toString().split('.');
-          for (const content of contents) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            makeBubble('chat-bubble-alt', dog_name, content, new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})); // {{chat_dog_name}}는 백엔드에서 보내준 강아지 이름입니다.
-          }  
-            
-          recodingChatContents.push({"no": msgCnt, "content": data.message_content, "send": 1, "date": new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})})
-          if (recodingChatContents.length == 10)
-            recodingChatContents.shift()
-          msgCnt++
 
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    });
-    
-
-    function sendMessage() {
-      // 클릭 이벤트 디스패치
-      sendButton.dispatchEvent(new Event("click"));
+          console.log(cookie)
+          return cookie
     }
 
-    // 클릭 이벤트 핸들러
-    sendButton.onclick = function() {
-      // 원하는 동작 수행
-    };
+    function set_date_format(date){
+      time = date.split(" ")[1].split(":")
+      ampm = parseInt(time[0], 2) > 12 ? `오후 ${time[0]}:` : `오전 ${time[0]}:`
+      mm = time[1]
+      format_date = `${ampm}${mm}`
 
-    messageInput.addEventListener("keyup", (event) => {
-      if (event.keyCode === 13) {
-        sendMessage();
+      return format_date
+    }
+
+
+    async function makeBubble(target, name, userMsg, date) {
+      var isMe = target === 'me';
+      var profilePart = isMe ? '' : `<div class="box img"><img id="profile" src=${profile}></div>`;
+
+      var _tar = $(".chat_wrap .inner").append(
+          `<div class="item ${isMe ? 'mymsg' : ''}">
+              ${profilePart}
+              <div class="box">
+                  <p class="msg">${userMsg}</p>
+                  <span class="time">${date}</span>
+              </div>
+          </div>`
+      );
+
+      var lastItem = $(".chat_wrap .inner .item:last");
+      setTimeout(function () {
+          lastItem.addClass("on");
+      }, 10);
+
+      var position = lastItem.position().top + $(".chat_wrap .inner").scrollTop();
+
+      $(".chat_wrap .inner").stop().animate({ scrollTop: position }, 500);
+  }
+
+  var chatList = []
+  var msgCnt = 0
+  sendButton.addEventListener("click", async (event) => {
+    // 메세지 입력칸 값 가져오기
+    var query = messageInput.value
+    // 메세지 입력칸 초기화
+    messageInput.value = "";
+    // 백엔드로 보내기 위해 json 형식으로 구성하기
+    const user_msg = `{"query": "${query}", "dogId": "${dogId}", "userId": "${userId}"}`
+    // send 0 유저 1 강아지
+
+    chatList.push({ "no": msgCnt, "content": query, "send": 0, "date": new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
+    if (chatList.length == 10)
+    chatList.shift()
+
+    msgCnt++
+
+    if (user_msg) {
+      makeBubble('me', userId, query, new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+
+      const response = await fetch('/appeal/answer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "userId": userId, "dogId": dogId, "friendNum": frendNum, "chat": chatList.length == 0 ?
+            { "no": msgCnt, "content": query, "send": 0, "date": new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) } : chatList
+        })
+      });
+
+      const data = await response.json();
+      console.log(data);
+      const contents = data.message_content.toString().split('.');
+      for (const content of contents) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        makeBubble('chat-bubble-alt', dog_name, content, new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })); // {{chat_dog_name}}는 백엔드에서 보내준 강아지 이름입니다.
       }
-    });
 
-  </script>
+      chatList.push({ "no": msgCnt, "content": data.message_content, "send": 1, "date": new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) })
+      if (chatList.length == 10)
+      chatList.shift()
+      msgCnt++
+    }
+  });
+
+
+  function sendMessage() {
+    // 클릭 이벤트 디스패치
+    sendButton.dispatchEvent(new Event("click"));
+  }
+
+  // 클릭 이벤트 핸들러
+  sendButton.onclick = function () {
+    // 원하는 동작 수행
+  };
+
+  messageInput.addEventListener("keyup", (event) => {
+    if (event.keyCode === 13) {
+      sendMessage();
+    }
+  });
+
+
+  
+  var currentTime = function(){
+      var date = new Date();
+      var hh = date.getHours();
+      var mm = date.getMinutes();
+      var apm = hh >12 ? "오후":"오전";
+      var ct = apm + " "+hh+":"+mm+"";
+      return ct;
+  }
+
+</script>
 
 {% endblock %}

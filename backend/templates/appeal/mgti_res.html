@@ -1,190 +1,149 @@
-
 {% extends "main.html" %}
 
 {% block content %}
 
 <style>
-@font-face {
-  font-family: 'S-CoreDream-3Light';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-  h1 {
-  margin-bottom: 50px;
-}
-  h2 {
-  margin-bottom: 150px;
-}
-
-body {
-  background-color: #f2f2f2;
-  font-family: 'S-CoreDream-3Light';
-  text-align: center;
+  @font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
   
+    h1 {
+    margin-bottom: 50px;
+    font-size: 3.7rem;
+    color:rgb(42, 42, 42);
+  }
+    h2 {
+    margin-bottom: 20px;
+    color:rgb(42, 42, 42);
+    font-family: 'GangwonEdu_OTFBoldA';
+  }
   
-}
+  body {
+    background-color: #f2f2f2;
+    font-family: 'S-CoreDream-3Light';
+    text-align: center; 
+  }
+  
+  form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  
+  label {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  
+  .image-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    width: 100%;
+    height: 200px;
+  }
+  
+  .image-container img {
+    width: 200px;
+    height: 200px;
+    margin: 0 10px;
+  }
+  .container {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 50px;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+  .highlight {
+    background-color: rgb(255, 192, 203);
+    display: inline-block;
+    padding: 0 10px;
+    line-height: 0.5;
+    font-family: 'S-CoreDream-3Light';
+  }
+  
+  #frame{
+      padding-bottom: 60px;
+      position: relative;
+      padding-top: 100px;
+  }
+  
+  </style>
 
-form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
 
-label {
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-.image-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-}
-
-.image-container img {
-  width: 200px;
-  height: 200px;
-  margin: 0 10px;
-}
-.container {
-  border: 4px solid rgb(210, 210, 210);
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  padding: 50px;
-  border-radius: 20px;
-  box-sizing: border-box;
-}
-.highlight {
-  background-color: pink;
-  display: inline-block;
-  padding: 0 10px;
-  line-height: 0.5;
-}
-
-#frame{
-  height: 1200px;
-  width: 100%;
-  margin-top: 75px;
-  position:relative
-}
-</style>
-
+  <!-- -->
   <div id="frame">
-    <title>나의 MGTI는?</title>
+    <h2><span class="title">나와 잘 어울리는 강아지의 MBTI 유형은?</span></h2>
+    <div class="separator"></div>
 
-    <div class="container">
-    <h1><span class="highlight">나와 잘 어울리는 강아지 유형은</span></h1>
-    <h1><span class="highlight">"<a id="mbti"></a>"</span></h1>
-    <h2><span class="highlight">"<a id="mbti_introduction"></a>"</span></h2>
+    <div>
+      <h1>
+        <span class="highlight">
+          <a id="result_mbtiType" style="color: rgb(57, 53, 53)">
+          </a>
+        </span>
+      </h1>
+      <p>"&nbsp;
+        <a id="mbti_introduction">
+        </a>&nbsp;"
+      </p>
 
-    <h1><span class="highlight">나와 잘 맞는 멍친구들</span></h1>
-    <div class="image-container">
-      <img id="image1" alt="species_one_photo"></img>
-      <img id="image2" alt="species_one_photo"></img>
-      <img id="image3" alt="species_two_photo"></img>
-      <img id="image4" alt="species_two_photo"></img>
-      
-      
+      <div class="separator"></div>
+      <h2><span class="title"> </span></h2>
+      <div class="image-container">
+        <form id="img_form" method="get">
+          <input id="image1" type="image" alt="photo" onclick="changeActionAndSubmit(event)">
+          <input id="image2" type="image" alt="photo" onclick="changeActionAndSubmit(event)">
+          <input id="image3" type="image" alt="photo" onclick="changeActionAndSubmit(event)">
+          <input id="image4" type="image" alt="photo" onclick="changeActionAndSubmit(event)">
+        </form>
+      </div>
+      <p style="font-size:15px; padding-top:30px;">If you want to chat with these mung, Then Sign up !!</p>
     </div>
-    <span class="highlight">※ 멍 친구들과 대화를 원하면 회원가입을 진행하세요</span>
-    </div>
+
   </div>
-
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
-    const answers = {};
-    for (let i = 0; i < 15; i++) {
-        answers[i] = sessionStorage.getItem(i);
+    var mbti = JSON.parse('{{mbti | tojson}}')["mbti"]
+    $("#result_mbtiType").text(mbti)
+    
+    const response = fetch('/appeal/mgti_res/get_dog', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          body: mbti
+          }).then(response => response.json())
+            .then(data => {
+              console.log('서버 응답:', data);
+              // 서버 응답에 대한 추가 처리 수행
+              data["dogs"].forEach((dog_info, idx) => {
+                var src = dog_info["diffusion_profile_image"]
+                $(`#image${idx+1}`).attr("src", src).attr("value",dog_info["animal_id"])
+              });
+              var mbti_info = data["mbti_info"]
+              $("#mbti_introduction").text(mbti_info)
+              
+            })
+            .catch(error => {
+              console.error('에러 발생:', error);
+              // 에러 처리 수행
+            });
+
+      function changeActionAndSubmit(event) {
+        var form = document.getElementById("img_form");
+        var targetId = $(`#${event.target.id}`).val();
+        form.action = `/main/introduction/${targetId}`;
+        form.submit();
     }
-    console.log(answers)
 
-    $.ajax({
-      url: '/appeal/res2',
-      type: 'POST',
-      data: JSON.stringify(answers),
-      contentType: 'application/json',
-      success: function (response) {
-          // 전송 성공 시 실행할 코드
-          console.log('Data sent successfully!');
-          console.log(response);
-          console.log(response[4]);
-          // console.log(response[8])
-          // console.log(len(response));
-          
+    
+  </script>
 
-          var image1 = [];
-          var image2 = [];
-          var image3 = [];
-          var image4 = [];
-          var mbtiIntroduction = response[0];
-          var mbtiType = response[10];
-          var abandonedSpecies = response[3];
-          var dogid_1 = response[9];
-          var dogid_2 = response[12];
-
-          // species_for_mbti.species_one와 abandoned_animal.species 비교
-          if (response[1] === abandonedSpecies) {
-              // abandoned_animal.diffusion_profile_image 반환
-              image1.push(response[4]);
-              image2.push(response[11]);
-              document.getElementById("image1").addEventListener("click", function() {
-              window.location.href = "/main/introduction/" + dogid_1;
-          });
-          document.getElementById("image2").addEventListener("click", function() {
-              window.location.href = "/main/introduction/" + dogid_2;
-          });
-          } else {
-              // species_for_mbti.species_one_photo 반환
-              image1.push(response[5]);
-              image2.push(response[6]);
-          }
-
-          // species_for_mbti.species_two와 abandoned_animal.species 비교
-          if (response[2] === abandonedSpecies) {
-              // abandoned_animal.diffusion_profile_image 반환
-              image3.push(response[4]);
-              image4.push(response[11]);
-              document.getElementById("image3").addEventListener("click", function() {
-              window.location.href = "/main/introduction/" + dogid_1;
-          });
-          document.getElementById("image4").addEventListener("click", function() {
-              window.location.href = "/main/introduction/" + dogid_2;
-          });
-          } else {
-              // species_for_mbti.species_two_photo 반환
-              image3.push(response[7]);
-              image4.push(response[8]);
-          }
-
-          document.getElementById("image1").src = image1;
-          // document.getElementById("image1").src = image1;
-          document.getElementById("image2").src = image2;
-          document.getElementById("image3").src = image3;
-          document.getElementById("image4").src = image4;
-          document.getElementById("mbti_introduction").innerHTML = mbtiIntroduction;
-          document.getElementById("mbti").innerHTML = mbtiType;
-
-          // clickable-image 클래스 추가
-          document.getElementById("image1").classList.add("clickable-image");
-          document.getElementById("image2").classList.add("clickable-image");
-          document.getElementById("image3").classList.add("clickable-image");
-          document.getElementById("image4").classList.add("clickable-image");
-      },
-      error: function (xhr, status, error) {
-          // 전송 실패 시 실행할 코드
-          console.log('Error occurred while sending data:', error);
-      }
-  });
-</script>
-
-<style>
-    .clickable-image {
-        cursor: pointer;
-    }
-</style>
-
-{% endblock %}
+  {% endblock %}

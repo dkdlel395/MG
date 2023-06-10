@@ -242,7 +242,6 @@ Section
 .sections {
     padding-top:85px;
     padding-bottom: 105px;
-    overflow: hidden;
 }
 .sections.footer {
     padding-bottom: 80px;
@@ -355,10 +354,10 @@ ul{
 Separator
 */
 .separator {
-    height: 3px;
-    width: 127px;
+    height: 30px;
+    /* width: 127px;
     margin: 25px auto;
-    background: #f38181;
+    background: #f38181; */
 }
 .whiseparator {
     height: 10px;
@@ -688,7 +687,7 @@ input::-ms-input-placeholder {
 }
 /*heading title all area*/
 .head_title{
-    margin-bottom:90px;
+    margin-bottom:30px;
 }
 .head_title h2{
     color:#333333;
@@ -804,7 +803,8 @@ input::-ms-input-placeholder {
 
 /*counter section css*/
 .counter{
-    background: #3bd3ba;
+    background: #f2f2f2;
+    margin-top:100px;
 }
 .counter .main_counter_area{}
 .counter .main_counter_area{}
@@ -816,11 +816,11 @@ input::-ms-input-placeholder {
 }
 
 .counter .main_counter_area .single_counter h2{
-    color:#fff;
-    font-size:4.5rem;
+    color:#383838;
+    font-size:3.5rem;
 }
 .counter .main_counter_area .single_counter h3{
-    color:#fff;
+    color:#5b5b5b;
     font-size:1.125rem;
 }
 
@@ -842,10 +842,10 @@ input::-ms-input-placeholder {
 }
 .main_service_area{}
 .service .single_service {
-    margin-bottom:30px;
-    margin-top:20px;
+    margin-bottom: 30px;
+    margin-top: 20px;
     display: inline-block;
-    width:100%;
+    width: 800px;
 
 }
 
@@ -856,7 +856,7 @@ input::-ms-input-placeholder {
     margin-right: 5%;
 }
 .service .single_service .single_service_icon i{
-    color:#95e1d3;
+    color: #e39a9a;
     font-size:2rem;
     margin-top: 10px;
 }
@@ -911,7 +911,7 @@ input::-ms-input-placeholder {
     text-transform: uppercase;
 }
 .doservice .main_doservice .single_doservice .single_doservice_acording .panel-title a i{
-    color: #3bd3ba;
+    color: #e39a9a;
     font-size: 1.575rem;
     display: inline-block;
     margin-right: 15px;
@@ -1170,13 +1170,14 @@ input::-ms-input-placeholder {
     overflow: hidden;
 }
 .client .main_client_content .single_client .single_client_img{
-    width:20%;
-    float:left;
+    width: 20%;
+    float: left;
+    margin-left: 80px;
 }
 .client .main_client_content .single_client .single_client_content{
-    width:75%;
-    float:right;
-    margin-left:5%;
+    width: 45%;
+    float: right;
+    margin-left: 5%;
 }
 .client .main_client_content .single_client .single_client_content p{
     margin-bottom: 5px;

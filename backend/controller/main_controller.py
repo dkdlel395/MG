@@ -1,59 +1,165 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, current_app as app
 from controller import bp_main as main
-from controller import db_controller
-import json
+import pymysql
+import logging
+import environment as env
 
-db = db_controller
-app = db.init_database( )
-mysql = db.init(app)
+def connection():
+    return pymysql.connect(
+        host        = env.db_ip,
+        port        = env.db_port,
+        user        = env.db_user_id,
+        password    = env.db_user_pw,
+        database    = env.db_name,
+        cursorclass = pymysql.cursors.DictCursor
+    )
 
-# 마스터페이지 -> 여기 의미 없는 페이지라 나중에 메인페이지로 변경하면 될듯
-@main.route('/', methods=['get','post'])
-def home():
-    popular_doges =  db.take_popular_dog( app, mysql, 3 )
-    return render_template( 'main.html' , dogs=popular_doges) # dog_image_address는 강아지 사진 주소를 프론트엔드로 보낼때 사용하는 함수
+def tool(msg, text=''):
+    ###
+    # 로깅 레벨 설정
+    app.logger.setLevel(logging.DEBUG)
+
+    # 로깅 핸들러 추가
+    stream_handler = logging.StreamHandler()
+
+    app.logger.info("======================")
+    app.logger.info(text)
+    app.logger.info(msg)
+
 
 # 메인페이지
 @main.route('/mainpage', methods=['get','post'])
 def mainpage():
-    dogs=[db.main_dog( app, mysql, 3 , 'animal_id, animal_name, age, diffusion_profile_image')]
+    try:
+        with connection().cursor() as cursor:
+                sql = f'''
+                    SELECT animal_id, animal_name, age, diffusion_profile_image
+                    FROM abandoned_animal
+                    ORDER BY increased_friends DESC
+                    LIMIT 3;
+                '''
+                cursor.execute(sql)
+                dogs = cursor.fetchall()
+                
+                dogs_json = {
+                    "dog":dogs
+                }
+        
+    finally:
+        cursor.close()
+    return render_template( 'mainpage.html' , dogs=dogs_json)
 
-    main_dogs_id = list()
-    main_dogs_name = list()
-    main_dogs_age = list()
-    main_dogs_img = list()
-    
-    for dog1 in dogs:
-        for dog in dog1:
-            main_dogs_id.append(dog[0]) 
-            main_dogs_name.append(dog[1])
-            main_dogs_age.append(dog[2])
-            main_dogs_img.append(dog[3])
-
-    return render_template( 'mainpage.html' , main_dogs_id=main_dogs_id, main_dogs_img=main_dogs_img, main_dogs_name=main_dogs_name, main_dogs_age=main_dogs_age)
 
 # 소개페이지
-@main.route('/introduction/<intro_input_dog_id>', methods=['get','post'])
-def introduction(intro_input_dog_id):
-    intro_dogs_id = intro_input_dog_id
-    intro_dogs_name = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'animal_name') ]
-    intro_dogs_age = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'age') ]
-    intro_dogs_img = [dog[0] for dog in db.intro_dog( app, mysql, intro_input_dog_id , 'diffusion_profile_image') ]
-    intro_dogs_species = [dog[0] for dog in db.species_dog(app, mysql, intro_input_dog_id , 'species_name')]
-
+@main.route('/introduction/<dog_id>', methods=['get','post'])
+def introduction(dog_id):
+    tool(dog_id)
+    user_id = 'yc'
     if request.method == 'GET':
-        return render_template( 'introduction.html' ,intro_dogs_id=intro_dogs_id, intro_dogs_name=intro_dogs_name, intro_dogs_age=intro_dogs_age, intro_dogs_img=intro_dogs_img, intro_dogs_species=intro_dogs_species)
-    else:
-        dogid = request.form.get('dogid')
-        return redirect(url_for('appeal_bp.load_chat_page', dogid=dogid))
+        try:
+            with connection().cursor() as cursor:
+                sql = f"""
+                    SELECT a.animal_name, a.age, a.introduction, a.diffusion_profile_image, p.persona
+                    FROM abandoned_animal AS a
+                    JOIN persona AS p ON a.animal_id = p.animal_id
+                    WHERE a.animal_id = '{dog_id}'
+                """
+                cursor.execute(sql)
+                dog_info = cursor.fetchone()
+                if dog_info : dog_info["dog_id"] = dog_id
+                tool(dog_info, 'dog_info')
+        except Exception as e:
+            pass
+        finally:
+            cursor.close()
+            
+        return render_template( 'introduction.html' , dog_info=dog_info)
+    else :
+        try:
+            conn = connection()
+            with conn.cursor() as cursor:
+                sql = f"""
+                    SELECT no
+                    FROM friend_list
+                    WHERE user_id = '{user_id}'
+                    AND animal_id = '{dog_id}'
+                """
+                friend_no=dict()
+                
+                cursor.execute(sql)
+                friend_no = cursor.fetchone()
+                friend_no = friend_no if friend_no != None else {}
 
+                if not friend_no.get("no") : 
+                    sql = f"""
+                        INSERT INTO friend_list(user_id, animal_id)
+                        VALUES ('{user_id}','{dog_id}')
+                    """
 
+                    cursor.execute(sql)
+                    conn.commit()
+            
+                
+                    sql = f"""
+                        SELECT no
+                        FROM friend_list
+                        WHERE user_id = '{user_id}'
+                        AND animal_id = '{dog_id}'
+                    """
+                    friend_no = {}
+                    
+                    cursor.execute(sql)
+                    friend_no = cursor.fetchone()
+                    friend_no = friend_no if friend_no != None else {}
+        except Exception as e:
+            pass
+        finally:
+            cursor.close()
 
+        tool(friend_no, 'introduction_friend_no_1')
+        
+        
+
+            
+            
+    tool(friend_no, 'introduction_friend_no_2')
+
+    return redirect(url_for('appeal_bp.load_chat_page', dog_id={"dog_id":dog_id, "friend_no":friend_no}))
+    
+    
 @main.route('/aboutus', methods=['get','post'])
 def aboutus():
-    return render_template( 'aboutus.html') # dog_image_address는 강아지 사진 주소를 프론트엔드로 보낼때 사용하는 함수
+    return render_template( 'aboutus.html')
 
-
+# 삭제예정
 @main.route('/index', methods=['get','post'])
 def index():
-    return render_template( 'index.html') # dog_image_address는 강아지 사진 주소를 프론트엔드로 보낼때 사용하는 함수
+    return render_template( 'index.html')
+
+
+@main.route('/munglist', methods=['get','post'])
+def munglist():
+    try:
+        with connection().cursor() as cursor:
+                sql = f'''
+                    SELECT animal_id, animal_name, age, diffusion_profile_image
+                    FROM abandoned_animal
+                    ORDER BY increased_friends DESC
+                    LIMIT 10;
+                '''
+                cursor.execute(sql)
+                dogs = cursor.fetchall()
+                
+                dogs_json = {
+                    "dog":dogs
+                }
+    except Exception as e:
+            pass
+    finally:
+        cursor.close()
+
+    return render_template( 'munglist.html' , dogs=dogs_json)
+
+@main.route('/instruct', methods=['get','post'])
+def instruct():
+     return render_template('instruct.html')

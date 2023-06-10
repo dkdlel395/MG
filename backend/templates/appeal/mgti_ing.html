@@ -2,11 +2,64 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>멍결고리</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <!-- Google fonts link-->
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+
+
+    <!--For Plugins external css-->
+    <link rel="stylesheet" href="../static/css/plugins.css" />
+
+    <!--Theme custom css -->
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <!--Theme Responsive css-->
+    <link rel="stylesheet" href="../static/css/responsive.css" />
+
+    <script src="../static/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
     <style>
+        @font-face {
+            font-family: 'HSSaemaul-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSSaemaul-Regular.woff') format('woff');
+            font-weight: lighter;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'GangwonEdu_OTFBoldA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'S-CoreDream-3Light';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+
         * {
             margin: 0;
             padding: 0;
@@ -20,105 +73,8 @@
 
         }
 
-
-        #image {
-            height: 95px;
-            width: 95px;
-            position: absolute;
-            border: 2px solid orange;
-            position: absolute;
-            /* 이미지를 절대 위치로 설정합니다. */
-            top: 50%;
-            /* 이미지의 상단을 header의 중앙으로 정렬합니다. */
-            left: 50%;
-            /* 이미지의 좌측을 header의 중앙으로 정렬합니다. */
-            transform: translate(-50%, -50%);
-            /* 이미지를 정확히 header의 중앙에 위치시킵니다. */
-
-        }
-
-        nav {
-            position: absolute;
-            bottom: 0;
-            display: flex;
-            /* nav를 flex로 설정 */
-            width: 100%;
-            /* border: 2px solid crimson; */
-            height: 100%;
-        }
-
-        #menu1 {
-            height: 50px;
-            border: 3px solid green;
-            position: absolute;
-            /* nav를 absolute로 설정 */
-            flex-direction: row;
-            display: flex;
-            /* nav를 flex로 설정 */
-            list-style: none;
-            /* ul의 기본 스타일을 제거 */
-            width: 27%;
-            padding: 0;
-            top: 50px;
-            left: 40px;
-        }
-
-        #menu1 li {
-
-            text-decoration: none;
-            width: 20%;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            border: 3px solid #98E0AD;
-            font-size: 11px;
-            left: 10px;
-            font-family: Georgia, serif;
-            letter-spacing: 0.5px;
-        }
-
-        #menu1 li a {
-            text-decoration: none;
-            text-decoration-line: none;
-            color: rgb(74, 74, 74);
-        }
-
-
-        #menu2 {
-            height: 40px;
-            border: 3px solid rgb(255, 255, 4);
-            position: absolute;
-            /* nav를 absolute로 설정 */
-            right: 10px;
-            display: flex;
-            /* nav를 flex로 설정 */
-            list-style: none;
-            /* ul의 기본 스타일을 제거 */
-            padding: 0;
-
-            top: 0px;
-        }
-
-        #menu2 li {
-            margin-right: 7px;
-            text-align: center;
-            height: 30px;
-            line-height: 30px;
-            font-size: 12px;
-            font-family: Georgia, serif;
-
-
-        }
-
-        #menu2 li a {
-            text-decoration: none;
-            text-decoration-line: none;
-            color: rgb(23, 22, 22);
-        }
-
         main {
-            height: 1000px;
-
+            height: 500px;
         }
 
         footer {
@@ -133,6 +89,8 @@
         .button-container {
             display: flex;
             justify-content: center;
+            gap: 10px;
+            width: 2000px;
         }
 
         button {
@@ -146,17 +104,14 @@
             padding: 10px 20px;
             margin: 10px;
             cursor: pointer;
+
         }
 
         button:hover {
             background-color: #F29B9B;
             color: #fff;
         }
-    </style>
 
-
-    <title>One-page Scroll</title>
-    <style>
         body,
         html {
             height: 100%;
@@ -170,43 +125,67 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
         }
-    </style>
-</head>
 
-<body>
+        .section > span {
+            width: 100%;
+            font-size: 29px;
+            color: black;
+        }
 
-    <head>
-        <div class="section" id="section1">나의 MGTI는?</div>
 
-    <body>
-        <style>
-            @font-face {
-                font-family: 'S-CoreDream-3Light';
-                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-                font-weight: normal;
-                font-style: normal;
-            }
+        .section .container{
+            width: 100%;
+        }
 
-            form {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-            }
 
-            label {
-                margin-left: 5px;
-                margin-right: 5px;
-            }
 
-            body {
-                background-color: #f2f2f2;
-                font-family: 'S-CoreDream-3Light';
-                text-align: center;
-            }
+        form {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
 
-        /* 진행바 스타일 */
+        label {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            font-family: 'S-CoreDream-3Light';
+            text-align: center;
+
+        }
+
+        h2 {
+            font-family: 'S-CoreDream-3Light';
+            font-weight: bolder;
+            color: #000000;
+            font-size: 2.0rem;
+            font-weight: 200%;
+            border: none;
+            border-radius: 5px;
+
+
+            cursor: pointer;
+        }
+
+        .section_main{
+            width: 100%;
+            height: 100%;
+        }
+
+        #section3{
+            position: relative;
+        }
+
+        #main {
+            width: 100%;
+            height: 100%;
+        }
+
         #progress {
             position: fixed;
             top: 10%;
@@ -214,13 +193,13 @@
             transform: translate(-50%, -50%);
             margin-bottom: 17px;
             appearance: none;
-            width: 700px;
+            width: 500px;
             
         }
 
         #progress::-webkit-progress-bar {
-            background: #f0f0f0;
-            border-radius: 12px;
+            background: #e3e2e2;
+            /* border-radius: 8px; */
             border: 1px solid #eeeeee;
             height: 28px;
             width: 100%;
@@ -228,285 +207,244 @@
         }
 
         #progress::-webkit-progress-value {
-            background: #fdd4d6;
-            border-radius: 0px;
+            background: #f8b6b9;
+            border-radius: 5px;
             height: 28px;
             width: 0%;
         }
-        </style>
-        </head>
-
-        <body>
-
-            <progress
-            class="progress"
-            id="progress"
-            value="0"
-            min="0"
-            max="100"
-        ></progress>
-
-            <div class="section" id="section2">
-                <div class="container">
-
-                    <h2>애견 카페에 갔을때, 우리 강아지는</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(0, 0)">주인 껌딱지! 나만 뚫어져라 쳐다본다</button>
-                        <button class="button" type="button" onclick="handleAnswer(0, 1)">다른 댕댕이 친구들과 신나게 뛰어논다</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>여유로운 주말, 우리 강아지는</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(1, 0)">집에서 단둘이 꽁냥꽁냥</button>
-                        <button class="button" type="button" onclick="handleAnswer(1, 1)">다른 댕댕이 친구들을 찾아 산책</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>내가 원하는 강아지 성격은</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(2, 0)">얌전하고 조용조용</button>
-                        <button class="button" type="button" onclick="handleAnswer(2, 1)">활발한 댕댕이</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>강아지가 애교를 부린다! 어떤 상황일까?</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(3, 0)">졸려~~~ 옆에 코 붙어서 잘래 멍~!</button>
-                        <button class="button" type="button" onclick="handleAnswer(3, 1)">나랑 같이 산책가죠!! 멍멍!!</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>낯선 사람을 만났을때 우리 강아지는</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(4, 0)">왈왈! 저리가</button>
-                        <button class="button" type="button" onclick="handleAnswer(4, 1)">멍! 예뻐해줘!</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>우리 강아지는 새로운 장난감을 발견했을때</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(5, 0)">무서워어..경계한다 왈왈!</button>
-                        <button class="button" type="button" onclick="handleAnswer(5, 1)">멍멍! 이거모야? 신나서 건드려본다</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>나랑 사이가 안좋은 친구를 강아지랑 산책하는 도중 만났다</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(6, 0)">으르르르르렁 !! 멍멍!! 저리가!!</button>
-                        <button class="button" type="button" onclick="handleAnswer(6, 1)">앗 사람이다~!! 사람죠아 멍!!</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>새로운 가족이 된 우리강아지가 우리집 올 때 하는 생각은?</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(7, 0)">집에 나말고 누가 있으면 어쩌지?ㅜㅜ 나 혼자였으면
-                            좋겠어 멍..!</button>
-                        <button class="button" type="button" onclick="handleAnswer(7, 1)">집에 친구들이 더 있으면 좋겠어!! 많을수록
-                            좋아~!</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>낯선 곳에 갔을때 우리 강아지는</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(8, 0)">독립적이고 혼자서도 잘해요</button>
-                        <button class="button" type="button" onclick="handleAnswer(8, 1)">주인만 바라보는 주인 껌딱지</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>내가 엉엉 울고있을때 우리 강아지는</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(9, 0)">아무 생각 없이 평소처럼 행동한다</button>
-                        <button class="button" type="button" onclick="handleAnswer(9, 1)">집사야 울지망 ㅜㅜ 눈치채고 내 옆에 꼭
-                            붙어있는다</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>우리 강아지는 혼자 있을때</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(10, 0)">아싸 자유시간! 맘껏 장난감 가지구
-                            놀아야지</button>
-                        <button class="button" type="button" onclick="handleAnswer(10, 1)">주인님 언제왕 ㅜㅜ 보고파</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>집사와 간식중에 하나만 선택한다면 우리 강아지는</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(11, 0)">나의 pick은 간식! 간식달라멍!</button>
-                        <button class="button" type="button" onclick="handleAnswer(11, 1)">간식 치워 우리 집사가 최고다멍!</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>우리 강아지는 산책할때</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(12, 0)">매일 일정한 시간에 규칙적으로</button>
-                        <button class="button" type="button" onclick="handleAnswer(12, 1)">집사야 산책 가고싶다! 가고싶을때
-                            암때나~</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>우리 강아지는 사료를 먹을때</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(13, 0)">딱딱 정해진 시간에 규칙적으로 냠냠!</button>
-                        <button class="button" type="button" onclick="handleAnswer(13, 1)">아 배고파~집사야 밥을 대령하거라!</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="section" id="section2">
-                <div class="container">
-                    <h2>새로운 산책코스 발견! 우리 강아지는?</h2>
-                    <form onsubmit="handleAnswer(event)">
-                        <button class="button" type="button" onclick="handleAnswer(14, 0)">원래 다니던 산책코스가 아니자나!? 평소처럼 잘
-                            따라오지 않는다</button>
-                        <button class="button" type="button" onclick="handleAnswer(14, 1)">킁킁! 냄새를 맡으며 잘 따라온다</button>
-                    </form>
-                </div>
-            </div>
+    </style>
 
 
-            <div class="section" id="section3">
-                <!-- <form action="mbti_result.html">
-                    <input type="submit" onclick="submitAnswers()" value="결과보기">
-                </form> -->
-            </div>
+    <title>One-page Scroll</title>
 
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-                var answers = [];
+</head>
 
-                function handleAnswer(questionNumber, option) {
-                    //kkk = [questionNumber,option]
-                    const answer = { questionNumber, option };
+<body>
+    <progress class="progress" id="progress" value="0" min="0" max="100"></progress>
 
-                    console.log('questionNumber', questionNumber)
-                    console.log('option', option)
-                    console.log('answer', answer)
-                    const answers = sessionStorage.setItem(questionNumber, option); // 선택지를 골라서 나온 0,1을 세션 스토리지에 저장한다
+    <div id="main">
+        <div class="section" id="section1">
+                <span>내가 선호하는 강아지는 !</span>
+        </div>
+        <div class="section_main">
 
-                    currentSectionIndex = questionNumber + 2;
-                    scrollToSection(currentSectionIndex);
+            
+        </div>
+    </div>
 
-                    // 15번째 질문일 경우 백엔드에 저장된 값 전송
-                    if (questionNumber === 14) {
-                        const answers = {};
-                        for (let i = 0; i < 15; i++) {
-                            answers[i] = sessionStorage.getItem(i);
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        question = [
+            {
+                "q1":"애견 카페에 갔을때, 우리 강아지는", 
+                "a1":"주인 껌딱지! 나만 뚫어져라 쳐다본다",
+                "a2":"다른 댕댕이 친구들과 신나게 뛰어논다",
+                "form":0
+            },
+            {
+                "q2":"여유로운 주말, 우리 강아지는", 
+                "a1":"집에서 단둘이 꽁냥꽁냥",
+                "a2":"다른 댕댕이 친구들을 찾아 산책",
+                "form":0
+            },
+            {
+                "q3":"내가 원하는 강아지 성격은", 
+                "a1":"얌전하고 조용조용",
+                "a2":"활발한 댕댕이",
+                "form":0
+            },
+            {
+                "q4":"강아지가 애교를 부린다! 어떤 상황일까?", 
+                "a1":"졸려~~~ 옆에 코 붙어서 잘래 멍~!",
+                "a2":"나랑 같이 산책가죠!! 멍멍!!",
+                "form":0
+            },
+            {
+                "q5":"낯선 사람을 만났을때 우리 강아지는", 
+                "a1":"왈왈! 저리가",
+                "a2":"멍! 예뻐해줘!",
+                "form":1
+            },
+            {
+                "q6":"우리 강아지는 새로운 장난감을 발견했을때", 
+                "a1":"무서워어..경계한다 왈왈!",
+                "a2":"멍멍! 이거모야? 신나서 건드려본다",
+                "form":1
+            },
+            {
+                "q7":"나랑 사이가 안좋은 친구를 강아지랑 산책하는 도중 만났다", 
+                "a1":"으르르르르렁 !! 멍멍!! 저리가!!",
+                "a2":"앗 사람이다~!! 사람죠아 멍!!",
+                "form":1
+            },
+            {
+                "q8":"새로운 가족이 된 우리강아지가 우리집 올 때 하는 생각은?", 
+                "a1":"집에 나 혼자였으면 좋겠어 멍..!",
+                "a2":"집에 동물 친구들이 더 있으면 좋겠어!! 많을수록 좋아~!",
+                "form":1
+            },
+            {
+                "q9":"낯선 곳에 갔을때 우리 강아지는", 
+                "a1":"독립적이고 혼자서도 잘해요",
+                "a2":"주인만 바라보는 주인 껌딱지",
+                "form":2
+            },
+            {
+                "q10":"내가 엉엉 울고있을때 우리 강아지는", 
+                "a1":"아무 생각 없이 평소처럼 행동한다",
+                "a2":"집사야 울지망 ㅜㅜ 눈치채고 내 옆에 꼭 붙어있는다",
+                "form":2
+            },
+            {
+                "q11":"우리 강아지는 혼자 있을때", 
+                "a1":"아싸 자유시간! 맘껏 장난감 가지구 놀아야지",
+                "a2":"주인님 언제왕 ㅜㅜ 보고파",
+                "form":2
+            },
+            {
+                "q12":"집사와 간식중에 하나만 선택한다면 우리 강아지는", 
+                "a1":"나의 pick은 간식! 간식달라멍!",
+                "a2":"간식 치워 우리 집사가 최고다멍!",
+                "form":2
+            },
+            {
+                "q13":"우리 강아지는 산책할때", 
+                "a1":"매일 일정한 시간에 규칙적으로",
+                "a2":"집사야 산책 가고싶다! 가고싶을때 암때나~",
+                "form":3
+            },
+            {
+                "q14":"우리 강아지는 사료를 먹을때", 
+                "a1":"딱딱 정해진 시간에 규칙적으로 냠냠!",
+                "a2":"아 배고파~집사야 밥을 대령하거라!",
+                "form":3
+            },
+            {
+                "q15":"새로운 산책코스 발견! 우리 강아지는?", 
+                "a1":"원래 다니던 산책코스가 아니자나!? 평소처럼 잘 따라오지 않는다",
+                "a2":"킁킁! 냄새를 맡으며 잘 따라온다",
+                "form":3
+            },
+        ]
+
+
+        
+        
+        var result = {}
+        var questionCheck = Array(question.length).fill(false);
+        var parent = $(".section_main")
+        question.forEach((quest, idx) => {
+                var q = quest[`q${idx+1}`]
+                var a1 = quest["a1"]
+                var a2 = quest["a2"]
+                var fom = quest["form"]
+
+                
+
+                // 새로운 요소들을 생성합니다.
+                var section_2 = $("<div>").attr("id", "section2").attr("class","section")
+                var container = $("<div>").attr("class", "container")
+                var title     = $("<h2>").text(q)
+                var newDiv = $("<div>").attr("id", "button-container");
+                var button1 = $("<button>").addClass("button").attr("type", "button").attr("id",`btn${idx}_0`).attr("value",`btn${idx}_1`).text(a1).click(function(event){
+                    handleAnswer(idx, 1, event)
+                });
+                var button2 = $("<button>").addClass("button").attr("type", "button").attr("id",`btn${idx}_1`).attr("value",`btn${idx}_0`).text(a2).click(function(event){
+                    handleAnswer(idx, 1, event)
+                });;     
+            
+                newDiv.append(button1, button2);
+                container.append(title);
+                container.append(newDiv);
+                section_2.append(container);
+                parent.append(section_2);
+
+                result[`Q${idx+1}`] = [fom,0]
+                });
+
+                var section_result = $("<div>").attr("class", "section").attr("id", "section3");
+                var form_result    = $("<form>").attr("id","test").attr("action", "/appeal/mgti_res").attr("method", "POST");
+                var input_result   = $("<input>").attr("id", "result").attr("name","result").attr("type", "hidden")
+                var button_result  = $("<button>").attr("type", "submit").text("결과보기").click(function(event){
+                    idx = 1
+                    for(let val of questionCheck) {
+                        if(!val) {
+                            scrollToSection(idx)
+                            event.preventDefault();
+                            break;  // arr의 요소가 3이면 루프를 탈출합니다.
                         }
-                        console.log(answers)
-                        // 백엔드로 데이터 전송
-
-                        $.ajax({
-                            url: '/appeal/res2',
-                            type: 'POST',
-                            data: JSON.stringify(answers),
-                            contentType: 'application/json',
-                            success: function (response) {
-                                // 전송 성공 시 실행할 코드
-                                console.log('Data sent successfully!');
-                                console.log(response);
-
-                                // 세션 스토리지 비우기
-                                // for (let i = 0; i < 15; i++) {
-                                //     sessionStorage.removeItem(i);
-                                // }
-
-                                // // 스크롤 이동이 완료된 후에 리다이렉션 로직 실행
-                               // setTimeout(() => {
-                                    //if (currentSectionIndex === 16) {
-                                        window.location.href = "/appeal/mgti_res";
-                                    //}
-                               // }, 1000); // 적절한 대기 시간 설정 (1초로 설정한 예시)
-                            },
-                            error: function (xhr, status, error) {
-                                // 전송 실패 시 실행할 코드
-                                console.log('Error occurred while sending data:', error);
-                            }
-                        });
-
+                        idx ++
+                        console.log(val);
                     }
+                })
 
-                }
-            </script>
+                form_result.append(input_result);
+                form_result.append(button_result);
+                section_result.append(form_result);
+                parent.append(section_result);
 
-            </head>
+                button_result.on("click", move_result);
 
-            <script>
-                const sections = document.querySelectorAll('.section');
-                let currentSectionIndex = 0;
-                let isScrolling = false;
-                var progress = document.getElementById("progress"); // 진행바 요소
-
-                function scrollToSection(index) {
-                    isScrolling = true;
-                    sections[index].scrollIntoView({ behavior: 'smooth' });
-                    setTimeout(() => {
-                        isScrolling = false;
-                        // 페이지를 넘길 때마다 진행바의 게이지를 7씩 증가시킴
-                        var currentValue = parseInt(progress.value);
-                        var newValue = Math.min(currentValue + 7, 100);
-                        progress.value = newValue;
-                    }, 500);
+                function move_result() {
+                 $("#result").val(JSON.stringify(result));
                 }
 
-                function handleScroll(event) {
-                    if (isScrolling) return;
+        function handleAnswer(questionNumber, option, event) {
+            $(`#${event.target.id}`).css("background-color","red")
+            let btn1 =  $(`#${event.target.id}`).val()
+            $(`#${btn1}`).css("background-color","#f8b6b9")
 
-                    const direction = event.deltaY > 0 ? 1 : -1;
-                    currentSectionIndex += direction;
+            console.log(questionNumber)
+            const answers = sessionStorage.setItem(questionNumber, option);
+            result[`Q${questionNumber+1}`][1]=option
+            
+            currentSectionIndex = questionNumber + 2;
+            scrollToSection(currentSectionIndex);
 
-                    if (currentSectionIndex < 0) {
-                        currentSectionIndex = 0;
-                    } else if (currentSectionIndex >= sections.length) {
-                        currentSectionIndex = sections.length - 1;
-                    }
+            if (!questionCheck[questionNumber]) {
+                var currentValue = parseFloat(progress.value);
+                var newValue = Math.min(currentValue + 100/question.length , 100);
+                progress.value = newValue;
+                console.log(progress.value)
+                questionCheck[questionNumber] = true
 
-                    scrollToSection(currentSectionIndex);
-                }
+                if (newValue>=100) scrollToSection(questionCheck.length + 1)
+            }
+        }
 
-                window.addEventListener('wheel', handleScroll);
 
+        const sections = document.querySelectorAll('.section');
+        let currentSectionIndex = 0;
+        let isScrolling = false;
 
-            </script>
-        </body>
+        function scrollToSection(index) {
+            isScrolling = true;
+            sections[index].scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1000);
+        }
+
+        function handleScroll(event) {
+            if (isScrolling) return;
+
+            const direction = event.deltaY > 0 ? 1 : -1;
+            currentSectionIndex += direction;
+
+            if (currentSectionIndex < 0) {
+                currentSectionIndex = 0;
+            } else if (currentSectionIndex >= sections.length) {
+                currentSectionIndex = sections.length - 1;
+            }
+
+            scrollToSection(currentSectionIndex);
+        }
+
+        window.addEventListener('wheel', handleScroll);
+    </script>
+</body>
 
 </html>

@@ -1,7 +1,0 @@
-* `순서대로 입력해주세요`
-docker-compose up -d
-
-
-* 마리아 DB CLI 사용시
-docker exec -it my_mariadb bash
-mysql -u root -p1234

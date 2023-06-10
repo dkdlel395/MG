@@ -1,102 +1,215 @@
-from flask import render_template, request, Flask, jsonify, session, make_response
+from flask import render_template, request, jsonify, redirect, url_for,current_app as app
 from controller import bp_appeal as appeal
-from controller import db_controller as db
-from chat_gpt import gpt_plugin
 import json
+import jwt
 import logging
-import urllib
+import requests
+import pymysql
+import environment as env
+from pymysqlpool.pool import Pool
+
+def tool(msg, form=''):
+    ###
+    # 로깅 레벨 설정
+    app.logger.setLevel(logging.DEBUG)
+
+    # 로깅 핸들러 추가
+    stream_handler = logging.StreamHandler()
+
+    app.logger.info("======================")
+    app.logger.info(form)
+    app.logger.info(msg)
 
 
-app = db.init_database()
-mysql = db.init(app)
-
-###
-# 로깅 레벨 설정
-app.logger.setLevel(logging.DEBUG)
-
-# 로깅 핸들러 추가
-stream_handler = logging.StreamHandler()
-
-messages = []  # 채팅 기록 저장
 
 
-@appeal.route('/', methods=['GET', 'POST'])
-def home():
-    return 'appeal'
+def db_connection():
+    pool = Pool(
+        host        = env.db_ip,
+        port        = env.db_port,
+        user        = env.db_user_id,
+        password    = env.db_user_pw,
+        database    = env.db_name,
+    )
+    pool.init()
+    return pool
+
+
+def db_sql( pool, sql, args, multy=False ):
+    connection = pool.get_conn()
+    cur = connection.cursor()
+
+    #트라이캐치 붙히기
+    # args는 튜플로 구성
+    cur.execute(sql, args=args)
+
+    
+    if multy : 
+        result = cur.fetchall()
+        pool.release(connection)
+        return result
+    else     : 
+        result = cur.fetchone()
+        pool.release(connection)
+        return result
+
+def db_connection2():
+    return pymysql.connect(
+            host        = env.db_ip,
+            port        = env.db_port,
+            user        = env.db_user_id,
+            password    = env.db_user_pw,
+            database    = env.db_name,
+            cursorclass = pymysql.cursors.DictCursor
+        )
+
+
 
 @appeal.route("/answer", methods=["POST"]) 
 def answer():
     user_msg = json.loads(request.data.decode('utf-8'))
-    
-    query = user_msg["chat"][-1]["content"]
-    app.logger.info("=======================")
-    app.logger.info(user_msg["chat"])
-    app.logger.info(user_msg["chat"][-1])
-    app.logger.info("=======================")
     user_id = user_msg['userId']
     dog_id = user_msg['dogId']
-    frend_number = 1
     
-    db.save_chat_content( app, mysql, frend_number, query , 0, 'NULL' , 'NULL' )
+    try:
+        with db_connection2().cursor() as cursor:
+            sql = f"""
+                SELECT animal_name, age, personality, species
+                FROM abandoned_animal
+                WHERE animal_id='{dog_id}'
+            """
+            dog=dict()
+
+            cursor.execute(sql)
+            dog = cursor.fetchall()[0]
+ 
+            sql = f"""
+                SELECT experience
+                FROM persona
+                WHERE animal_id='{dog_id}'
+            """
+            dog2=dict()
+
+            cursor.execute(sql)
+            dog2 = cursor.fetchall()[0]
+
+            sql = f"""
+                SELECT Accent
+                FROM dog_Accent
+                WHERE animal_id='{dog_id}'
+            """
+
+            cursor.execute(sql)
+            dog3 = cursor.fetchall()[0]
+
+    except Exception as e:
+        pass
+    finally:
+        cursor.close()
+        
+        user_msg["dogName"] = dog.get("animal_name")
+        user_msg["age"]     = dog.get("age")
+        user_msg["persona"] = dog.get("personality")
+        user_msg["species"] = dog.get("species")
+        user_msg["experience"] = dog2.get("experience")
+        user_msg["Accent"] = dog3.get("Accent")
+        app.logger.info(user_msg["Accent"])
+        
+
 
     # GPT 프롬프트 엔지니어링 부분 모듈 로드
-    answer = gpt_plugin.gpt(user_msg, app=app)
-
-    answer_date = db.save_chat_content( app, mysql, frend_number , answer , 1, 'NULL' , 'NULL' )
-    
-
+    url = f'http://{env.long_memory_ip}:3333/get_sim_text'
+    headers = {'Content-Type': 'application/json'}
+    tool(user_msg)
+    resp = requests.post(url, data=json.dumps(user_msg), headers=headers).json()
     message = {                       # 주고받는 메세지의 속성값을 저장한다
-        'message_type': 'bot', 
-        'dog_name': '뽀또',
-        'message_content': answer,
-        'time': answer_date
+        'message_type'    : 'bot', 
+        'dog_name'        : dog["animal_name"],
+        'message_content' : resp["answer"],
+        'time'            : resp["date"]
     }
-    
+    app.logger.info(message["message_content"])
+    if 'Answer' in message["message_content"]:
+        update_dic ={"message_content" : message["message_content"].replace('Answer', '').replace(':', '')}
+        message.update(update_dic)
+    else:
+        pass
 
     return jsonify(message) # message 안에는 (messsagetype(사용자인지,봇인지 판단), 강아지 이름, 강아지 채팅 내용, 시간) 으로 이루어져있다.
-
 
 # 채팅 페이지
 @appeal.route("/load_chat_page", methods=["GET", "POST"])
 def load_chat_page():
+    dog_info  = json.loads(request.args.get('dog_id').replace("'",'"'))
+    dog_id    = dog_info.get('dog_id')
+    friend_no = dog_info.get('friend_no')
     
-    dog_id = request.args.get('dogid')             # 멍소개 페이지에서 보낸 유기견의 id를 받아온다
+    # jwt에서 받아올 예정
     user_id = 'yc'
-    friend_number = 1
+
+    try:
+        with db_connection2().cursor() as cursor:
+            sql = f"""
+                SELECT animal_name, diffusion_profile_image
+                FROM abandoned_animal 
+                WHERE animal_id = '{dog_id}' 
+            """
+            cursor.execute(sql)
+            dog_info = cursor.fetchall()[0]
+
+    except Exception as e:
+        pass
+    finally:
+        cursor.close()
 
     
-    
-    dog_info = db.get_dog_info(app, mysql, dog_id) # 이 함수의 결과는 (' 결과 ',)로 나온다
-    dog_info = [t for t in dog_info[0]]
-    dog_info_json = {"dog_id":dog_id,"dog_name":dog_info[0], "img_src":dog_info[1],"user_id":user_id}
+    dog_info_json = {
+        "dog_id"    : dog_id, 
+        "dog_name"  : dog_info.get("animal_name"), 
+        "img_src"   : dog_info.get("diffusion_profile_image"), 
+        "user_id"   : user_id,
+        "friend_no" : friend_no.get("no")
+    }
 
     return render_template("chat.html", dog_info=dog_info_json)
+    
+
+    
+
 
 @appeal.route("/load_before_chat", methods=["POST"])
 def load_before_chat():
-    friend_number = request.get_data(as_text=True).strip()
+    dog_info  = json.loads(request.data.decode('utf-8'))
+    friend_number = dog_info.get("friendNo")
+    dog_id  = dog_info.get("dogId")
+    user_id = dog_info.get("userId")
 
-    # 추후에 바꿔야함
-    user_id = 'yc'
-    dog_id  = 'abc000'
 
-    # 데이터베이스 채팅 10개 가져오기
-    cookie_name = f'{friend_number}_friend_chat_list'
-    chat_info = db.load_chat(app,mysql,friend_number)
+    sql = """
+            SELECT chat_content, sent_or_received, chat_date
+            FROM chat
+            WHERE friend_list_no = %s
+            ORDER BY no DESC
+            limit 10;
+    """
     
-    chat_contents = [{ "no":idx, "content":urllib.parse.quote(content.encode("utf-8")),"send":int.from_bytes(send), "date":str(date) } for idx, (content, send, date) in enumerate(chat_info)]
+    args = (friend_number,)
+    chat_info = db_sql(pool=db_connection(),sql=sql,args=args,multy=True)
+    
+    
+    
+    tool(chat_info, 'chat_info')
+    
+    chat_contents = [{ "no":idx, "content": chat["chat_content"],"send":int.from_bytes( chat["sent_or_received"] ), "date":str(chat["chat_date"]) } for idx, chat in enumerate(chat_info)]
     current_chat_list = {
-            "user_id" : user_id,
-            "dog_id"  : dog_id,
+            "user_id" : dog_id,
+            "dog_id"  : user_id,
+            "friend_list_no" : friend_number,
             "chat": chat_contents
         }
-
-    resp = make_response('쿠키가 설정되었습니다')
-    app.logger.info(chat_contents)
-
-    resp.set_cookie(cookie_name, json.dumps(current_chat_list).encode('utf-8'))
-
-    return resp
+    
+    tool(current_chat_list, 'current_chat_list')
+    return current_chat_list
 
 
 @appeal.route('/mgti_start', methods=['GET', 'POST'])
@@ -111,89 +224,48 @@ def mgti_ing():
     return render_template("mgti_ing.html")
 
 
-# MGTI 결과 페이지
-@appeal.route('/mgti_res', methods=['GET', 'POST'])
-def mgti_res():
-    return render_template("mgti_res.html")
-
-# MGTI 고른거 전송 라우트
-
-
-@appeal.route('/res2', methods=['get', 'post'])
+@appeal.route('/mgti_res', methods=['get', 'post'])
 def res2():
-    if request.method == 'POST':
-        I, E, S, N, T, J, F, P = 0, 0, 0, 0, 0, 0, 0, 0
-        data = request.get_json()       # mgti_res페이지에서 보낸 mgti결과 딕셔너리를 받는다
-    for key, value in data.items():
-        if key == '0' or key == '1' or key == '2':
-            if value == '0':
-                I += 1
-            elif value == '1':
-                E += 1
-        elif key == '3':
-            if value == '0':
-                I += 2 
-            elif value == '1':
-                E += 2
-        elif key == '4' or key == '6' or key == '7':
-            if value == '0':
-                N += 1
-            elif value == '1':
-                S += 1
-        elif key == '5':
-            if value == '0':
-                N += 2
-            elif value == '1':
-                S += 2
-        elif key == '9' or key == '10' or key == '11':
-            if value == '0':
-                T += 1
-            elif value == '1':
-                F += 1
-        elif key == '8':
-            if value == '0':
-                T += 2
-            elif value == '1':
-                F += 2
-        elif key == '12' or key == '13' or key == '14':
-            if value == '0':
-                J += 1
-            elif value == '1':
-                P += 1 
+    data = json.loads(request.form.get('result'))
+    score = [0] * 4
 
-    if I > E:
-        A = "I"
-    elif E > I:
-        A = "E"
-    else:
-        A = ""
+    for mbti_form, val in data.values():
+        score[mbti_form] += val
 
-    if N > S:
-        B = "N"
-    elif S > N:
-        B = "S"
-    else:
-        B = ""
+    mbti = [["I", "E"], ["N", "S"], ["T", "F"], ["J", "P"]]
+    dog_mbti = {"mbti":"".join(mbti[idx][each_score < 0] for idx, each_score in enumerate(score))}
+ 
+    return render_template('mgti_res.html', mbti=dog_mbti)
 
-    if T > F:
-        C = "T"
-    elif F > T:
-        C = "F"
-    else:
-        C = ""
+@appeal.route('/mgti_res/get_dog', methods=['get', 'post'])
+def get_dog():
+    mbti = request.data.decode('utf-8')
 
-    if J > P:
-        D = "J"
-    elif P > J:
-        D = "P"
-    else:
-        D = ""      # 받아온 딕셔너리의 내용을 바탕으로 mgti를 도출하는 용도
+    try:
+        with db_connection2().cursor() as cursor:
+            sql = f'''
+                SELECT animal_id, diffusion_profile_image
+                FROM abandoned_animal
+                WHERE mbti_type='{mbti}'
+                LIMIT 4;
+            '''
 
-    mgti = f"{A}{B}{C}{D}"
-    mgti_info = db.mgti_commantary(app,mysql,mgti) # mgti_commantary는 db에 접근해 mgti관련 정보를 가져오는 함수이다
-    fl_info = list(mgti_info[0])
-    fl_info.append(mgti) # fl_info에 mgti_commantary 결과값과 mgti를 넣는다(html에서 한번에 리스트로 받기 위함)
-    if None not in fl_info:
-        fl_info.append(mgti_info[1][4]) # 디퓨전 프사가 없다면 null값일수 있음
-        fl_info.append(mgti_info[1][9])
-    return fl_info
+            cursor.execute(sql)
+            dog = {"dogs":cursor.fetchall()}
+
+
+            sql = f'''
+                SELECT mbti_introduction
+                FROM species_for_mbti
+                WHERE mbti_type='{mbti}'
+            '''
+
+            cursor.execute(sql)
+            dog["mbti_info"] = cursor.fetchone()["mbti_introduction"]
+
+    except Exception as e:
+        pass
+    finally:
+        cursor.close()
+
+    return dog
