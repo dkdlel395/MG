@@ -3,6 +3,14 @@
         - git clone https://github.com/dkdlel395/MG.git
 
     - git clone -b 가지이름 https://github.com/dkdlel395/MG.git
-# 구동 명령어
-    - set FLASK_APP=backend.py
-    - flask run --debug
+# Module version
+    - flask
+    - pymysql
+    - requests
+    - openai
+    - jwt
+    - requests
+    - pymysql-pooling
+    - pinecone-client
+    - sentence_transformers
+    - openai
